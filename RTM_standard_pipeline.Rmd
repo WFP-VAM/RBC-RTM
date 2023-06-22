@@ -1,0 +1,119 @@
+---
+title: "RTM standard pipeline processes"
+author: "Amira Swedan"
+date: "`r format(Sys.time(), '%d/%m/%Y')`"
+output:
+  word_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This data pipeline automate the process of RTM data management for the RTM core variables related to the key indicators. The standard pipeline procedures are aligned with [RBC RTM SOPs](https://wfp-my.sharepoint.com/:w:/g/personal/amira_swedan_wfp_org/EVistHIsU_xAsdsF-2SEcRoB-cMrwS-IuyjyscsUVLfuig?e=SH9hHK) that includes a detailed explanation about the methodology applied in this script.
+ 
+
+The key functions implemented in this standard pipeline are:
+
+1. Raw data extraction
+2. Data Quality Checks
+3. Data recoding 
+4. Indicators computation
+5. Weights construction
+6. Connecting to the regional master table 
+
+# Load packages and read relevant input files
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(readxl)
+library(httr)
+library(jsonlite)
+library(lubridate)
+
+pipInput = read_excel('RTM_pipeline_input.xlsx')
+pipInput$StartDate = format(as.Date(pipInput$StartDate), "%m/%d/%Y")
+pipInput$EndDate = format(as.Date(pipInput$EndDate), "%m/%d/%Y")
+
+```
+
+
+# Connect and extract raw data
+
+
+
+```{r extract raw data, message=FALSE, warning=FALSE, echo=TRUE}
+
+
+Syria_config = list ('APIKey' = paste("Syria_" , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Syria'] , "/")) [1] , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Syria'] , "/")) [3] , sep = ""),  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Syria']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Syria'] )
+
+
+
+Crystal_API_connect <- function (con_config) {
+  
+ r =  POST(url = 'http://campaignapi.crystelcall.com/CampaignAPI/api/Campaign' , body   = con_config ) 
+ 
+ if (r$status_code == 200) {
+   print ('Crystal API connection is ok ')
+ }
+ else {
+     print (paste0('ERROR:reading from Crystal API returned the status code ' , r$status_code))
+   }
+ 
+}
+
+
+Crystal_API_connect (Syria_config)
+
+ 
+```
+
+
+
+# Selecting core variables and Recoding
+
+```{r Selecting and recoding, echo=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+
+# Quality checks and flags
+
+```{r Check data quality, echo=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+
+# FCS, FCG calculation
+
+```{r Calculate food consumption indicators , echo=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+
+# rCSI and LCSI calculation
+
+```{r calculate livelihood coping indicators, echo=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+
+# Construct weights
+
+```{r Construct weights, echo=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+
+# Connect to regional master table
+
+```{r upload data, echo=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+
+
+
+
+
