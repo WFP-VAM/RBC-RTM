@@ -41,7 +41,13 @@ pipInput$EndDate = format(as.Date(pipInput$EndDate), "%m/%d/%Y")
 
 # Connect and extract raw data
 
+Connect through Crystal API to fetch the raw data.
 
+To connect you need to pass the key parameters (`APIKey`, `start date`, `end date`) for each country separately to Crystal_API_connect function.
+
+The parameters should be inserted in the pipeline input file, the configuration list for each country (Lebanon,Syria, and Yemen) will be updated automatically.
+
+To add a new country, first modify the input file and create a new configuration list that should be passed to the connection function. 
 
 ```{r extract raw data, message=FALSE, warning=FALSE, echo=TRUE}
 
@@ -50,6 +56,9 @@ Syria_config = list ('APIKey' = paste("Syria_" , unlist (strsplit(pipInput$EndDa
 
 Yemen_config = list ('APIKey' = paste("Yemen1_" , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Yemen1'] , "/")) [1] , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Yemen1'] , "/")) [3] , sep = ""),  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Yemen1']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Yemen1'] )
 
+Leb_config = list ('APIKey' = "Lebanon_112022",  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Lebanon']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Lebanon'] )
+
+##########################################################
 Crystal_API_connect <- function (con_config) {
   
 json_body <- jsonlite::toJSON(con_config, auto_unbox = TRUE)
@@ -70,17 +79,26 @@ print (json_body)
  return(Rawdata)
  
 }
-
+##################################################
 
 SyriaRaw = Crystal_API_connect (Syria_config)
+SyriaRaw = SyriaRaw[SyriaRaw$Completed == 'Y' ,]
+print(paste0('total number of completed surveys for Syria survey is ' , nrow(SyriaRaw)))
+
 YemenRaw = Crystal_API_connect(Yemen_config)
+YemenRaw = YemenRaw[YemenRaw$Completed == 'Y' ,]
+print(paste0('total number of completed surveys for Yemen survey is ' , nrow(YemenRaw)))
+
+LebRaw = Crystal_API_connect(Leb_config)
+LebRaw = LebRaw[LebRaw$Completed == 'Y' ,]
+print(paste0('total number of completed surveys for Lebanon survey is ' , nrow(LebRaw)))
+
 
  
 ```
 
 
-
-# Selecting core variables and Recoding
+# Renaming variables to get them aligned with the standard codebook, and select only core questions
 
 ```{r Selecting and recoding, echo=TRUE, message=FALSE, warning=FALSE}
 
