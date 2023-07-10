@@ -48,7 +48,7 @@ pipInput$EndDate = format(as.Date(pipInput$EndDate), "%m/%d/%Y")
 
 Syria_config = list ('APIKey' = paste("Syria_" , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Syria'] , "/")) [1] , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Syria'] , "/")) [3] , sep = ""),  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Syria']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Syria'] )
 
-
+Yemen_config = list ('APIKey' = paste("Yemen1_" , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Yemen1'] , "/")) [1] , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Yemen1'] , "/")) [3] , sep = ""),  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Yemen1']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Yemen1'] )
 
 Crystal_API_connect <- function (con_config) {
   
@@ -56,19 +56,24 @@ json_body <- jsonlite::toJSON(con_config, auto_unbox = TRUE)
 
 print (json_body)
   
- r =  POST(url = 'http://campaignapi.crystelcall.com/CampaignAPI/api/Campaign' , body = json_body , encode = "raw" ) 
+ r =  POST(url = 'http://campaignapi.crystelcall.com/CampaignAPI/api/Campaign' , body = json_body , add_headers('Content-Type'='application/json')) 
  
  if (r$status_code == 200) {
    print ('Crystal API connection is ok ')
  }
  else {
      print (paste0('ERROR:reading from Crystal API returned the status code ' , r$status_code))
-   }
+ }
+ 
+ Rawdata = fromJSON(rawToChar(r$content))
+ 
+ return(Rawdata)
  
 }
 
 
-Crystal_API_connect (Syria_config)
+SyriaRaw = Crystal_API_connect (Syria_config)
+YemenRaw = Crystal_API_connect(Yemen_config)
 
  
 ```
