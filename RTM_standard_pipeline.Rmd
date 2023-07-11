@@ -11,12 +11,15 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Overview
+
 This data pipeline automate the process of RTM data management for the RTM core variables related to the key indicators. The standard pipeline procedures are aligned with [RBC RTM SOPs](https://wfp-my.sharepoint.com/:w:/g/personal/amira_swedan_wfp_org/EVistHIsU_xAsdsF-2SEcRoB-cMrwS-IuyjyscsUVLfuig?e=SH9hHK) that includes a detailed explanation about the methodology applied in this script.
  
 
 The key functions implemented in this standard pipeline are:
 
 1. Raw data extraction
+2. Renaming and selecting core variables
 2. Data Quality Checks
 3. Data recoding 
 4. Indicators computation
@@ -98,11 +101,28 @@ print(paste0('total number of completed surveys for Lebanon survey is ' , nrow(L
 ```
 
 
-# Renaming variables to get them aligned with the standard codebook, and select only core questions
+# Renaming variables according to the standard codebook, and select only core questions
 
-```{r Selecting and recoding, echo=TRUE, message=FALSE, warning=FALSE}
+```{r renaming and selecting, echo=TRUE, message=FALSE, warning=FALSE}
+# Syria
+SyriaRaw_reduced = SyriaRaw %>% select (ADMIN0Name = Country, ADMIN1Name = City, ADMIN2Name = Area,RspID,SvyDate,EnuName = Agent ,HHH_YN,HHHSex,HHHAge,HHHEducation,RESPAge,HHSize , HHDispl, IDPDuration,HouseType,HWaterSRC, FCSStap, FCSPulse, FCSVeg, FCSFruit,FCSPr, FCSDairy, FCS_SRf, MktAccess_1M, MktAccessCnstr, rCSILessQlty, rCSIBorrow, rCSIMealNb , rCSIMealSize, rCSIMealAdult, Lcs_stress_DomAsset, Lcs_stress_Saving, Lcs_stress_SellFoodRation, Lcs_stress_CrdtFood, Lcs_crisis_OutSchool, Lcs_crisis_ProdAssets, Lcs_crisis_Migration, Lcs_em_ResAsset, LcsR_em_FemAnimal, Lcs_em_Begged)
+
+#Yemen
+YemenRaw_reduced = YemenRaw %>% select(RspID, SvyDate,EnuName = Agent ,RESPAge = BirthYear, HHHSex = HoHSex, ADMIN0Name = Country, ADMIN1Name = City, ADMIN2Name = Area, HHSize= HHSize_90days, HHDispl = IDP_YN, HHChronIllNb = HH65_Disease, FCSStap = Staples, FCSPulse = Pulses, FCSVeg = Veg, FCSFruit = Fruits, FCSPr = Proteins, FCSDairy = Dairy, FCSFat = Fats, FCSSugar = Sugars, FCS_SRf = FoodSrc1, rCSILessQlty = LessExpensiveFood, rCSIBorrow = BorrowOrHelp, rCSIMealNb = ReduceNumMeals, rCSIMealSize = LimitPortionSize, rCSIMealAdult = RestrictConsumption,LcsEN_stress_DomAsset = LC_2_SoldAsset, LcsEN_stress_CrdtFood = LC_3_CreditFood, LcsEN_stress_Saving = LC_4_SpentSaving, LcsEN_stress_BorrowCash = LC_5_BorrowMoney, LcsEN_crisis_ProdAssets = LC_6_SoldProduction, LcsEN_crisis_Health = LC_7_ReduceHealth, LcsEN_crisis_OutSchool = LC_8_WithdrawSchool, LcsEN_em_ResAsset = LC_9_SoldHome, LcsEN_em_Begged = LC_10_Begged , LcsEN_em_LastAnimal = LC_11_LastAnimal, LhCSIEnAccess = LC_MainReason, HHIncFirst_SRi = Income_MainSrc, HHIncChg_YN_1M = Income_Change  )
+
+#Lebanon
+LebRaw_reduced = select(EnuName = Agent, ADMIN0Name = Country, ADMIN1Name = City, ADMIN2Name = Area, SvyDate,RESPAge,HouseType= HHHousingCurrent, FCSStap, FCSPulse, FCSDairy, FCSPr, FCSVeg, FCSFruit, FCSFat, FCSSugar, rCSILessQlty, rCSIBorrow, rCSIMealSize, rCSIMealNb, rCSIMealAdult = rCSIMealAdul, LhCSIDomAsset )
 
 ```
+
+
+# Recoding
+
+```{r recoding, echo=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+
 
 
 # Quality checks and flags
@@ -112,14 +132,8 @@ print(paste0('total number of completed surveys for Lebanon survey is ' , nrow(L
 ```
 
 
-# FCS, FCG calculation
 
-```{r Calculate food consumption indicators , echo=TRUE, message=FALSE, warning=FALSE}
-
-```
-
-
-# rCSI and LCSI calculation
+# Food security indicators calculation
 
 ```{r calculate livelihood coping indicators, echo=TRUE, message=FALSE, warning=FALSE}
 
