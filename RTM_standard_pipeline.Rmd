@@ -30,7 +30,7 @@ The key objective of the standard pipeline is to maintain the same process of da
 Before running this pipeline script, you need to update the input file included in the script dependencies *RTM_pipeline_input.xlsx*, Specify in this file the start and end date that you wish to extract the data within. see the table below for more details:
 
 +------------------------------------------------+-------------------------------------------------------------------------------------+-------------------------------------------------------------------------+-------------------------------------------------------+----------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
-| **Provider**                                   | **SurveyType**                                                                      | **Country Code**                                                        | **StartDate**                                         | **EndDate**                                        | **SurveyID**                                                                                                                                 |
+| **Provider**                                   | **SurveyType**                                                                      | **Country Code**                                                        | **StartDate**                                         | **EndDate**                                        | **SvyID**                                                                                                                                    |
 +------------------------------------------------+-------------------------------------------------------------------------------------+-------------------------------------------------------------------------+-------------------------------------------------------+----------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
 | include here the name of the service provider. | Specify if the survey is RTM or other type of surveys ( include only RTM or Others) | the country code is the name of the country as included in the API key. | the first date the you need to extract the data from. | the last date that you need to extract the data to | This is unique ID to differentiate each data collection round. It is sequential for each country. and should be unique across all countries. |
 |                                                |                                                                                     |                                                                         |                                                       |                                                    |                                                                                                                                              |
@@ -61,7 +61,7 @@ pipInput$EndDate = format(as.Date(pipInput$EndDate), "%m/%d/%Y")
 
 ```
 
-## Connect and extract raw data
+## Connect and Extract Raw Data
 
 Connect through Crystal API to fetch the raw data.
 
@@ -149,7 +149,7 @@ LebRaw_reduced = LebRaw %>%  select(EnuName = Agent, ObsDate= LogDate1, Relation
 
 ```
 
-## Re-coding and merging
+## Re-coding and Merging
 
 ```{r recoding, echo=TRUE, message=FALSE, warning=FALSE}
 
@@ -159,6 +159,13 @@ SyriaRaw_reduced = SyriaRaw_reduced %>% mutate(HHHSex=recode(HHHSex, '1'='Female
 lcs_vars = names (SyriaRaw_reduced %>% select (starts_with('Lcs')))
 SyriaRaw_reduced[lcs_vars] = replaceall( SyriaRaw_reduced [lcs_vars] , c('1' , '2' , '3' , '4') , c('Yes' , 'No' , 'AlreadyExhausted'  , 'NotApplicable') , quiet = TRUE)
 
+#Yemen
+YemenRaw_reduced = YemenRaw_reduced %>% mutate(HHHSex=recode(HHHSex, '1'='Male' , '2' = 'Female' ) , HHDispl = recode(HHDispl , '1' = 'IDP' , '2' = 'Resident' ), FCS_SRf = recode(FCS_SRf, '1' = 'OwnProd' , '2' = 'Hunting' , '3' = 'Purchase' , '4' = 'On_Credit' , '5' ='Gifts' ,  '6' = 'Begging' , '7' = 'Swap' , '8' = 'FoodAssist' , '9'= 'CasualLabour') , HHIncFirst_SRi = recode (HHIncFirst_SRi , '1' = 'RegEmp' , '2' = 'CasualLabour' , '3' = 'NoWork') , HHIncChg_YN_1M = recode(HHIncChg_YN_1M, '1' = 'Increased' ,'2' = 'Same' , '3' = 'Reduced' , '4' = 'Stopped'), LhCSIEnAccess = recode(LhCSIEnAccess, '1' = 'Food' , '2' = 'Education' , '3' = 'Health' , '4' = 'Shelter' , '5' = 'Sanitation' , '6' = 'Other') )
+
+lcs_vars = names (YemenRaw_reduced %>% select (starts_with('Lcs')))
+YemenRaw_reduced[lcs_vars] = replaceall( YemenRaw_reduced [lcs_vars] , c('1' , '2' , '3' , '4' , '99') , c('No' , 'AlreadyExhausted' , 'Yes'  , 'No_shortage' , 'NotApplicable') , quiet = TRUE)
+
+
 
 
 
@@ -166,25 +173,25 @@ SyriaRaw_reduced[lcs_vars] = replaceall( SyriaRaw_reduced [lcs_vars] , c('1' , '
 
 ```
 
-## Quality checks and flags
+## Food Security Indicators Calculation
 
 ```{r Check data quality, echo=TRUE, message=FALSE, warning=FALSE}
 
 ```
 
-## Food security indicators calculation
+## Quality Checks and Associated Flags
 
 ```{r calculate livelihood coping indicators, echo=TRUE, message=FALSE, warning=FALSE}
 
 ```
 
-## Construct weights
+## Sampling Weights Construction
 
 ```{r Construct weights, echo=TRUE, message=FALSE, warning=FALSE}
 
 ```
 
-## Connect to regional master table
+## Regional Master Table Connection and Feeding
 
 ```{r upload data, echo=TRUE, message=FALSE, warning=FALSE}
 
