@@ -53,6 +53,7 @@ library(readxl)
 library(httr)
 library(jsonlite)
 library(lubridate)
+library(lares)
 
 pipInput = read_excel('RTM_pipeline_input.xlsx')
 pipInput$StartDate = format(as.Date(pipInput$StartDate), "%m/%d/%Y")
@@ -138,13 +139,13 @@ The codebook is embedded in WFP [survey designer](https://www.surveydesigner.vam
 
 ```{r renaming and selecting, echo=TRUE, message=FALSE, warning=FALSE}
 # Syria
-SyriaRaw_reduced = SyriaRaw %>% select (ADMIN0Name = Country, ADMIN1Name = City, ADMIN2Name = Area,RspID,SvyDate, ObsDate= LogDate1 ,EnuName = Agent ,HHH_YN,HHHSex,HHHAge,HHHEducation,RESPAge,HHSize , HHDispl, IDPDuration,HDwellType =HouseType,HWaterSRC, FCSStap, FCSPulse, FCSVeg, FCSFruit,FCSPr, FCSDairy, FCS_SRf, MktAccess_1M, MktAccessCnstr, rCSILessQlty, rCSIBorrow, rCSIMealNb , rCSIMealSize, rCSIMealAdult, Lcs_stress_DomAsset, Lcs_stress_Saving, Lcs_stress_SellFoodRation, Lcs_stress_CrdtFood, Lcs_crisis_OutSchool, Lcs_crisis_ProdAssets, Lcs_crisis_Migration, Lcs_em_ResAsset, LcsR_em_FemAnimal, Lcs_em_Begged)
+SyriaRaw_reduced = SyriaRaw %>% select (ADMIN0Name = Country, ADMIN1Name = City, ADMIN2Name = Area,RspID,SvyDate, ObsDate= LogDate1 ,EnuName = Agent ,HHH_YN,HHHSex,HHHAge,HHHEducation,RESPAge,HHSize , HHDispl, IDPDuration,HDwellType =HouseType,HWaterSRC, FCSStap, FCSPulse, FCSVeg, FCSFruit,FCSPr, FCSDairy, FCS_SRf, MktAccess_1M,  rCSILessQlty, rCSIBorrow, rCSIMealNb , rCSIMealSize, rCSIMealAdult, Lcs_stress_DomAsset, Lcs_stress_Saving, Lcs_stress_SellFoodRation, Lcs_stress_CrdtFood, Lcs_crisis_OutSchool, Lcs_crisis_ProdAssets, Lcs_crisis_Migration, Lcs_em_ResAsset, LcsR_em_FemAnimal, Lcs_em_Begged)
 
 #Yemen
 YemenRaw_reduced = YemenRaw %>% select(RspID, SvyDate,ObsDate= LogDate1 ,EnuName = Agent ,RESPAge = BirthYear, HHHSex = HoHSex, ADMIN0Name = Country, ADMIN1Name = City, ADMIN2Name = Area, HHSize= HHSize_90days, HHDispl = IDP_YN, HHChronIllNb = HH65_Disease, FCSStap = Staples, FCSPulse = Pulses, FCSVeg = Veg, FCSFruit = Fruits, FCSPr = Proteins, FCSDairy = Dairy, FCSFat = Fats, FCSSugar = Sugars, FCS_SRf = FoodSrc1, rCSILessQlty = LessExpensiveFood, rCSIBorrow = BorrowOrHelp, rCSIMealNb = ReduceNumMeals, rCSIMealSize = LimitPortionSize, rCSIMealAdult = RestrictConsumption,LcsEN_stress_DomAsset = LC_2_SoldAsset, LcsEN_stress_CrdtFood = LC_3_CreditFood, LcsEN_stress_Saving = LC_4_SpentSaving, LcsEN_stress_BorrowCash = LC_5_BorrowMoney, LcsEN_crisis_ProdAssets = LC_6_SoldProduction, LcsEN_crisis_Health = LC_7_ReduceHealth, LcsEN_crisis_OutSchool = LC_8_WithdrawSchool, LcsEN_em_ResAsset = LC_9_SoldHome, LcsEN_em_Begged = LC_10_Begged , LcsEN_em_LastAnimal = LC_11_LastAnimal, LhCSIEnAccess = LC_MainReason, HHIncFirst_SRi = Income_MainSrc, HHIncChg_YN_1M = Income_Change  )
 
 #Lebanon
-LebRaw_reduced = LebRaw %>%  select(EnuName = Agent, ObsDate= LogDate1, Relation_to_HoH , DispStat_Nationality , HHSizebelow2 , HHSizebetween2_5, HHSizebetween5_17, HHSizebetween18_59 , HHSize60above, HHHSex = HoHH_Sex, HWaterSRC= HHdrinkingwater, HToiletType = HHtoiletfacility, HElectricitySRC =MainSourcesElectricity, ADMIN0Name = Country, ADMIN1Name = City, ADMIN2Name = Area, SvyDate,RESPAge,HDwellType= HHHousingCurrent, FCSStap, FCSPulse, FCSDairy, FCSPr, FCSVeg, FCSFruit, FCSFat, FCSSugar, rCSILessQlty, rCSIBorrow, rCSIMealSize, rCSIMealNb, rCSIMealAdult = rCSIMealAdul, Lcs_stress_DomAsset =LhCSIDomAsset,  Lcs_stress_CrdtFood = LhCSICrdtFood, Lcs_crisis_ProdAssets = LhCSIProdAsset, Lcs_em_ResAsset= LhCSIsoldhouse, Lcs_stress_BorrowCash = LhCSIBorrowCash , Lcs_stress_LessSchool = LhCSIchangedschool, Lcs_crisis_OutSchool = LhCSIOutSchool , Lcs_crisis_Health = LhCSIHealth , Lcs_em_Begged = LhCSIBegged , FCS_SRf = HHFoodSource, HHIncFirst_SRi= Sources_of_income1 , HHIncSec_SRi= Sources_of_income2 , HHIncThird_SRi=Sources_of_income3)
+LebRaw_reduced = LebRaw %>%  select(EnuName = Agent, ObsDate= LogDate1, Relation_to_HoH , DispStat_Nationality , HHSizebelow2 , HHSizebetween2_5, HHSizebetween5_17, HHSizebetween18_59 , HHSize60above, HHHSex = HoHH_Sex, HWaterSRC= HHdrinkingwater, HToiletType = HHtoiletfacility, HElectricitySRC =MainSourcesElectricity, ADMIN0Name = Country, ADMIN1Name = City, ADMIN2Name = Area, SvyDate,RESPAge,HDwellType= HHHousingCurrent, FCSStap, FCSPulse, FCSDairy, FCSPr, FCSVeg, FCSFruit, FCSFat, FCSSugar, rCSILessQlty, rCSIBorrow, rCSIMealSize, rCSIMealNb, rCSIMealAdult = rCSIMealAdul, Lcs_stress_DomAsset =LhCSIDomAsset,  Lcs_stress_CrdtFood = LhCSICrdtFood, Lcs_crisis_ProdAssets = LhCSIProdAsset, Lcs_em_ResAsset= LhCSIsoldhouse, Lcs_stress_BorrowCash = LhCSIBorrowCash , Lcs_stress_LessSchool = LhCSIchangedschool, Lcs_crisis_OutSchool = LhCSIOutSchool , Lcs_crisis_Health = LhCSIHealth , Lcs_em_Begged = LhCSIBegged , FCS_SRf = HHFoodSource, HHIncFirst_SRi= Sources_of_income1 )
 
 ```
 
@@ -153,7 +154,11 @@ LebRaw_reduced = LebRaw %>%  select(EnuName = Agent, ObsDate= LogDate1, Relation
 ```{r recoding, echo=TRUE, message=FALSE, warning=FALSE}
 
 #Syria
-SyriaRaw_reduced = SyriaRaw_reduced %>% mutate(HHHSex=recode(HHHSex, '1'='Female' , '2' = 'Male' ) , HHDispl = recode(HHDispl , '1' = 'Resident' , '2' = 'Returnee' , '3' = 'IDP') , HHHEducation = recode(HHHEducation , '1' = 'None' , '2' = 'Primary' , '3' = 'Secondary' , '4' = 'Vocational' , '5' = 'University') ,  )
+SyriaRaw_reduced = SyriaRaw_reduced %>% mutate(HHHSex=recode(HHHSex, '1'='Female' , '2' = 'Male' ) , HHDispl = recode(HHDispl , '1' = 'Resident' , '2' = 'Returnee' , '3' = 'IDP') , HHHEducation = recode(HHHEducation , '1' = 'None' , '2' = 'Primary' , '3' = 'Secondary' , '4' = 'Vocational' , '5' = 'University') , IDPDuration = recode(IDPDuration, '1' = 'LT3M' , '3To6M' = '' , '3' = '7To12M' , '4' = 'Above12M' ) , HDwellType = recode(HDwellType, '1' = 'Own' , '2' = 'Rent' , '3' = 'Guest_family' , '4' = 'Guest_strangers' , '5' = 'SharingAcco' , '6' = 'Hotel' ,'7' ='RentAnotherH' , '8' ='NoPlace' , '9' = 'TempShelter' , '10' = 'Camp' , '11' = 'UnfinishedShelter' , '12' = 'CollectiveShelter' , '13' = 'Other') , HWaterSRC = recode(HWaterSRC, '1' = 'Piped' , '2' = 'PublicTap' , '3' = 'borehole' ,'4'= 'ProtectedWell' , '5' = 'ProtectedSpring' , '6' = 'UnprotectedSpring' , '7' = 'River' , '8' ='Lake' , '9' = 'Rain'), FCS_SRf = recode(FCS_SRf, '1' = 'OwnProd' , '2' = 'CasualLabour' , '3' = 'Purchase' , '4' = 'FoodAssist' , '5' ='Scavenging' , '6' = 'Gifts') , MktAccess_1M = recode (MktAccess_1M , '1' = 'Yes' , '2' = 'No' , '3' = 'DK') )
+
+lcs_vars = names (SyriaRaw_reduced %>% select (starts_with('Lcs')))
+SyriaRaw_reduced[lcs_vars] = replaceall( SyriaRaw_reduced [lcs_vars] , c('1' , '2' , '3' , '4') , c('Yes' , 'No' , 'AlreadyExhausted'  , 'NotApplicable') , quiet = TRUE)
+
 
 
 
