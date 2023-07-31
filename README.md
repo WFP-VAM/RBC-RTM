@@ -4,40 +4,37 @@ This data pipeline automates the process of RTM/mVAM data management for the RTM
 
 The key objective of the standard pipeline is to maintain the same process of data management across all countries running RTM/mVAM activities.
 
-**The key functions implemented in this standard pipeline are:**
+[**The key functions implemented in this standard pipeline are:**]{.underline}
 
-- Fetching the raw dataset
+-   Fetching the raw dataset
 
-- Renaming and selecting core variables
+-   Renaming and selecting core variables
 
-- Data quality checks
+-   Data quality checks
 
-- Data re-coding and merging
+-   Data re-coding and merging
 
-- Indicators computation
+-   Indicators computation
 
-- Weights construction
+-   Weights construction
 
-- Connecting to the regional master table
+-   Connecting to the regional master table
 
 Before running this pipeline script, you need to update the input file included in the script dependencies *RTM_pipeline_input.xlsx*, Specify in this file the start and end date that you wish to extract the data within. see the table below for more details:
 
-- **Provider**: include here the name of the service provider.
-
-- **SurveyType**: Specify if the survey is RTM or other type of surveys ( include only RTM or Others)
-
-- **Country Code**: the country code is the name of the country as included in the API key.
-
-- **StartDate**: the first date the you need to extract the data from. It should be in this format MM/DD/YYYY
-
-- **EndDate**: the last date that you need to extract the data to. It should be in this format MM/DD/YYYY
-
-- **SvyID**: This is unique ID to differentiate each data collection round. It is sequential for each country. and should be unique across all countries.
-
-
++------------------------------------------------+-------------------------------------------------------------------------------------+------------------------------------------------------+----------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
+| **Provider**                                   | **SurveyType**                                                                      | **Country Code**                                     | **StartDate**                                                                                | **EndDate**                                                                                | **SvyID**:                                                                                                                                   |
++------------------------------------------------+-------------------------------------------------------------------------------------+------------------------------------------------------+----------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
+| Include here the name of the service provider. | Specify if the survey is RTM or other type of surveys ( include only RTM or Others) | Specify the country code as included in the API key. | the first date the you need to extract the data from. It should be in this format MM/DD/YYYY | the last date that you need to extract the data to. It should be in this format MM/DD/YYYY | This is unique ID to differentiate each data collection round. It is sequential for each country. and should be unique across all countries. |
+|                                                |                                                                                     |                                                      |                                                                                              |                                                                                            |                                                                                                                                              |
+|                                                |                                                                                     | Example:Yemen1 is the country code for Yemen         |                                                                                              |                                                                                            |                                                                                                                                              |
++------------------------------------------------+-------------------------------------------------------------------------------------+------------------------------------------------------+----------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
 
 In addition to modifying the input file, make sure that all population figures included in the weights input table file are updated, and the desired indicators are selected.
 
+## RTM/mVAM methodology 
+
+RTM/mVAM survey cycle step by step process are explained in the consolidated regional SOPs accessible through this [link](https://wfp.sharepoint.com/:w:/s/RBC-Nearreal-timemonitoringsystem/EfLHfxeUpDJJom9vmhDFVgQB2HAfN0-PxVkXGtflBXSxzQ?e=ySl2b5)
 
 ## Working environment
 
