@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Overview
 
-This data pipeline automate the process of RTM/mVAM data management for the RTM core variables related to the key indicators. The standard pipeline procedures are aligned with [RBC RTM SOPs](https://wfp-my.sharepoint.com/:w:/g/personal/amira_swedan_wfp_org/EVistHIsU_xAsdsF-2SEcRoB-cMrwS-IuyjyscsUVLfuig?e=SH9hHK) that includes a detailed explanation about the methodology applied in this script.
+This data pipeline automates the process of RTM/mVAM data management for the RTM core variables related to the key indicators. The standard pipeline procedures are aligned with [RBC RTM SOPs](https://wfp-my.sharepoint.com/:w:/g/personal/amira_swedan_wfp_org/EVistHIsU_xAsdsF-2SEcRoB-cMrwS-IuyjyscsUVLfuig?e=SH9hHK) that includes a detailed explanation about the methodology applied in this script.
 
 The key objective of the standard pipeline is to maintain the same process of data management across all countries running RTM/mVAM activities.
 
@@ -27,19 +27,8 @@ The key objective of the standard pipeline is to maintain the same process of da
 -   Weights construction
 -   Connecting to the regional master table
 
-Before running this pipeline script, you need to update the input file included in the script dependencies *RTM_pipeline_input.xlsx*, Specify in this file the start and end date that you wish to extract the data within. see the table below for more details:
-
-+------------------------------------------------+-------------------------------------------------------------------------------------+-------------------------------------------------------------------------+-------------------------------------------------------+----------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
-| **Provider**                                   | **SurveyType**                                                                      | **Country Code**                                                        | **StartDate**                                         | **EndDate**                                        | **SvyID**                                                                                                                                    |
-+------------------------------------------------+-------------------------------------------------------------------------------------+-------------------------------------------------------------------------+-------------------------------------------------------+----------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
-| include here the name of the service provider. | Specify if the survey is RTM or other type of surveys ( include only RTM or Others) | the country code is the name of the country as included in the API key. | the first date the you need to extract the data from. | the last date that you need to extract the data to | This is unique ID to differentiate each data collection round. It is sequential for each country. and should be unique across all countries. |
-|                                                |                                                                                     |                                                                         |                                                       |                                                    |                                                                                                                                              |
-|                                                |                                                                                     |                                                                         | It should be in this format                           | It should be in this format                        |                                                                                                                                              |
-|                                                |                                                                                     |                                                                         |                                                       |                                                    |                                                                                                                                              |
-|                                                |                                                                                     |                                                                         | MM/DD/YYYY                                            | MM/DD/YYYY                                         |                                                                                                                                              |
-+------------------------------------------------+-------------------------------------------------------------------------------------+-------------------------------------------------------------------------+-------------------------------------------------------+----------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------+
-
-: Input table structure
+Before running this pipeline script, you need to update the input file included in the script dependencies *RTM_pipeline_input.xlsx*, Specify in this file the start and end date that you wish to extract the data within. 
+[*Check readme for more details*]
 
 In addition to modifying the input file, make sure that all population figures included in the weights input table file are updated, and the desired indicators are selected.
 
@@ -50,6 +39,7 @@ The script running environment is included in the *readme* file, [make sure that
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(readxl)
+library(xlsx)
 library(httr)
 library(jsonlite)
 library(lubridate)
@@ -79,6 +69,8 @@ Syria_config = list ('APIKey' = paste("Syria_" , unlist (strsplit(pipInput$EndDa
 Yemen_config = list ('APIKey' = paste("Yemen1_" , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Yemen1'] , "/")) [1] , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Yemen1'] , "/")) [3] , sep = ""),  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Yemen1']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Yemen1'] )
 
 Leb_config = list ('APIKey' = "Lebanon_112022",  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Lebanon']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Lebanon'] )
+
+Libya_config = list ('APIKey' = paste("Libya_" , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Libya'] , "/")) [1] , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Libya'] , "/")) [3] , sep = ""),  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Libya']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Libya'] )
 
 ##########################################################
 Crystal_API_connect <- function (con_config) {
@@ -115,6 +107,10 @@ LebRaw = Crystal_API_connect(Leb_config)
 LebRaw = LebRaw[LebRaw$Completed == 'Y' ,]
 print(paste0('total number of completed surveys for Lebanon survey is ' , nrow(LebRaw)))
 
+LibyaRaw = Crystal_API_connect(Libya_config)
+LibyaRaw = LibyaRaw[LibyaRaw$Completed == 'Y' ,]
+print(paste0('total number of completed surveys for Libya survey is ' , nrow(LibyaRaw)))
+
 ######################################################
 ## Export the raw data
 #####################################################
@@ -126,10 +122,11 @@ write.csv(YemenRaw , paste0("Yemen_raw_" , pipInput$SvyID[pipInput$CountryCode =
 
 write.csv(LebRaw , paste0("Lebanon_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Lebanon'] , ".csv"))
 
+write.csv(LibyaRaw , "Libya_1003_Raw.txt" , fileEncoding = "UTF-8" )
+
+
 ```
 
-```         
-```
 
 ## Renaming variables according to the standard codebook, and selecting only core indicators
 
@@ -145,7 +142,7 @@ SyriaRaw_reduced = SyriaRaw %>% select (ADMIN0Name = Country, ADMIN1Name = City,
 YemenRaw_reduced = YemenRaw %>% select(RspID, SvyDate,ObsDate= LogDate1 ,EnuName = Agent ,RESPAge = BirthYear, HHHSex = HoHSex, ADMIN0Name = Country, ADMIN1Name = City, ADMIN2Name = Area, HHSize= HHSize_90days, HHDispl = IDP_YN, HHChronIllNb = HH65_Disease, FCSStap = Staples, FCSPulse = Pulses, FCSVeg = Veg, FCSFruit = Fruits, FCSPr = Proteins, FCSDairy = Dairy, FCSFat = Fats, FCSSugar = Sugars, FCS_SRf = FoodSrc1, rCSILessQlty = LessExpensiveFood, rCSIBorrow = BorrowOrHelp, rCSIMealNb = ReduceNumMeals, rCSIMealSize = LimitPortionSize, rCSIMealAdult = RestrictConsumption,LcsEN_stress_DomAsset = LC_2_SoldAsset, LcsEN_stress_CrdtFood = LC_3_CreditFood, LcsEN_stress_Saving = LC_4_SpentSaving, LcsEN_stress_BorrowCash = LC_5_BorrowMoney, LcsEN_crisis_ProdAssets = LC_6_SoldProduction, LcsEN_crisis_Health = LC_7_ReduceHealth, LcsEN_crisis_OutSchool = LC_8_WithdrawSchool, LcsEN_em_ResAsset = LC_9_SoldHome, LcsEN_em_Begged = LC_10_Begged , LcsEN_em_LastAnimal = LC_11_LastAnimal, LhCSIEnAccess = LC_MainReason, HHIncFirst_SRi = Income_MainSrc, HHIncChg_YN_1M = Income_Change  )
 
 #Lebanon
-LebRaw_reduced = LebRaw %>%  select(EnuName = Agent, ObsDate= LogDate1, Relation_to_HoH , DispStat_Nationality , HHSizebelow2 , HHSizebetween2_5, HHSizebetween5_17, HHSizebetween18_59 , HHSize60above, HHHSex = HoHH_Sex, HWaterSRC= HHdrinkingwater, HToiletType = HHtoiletfacility, HElectricitySRC =MainSourcesElectricity, ADMIN0Name = Country, ADMIN1Name = City, ADMIN2Name = Area, SvyDate,RESPAge,HDwellType= HHHousingCurrent, FCSStap, FCSPulse, FCSDairy, FCSPr, FCSVeg, FCSFruit, FCSFat, FCSSugar, rCSILessQlty, rCSIBorrow, rCSIMealSize, rCSIMealNb, rCSIMealAdult = rCSIMealAdul, Lcs_stress_DomAsset =LhCSIDomAsset,  Lcs_stress_CrdtFood = LhCSICrdtFood, Lcs_crisis_ProdAssets = LhCSIProdAsset, Lcs_em_ResAsset= LhCSIsoldhouse, Lcs_stress_BorrowCash = LhCSIBorrowCash , Lcs_stress_LessSchool = LhCSIchangedschool, Lcs_crisis_OutSchool = LhCSIOutSchool , Lcs_crisis_Health = LhCSIHealth , Lcs_em_Begged = LhCSIBegged , FCS_SRf = HHFoodSource, HHIncFirst_SRi= Sources_of_income1 )
+LebRaw_reduced = LebRaw %>%  select(EnuName = Agent, ObsDate= LogDate1, RespNationality = DispStat_Nationality , HHSizebelow2 , HHSizebetween2_5, HHSizebetween5_17, HHSizebetween18_59 , HHSize60above, HHHSex = HoHH_Sex, HWaterSRC= HHdrinkingwater, HToiletType = HHtoiletfacility, HElectricitySRC =MainSourcesElectricity, ADMIN0Name = Country, ADMIN1Name = City, ADMIN2Name = Area, SvyDate,RESPAge,HDwellType= HHHousingCurrent, FCSStap, FCSPulse, FCSDairy, FCSPr, FCSVeg, FCSFruit, FCSFat, FCSSugar, rCSILessQlty, rCSIBorrow, rCSIMealSize, rCSIMealNb, rCSIMealAdult = rCSIMealAdul, Lcs_stress_DomAsset =LhCSIDomAsset,  Lcs_stress_CrdtFood = LhCSICrdtFood, Lcs_crisis_ProdAssets = LhCSIProdAsset, Lcs_em_ResAsset= LhCSIsoldhouse, Lcs_stress_BorrowCash = LhCSIBorrowCash , Lcs_stress_LessSchool = LhCSIchangedschool, Lcs_crisis_OutSchool = LhCSIOutSchool , Lcs_crisis_Health = LhCSIHealth , Lcs_em_Begged = LhCSIBegged , FCS_SRf = HHFoodSource )
 
 ```
 
@@ -154,28 +151,43 @@ LebRaw_reduced = LebRaw %>%  select(EnuName = Agent, ObsDate= LogDate1, Relation
 ```{r recoding, echo=TRUE, message=FALSE, warning=FALSE}
 
 #Syria
-SyriaRaw_reduced = SyriaRaw_reduced %>% mutate(HHHSex=recode(HHHSex, '1'='Female' , '2' = 'Male' ) , HHDispl = recode(HHDispl , '1' = 'Resident' , '2' = 'Returnee' , '3' = 'IDP') , HHHEducation = recode(HHHEducation , '1' = 'None' , '2' = 'Primary' , '3' = 'Secondary' , '4' = 'Vocational' , '5' = 'University') , IDPDuration = recode(IDPDuration, '1' = 'LT3M' , '3To6M' = '' , '3' = '7To12M' , '4' = 'Above12M' ) , HDwellType = recode(HDwellType, '1' = 'Own' , '2' = 'Rent' , '3' = 'Guest_family' , '4' = 'Guest_strangers' , '5' = 'SharingAcco' , '6' = 'Hotel' ,'7' ='RentAnotherH' , '8' ='NoPlace' , '9' = 'TempShelter' , '10' = 'Camp' , '11' = 'UnfinishedShelter' , '12' = 'CollectiveShelter' , '13' = 'Other') , HWaterSRC = recode(HWaterSRC, '1' = 'Piped' , '2' = 'PublicTap' , '3' = 'borehole' ,'4'= 'ProtectedWell' , '5' = 'ProtectedSpring' , '6' = 'UnprotectedSpring' , '7' = 'River' , '8' ='Lake' , '9' = 'Rain'), FCS_SRf = recode(FCS_SRf, '1' = 'OwnProd' , '2' = 'CasualLabour' , '3' = 'Purchase' , '4' = 'FoodAssist' , '5' ='Scavenging' , '6' = 'Gifts') , MktAccess_1M = recode (MktAccess_1M , '1' = 'Yes' , '2' = 'No' , '3' = 'DK') )
+SyriaRaw_reduced = SyriaRaw_reduced %>% mutate(HHHSex=recode(HHHSex, '1'='Female' , '2' = 'Male' ) , HHDispl = recode(HHDispl , '1' = 'Resident' , '2' = 'Returnee' , '3' = 'IDP') , HHHEducation = recode(HHHEducation , '1' = 'None' , '2' = 'Primary' , '3' = 'Secondary' , '4' = 'Vocational' , '5' = 'University') , IDPDuration = recode(IDPDuration, '1' = 'LT3M' , '3To6M' = '' , '3' = '7To12M' , '4' = 'Above12M' ) , HDwellType = recode(HDwellType, '1' = 'Own' , '2' = 'Rent' , '3' = 'Guest_family' , '4' = 'Guest_strangers' , '5' = 'SharingAcco' , '6' = 'Hotel' ,'7' ='RentAnotherH' , '8' ='NoPlace' , '9' = 'TempShelter' , '10' = 'Camp' , '11' = 'UnfinishedShelter' , '12' = 'CollectiveShelter' , '13' = 'Other') , HWaterSRC = recode(HWaterSRC, '1' = 'Piped' , '2' = 'PublicTap' , '3' = 'borehole' ,'4'= 'ProtectedWell' , '5' = 'ProtectedSpring' , '6' = 'UnprotectedSpring' , '7' = 'River' , '8' ='Lake' , '9' = 'Rain' , '10' = 'BottledWater' , '11' = 'TruckedWater'), FCS_SRf = recode(FCS_SRf, '1' = 'OwnProd' , '2' = 'Labour' , '3' = 'Purchase' , '4' = 'FoodAssist' , '5' ='Scavenging' , '6' = 'Gift') , MktAccess_1M = recode (MktAccess_1M , '1' = 'Yes' , '2' = 'No' , '3' = 'DK') )
 
 lcs_vars = names (SyriaRaw_reduced %>% select (starts_with('Lcs')))
 SyriaRaw_reduced[lcs_vars] = replaceall( SyriaRaw_reduced [lcs_vars] , c('1' , '2' , '3' , '4') , c('Yes' , 'No' , 'AlreadyExhausted'  , 'NotApplicable') , quiet = TRUE)
 
 #Yemen
-YemenRaw_reduced = YemenRaw_reduced %>% mutate(HHHSex=recode(HHHSex, '1'='Male' , '2' = 'Female' ) , HHDispl = recode(HHDispl , '1' = 'IDP' , '2' = 'Resident' ), FCS_SRf = recode(FCS_SRf, '1' = 'OwnProd' , '2' = 'Hunting' , '3' = 'Purchase' , '4' = 'On_Credit' , '5' ='Gifts' ,  '6' = 'Begging' , '7' = 'Swap' , '8' = 'FoodAssist' , '9'= 'CasualLabour') , HHIncFirst_SRi = recode (HHIncFirst_SRi , '1' = 'RegEmp' , '2' = 'CasualLabour' , '3' = 'NoWork') , HHIncChg_YN_1M = recode(HHIncChg_YN_1M, '1' = 'Increased' ,'2' = 'Same' , '3' = 'Reduced' , '4' = 'Stopped'), LhCSIEnAccess = recode(LhCSIEnAccess, '1' = 'Food' , '2' = 'Education' , '3' = 'Health' , '4' = 'Shelter' , '5' = 'Sanitation' , '6' = 'Other') )
+YemenRaw_reduced = YemenRaw_reduced %>% mutate(HHHSex=recode(HHHSex, '1'='Male' , '2' = 'Female' ) , HHDispl = recode(HHDispl , '1' = 'IDP' , '2' = 'Resident' ), FCS_SRf = recode(FCS_SRf, '1' = 'OwnProd' , '2' = 'Hunting' , '3' = 'Purchase' , '4' = 'On_Credit' , '5' ='Gift' ,  '6' = 'Begging' , '7' = 'Swap' , '8' = 'FoodAssist' , '9'= 'CasualLabour') , HHIncFirst_SRi = recode (HHIncFirst_SRi , '1' = 'RegEmp' , '2' = 'CasualLabour' , '3' = 'NoWork_assist') , HHIncChg_YN_1M = recode(HHIncChg_YN_1M, '1' = 'Increased' ,'2' = 'Same' , '3' = 'Reduced' , '4' = 'Stopped'), LhCSIEnAccess = recode(LhCSIEnAccess, '1' = 'Food' , '2' = 'Education' , '3' = 'Health' , '4' = 'Shelter' , '5' = 'Sanitation' , '6' = 'Other') )
 
 lcs_vars = names (YemenRaw_reduced %>% select (starts_with('Lcs')))
 YemenRaw_reduced[lcs_vars] = replaceall( YemenRaw_reduced [lcs_vars] , c('1' , '2' , '3' , '4' , '99') , c('No' , 'AlreadyExhausted' , 'Yes'  , 'No_shortage' , 'NotApplicable') , quiet = TRUE)
 
+#Lebanon
+LebRaw_reduced = LebRaw_reduced %>% mutate(RespNationality=recode(RespNationality, '1'='Leb' , '2' = 'Syr_Leb' , '3' = 'Pal_Leb' , '4' = 'Syr' , '5' = 'Pal' , '6' = 'Irq' , '7' = 'Migrant' , '8' = 'Others' ) , HHHSex=recode(HHHSex, '1'='Male' , '2' = 'Female') , HWaterSRC = recode(HWaterSRC, '1' = 'Piped' , '2' = 'PublicTap' , '3' = 'Well_pump' ,'4'= 'ProtectedWell' , '5' = 'Distilled_water' , '6' = 'UnprotectedSpring' , '7' = 'tank_truck' , '8' ='car_tank' , '9' = 'water_Seller' , '10' = 'bottled_water' , '11' = 'surface_water' , '12' = 'Other') , HToiletType = recode(HToiletType, '1' = 'Flush_toilet' , '2' = 'hole_tiledbath' , '3' = 'hole_unpavedbath' , '4' = 'bucket' , '5' = 'OpenAir') , HElectricitySRC = recode(HElectricitySRC , '1' = 'company' , '2' = 'NonOwned_Generator' , '3' = 'Owned_Generator' , '4' = 'Relatives' , '5' = 'Solar') , FCS_SRf = recode(FCS_SRf , '1' = 'OwnProd' , '2' = 'Purchase' ,'3' = 'Labour'  ,'4' = 'Gift' , '5' = 'FoodAssist' , '6' = 'Gov' , '7' = 'Community' , '8' = 'Other') )
 
 
+lcs_vars = names (LebRaw_reduced %>% select (starts_with('Lcs')))
+LebRaw_reduced[lcs_vars] = replaceall( LebRaw_reduced [lcs_vars] , c('1' , '2' , '3' , '4') , c('No' , 'AlreadyExhausted' , 'Yes'  , 'NotApplicable') , quiet = TRUE)
 
 
+## Create the master table 
 
+df_master = full_join(SyriaRaw_reduced , YemenRaw_reduced)
+df_master = full_join( df_master, LebRaw_reduced)
 
 ```
 
 ## Food Security Indicators Calculation
 
 ```{r Check data quality, echo=TRUE, message=FALSE, warning=FALSE}
+
+##rCSI 
+
+##FCS
+
+##LCSI
+
+
 
 ```
 
