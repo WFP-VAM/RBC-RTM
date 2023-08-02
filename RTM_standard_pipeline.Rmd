@@ -44,6 +44,9 @@ library(httr)
 library(jsonlite)
 library(lubridate)
 library(lares)
+library(labelled)
+library(expss)
+
 
 pipInput = read_excel('RTM_pipeline_input.xlsx')
 pipInput$StartDate = format(as.Date(pipInput$StartDate), "%m/%d/%Y")
@@ -136,7 +139,7 @@ The codebook is embedded in WFP [survey designer](https://www.surveydesigner.vam
 
 ```{r renaming and selecting, echo=TRUE, message=FALSE, warning=FALSE}
 # Syria
-SyriaRaw_reduced = SyriaRaw %>% select (ADMIN0Name = Country, ADMIN1Name = City, ADMIN2Name = Area,RspID,SvyDate, ObsDate= LogDate1 ,EnuName = Agent ,HHH_YN,HHHSex,HHHAge,HHHEducation,RESPAge,HHSize , HHDispl, IDPDuration,HDwellType =HouseType,HWaterSRC, FCSStap, FCSPulse, FCSVeg, FCSFruit,FCSPr, FCSDairy, FCS_SRf, MktAccess_1M,  rCSILessQlty, rCSIBorrow, rCSIMealNb , rCSIMealSize, rCSIMealAdult, Lcs_stress_DomAsset, Lcs_stress_Saving, Lcs_stress_SellFoodRation, Lcs_stress_CrdtFood, Lcs_crisis_OutSchool, Lcs_crisis_ProdAssets, Lcs_crisis_Migration, Lcs_em_ResAsset, LcsR_em_FemAnimal, Lcs_em_Begged)
+SyriaRaw_reduced = SyriaRaw %>% select (ADMIN0Name = Country, ADMIN1Name = City, ADMIN2Name = Area,RspID,SvyDate, ObsDate= LogDate1 ,EnuName = Agent ,HHH_YN,HHHSex,HHHAge,HHHEducation,RESPAge,HHSize , HHDispl, IDPDuration,HDwellType =HouseType,HWaterSRC, FCSStap, FCSPulse, FCSVeg, FCSFruit,FCSPr, FCSDairy, FCSFat , FCSSugar, FCS_SRf, MktAccess_1M,  rCSILessQlty, rCSIBorrow, rCSIMealNb , rCSIMealSize, rCSIMealAdult, Lcs_stress_DomAsset, Lcs_stress_Saving, Lcs_stress_SellFoodRation, Lcs_stress_CrdtFood, Lcs_crisis_OutSchool, Lcs_crisis_ProdAssets, Lcs_crisis_Migration, Lcs_em_ResAsset, LcsR_em_FemAnimal, Lcs_em_Begged)
 
 #Yemen
 YemenRaw_reduced = YemenRaw %>% select(RspID, SvyDate,ObsDate= LogDate1 ,EnuName = Agent ,RESPAge = BirthYear, HHHSex = HoHSex, ADMIN0Name = Country, ADMIN1Name = City, ADMIN2Name = Area, HHSize= HHSize_90days, HHDispl = IDP_YN, HHChronIllNb = HH65_Disease, FCSStap = Staples, FCSPulse = Pulses, FCSVeg = Veg, FCSFruit = Fruits, FCSPr = Proteins, FCSDairy = Dairy, FCSFat = Fats, FCSSugar = Sugars, FCS_SRf = FoodSrc1, rCSILessQlty = LessExpensiveFood, rCSIBorrow = BorrowOrHelp, rCSIMealNb = ReduceNumMeals, rCSIMealSize = LimitPortionSize, rCSIMealAdult = RestrictConsumption,LcsEN_stress_DomAsset = LC_2_SoldAsset, LcsEN_stress_CrdtFood = LC_3_CreditFood, LcsEN_stress_Saving = LC_4_SpentSaving, LcsEN_stress_BorrowCash = LC_5_BorrowMoney, LcsEN_crisis_ProdAssets = LC_6_SoldProduction, LcsEN_crisis_Health = LC_7_ReduceHealth, LcsEN_crisis_OutSchool = LC_8_WithdrawSchool, LcsEN_em_ResAsset = LC_9_SoldHome, LcsEN_em_Begged = LC_10_Begged , LcsEN_em_LastAnimal = LC_11_LastAnimal, LhCSIEnAccess = LC_MainReason, HHIncFirst_SRi = Income_MainSrc, HHIncChg_YN_1M = Income_Change  )
@@ -179,11 +182,55 @@ df_master = full_join( df_master, LebRaw_reduced)
 
 ## Food Security Indicators Calculation
 
-```{r Check data quality, echo=TRUE, message=FALSE, warning=FALSE}
+```{r indicators , echo=TRUE, message=FALSE, warning=FALSE}
 
-##rCSI 
 
-##FCS
+#assign variable and value labels
+var_label(df_master$FCSStap) <- "Cereals, grains, roots and tubers"
+var_label(df_master$FCSPulse) <- "Pulses/ legumes / nuts"
+var_label(df_master$FCSDairy) <- "Milk and other dairy products"
+var_label(df_master$FCSPr) <- "Meat, fish and eggs"
+var_label(df_master$FCSVeg) <- "Vegetables and leave"
+var_label(df_master$FCSFruit) <- "Fruits"
+var_label(df_master$FCSFat) <- "Oil/fat/butter"
+
+#calculate FCS and FCG
+
+FCS_vars = names (df_master %>% select (starts_with('FCS')))
+
+df_master[FCS_vars[-9]] = apply(df_master[FCS_vars[-9]] , 2 , as.numeric)
+
+
+df_master <- df_master %>% mutate(FCS = (2 * FCSStap) +(3 * FCSPulse) +(4*FCSPr) +(4*FCSDairy) + FCSVeg  + FCSFruit +(0.5*FCSFat) +(0.5*FCSSugar))
+var_label(df_master$FCS) <- "Food Consumption Score"
+
+df_master <- df_master %>% mutate(FCG = case_when(
+  FCS <= 28 ~ 1, between(FCS, 28.5, 42) ~ 2, FCS > 42 ~ 3))
+
+val_lab(df_master$FCG) = num_lab("
+             1 Poor
+             2 Borderline
+             3 Acceptable
+")
+
+var_label(df_master$FCG) <- "FCS Categories"
+
+#rCSI (reduced Coping Strategies Index)
+#assign variable and value labels
+var_label(df_master$rCSILessQlty) <-  "Rely on less preferred and less expensive food in the past 7 days"
+var_label(df_master$rCSIBorrow) <- "Borrow food or rely on help from a relative or friend in the past 7 days"
+var_label(df_master$rCSIMealNb) <-  "Reduce number of meals eaten in a day in the past 7 days"
+var_label(df_master$rCSIMealSize) <- "Limit portion size of meals at meal times in the past 7 days"
+var_label(df_master$rCSIMealAdult) <-  "Restrict consumption by adults in order for small children to eat in the past 7 days"
+
+#calculate reduced Coping Strategy Index (rCSI)
+rcsi_vars = names (df_master %>% select (starts_with('rCSI')))
+df_master[rcsi_vars] = apply(df_master[rcsi_vars] , 2 , as.numeric)
+
+df_master <- df_master %>% mutate(rCSI = rCSILessQlty + (2 * rCSIBorrow) + rCSIMealNb + rCSIMealSize + (3 * rCSIMealAdult))
+var_label(df_master$rCSI) <- "Reduced coping strategies index (rCSI)"
+
+
 
 ##LCSI
 
