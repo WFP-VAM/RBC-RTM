@@ -27,8 +27,7 @@ The key objective of the standard pipeline is to maintain the same process of da
 -   Weights construction
 -   Connecting to the regional master table
 
-Before running this pipeline script, you need to update the input file included in the script dependencies *RTM_pipeline_input.xlsx*, Specify in this file the start and end date that you wish to extract the data within. 
-[*Check readme for more details*]
+Before running this pipeline script, you need to update the input file included in the script dependencies *RTM_pipeline_input.xlsx*, Specify in this file the start and end date that you wish to extract the data within. [*Check readme for more details*]
 
 In addition to modifying the input file, make sure that all population figures included in the weights input table file are updated, and the desired indicators are selected.
 
@@ -130,7 +129,6 @@ write.csv(LibyaRaw , "Libya_1003_Raw.txt" , fileEncoding = "UTF-8" )
 
 ```
 
-
 ## Renaming variables according to the standard codebook, and selecting only core indicators
 
 The new variables names in this section are specified according to the standard variables names included in WFP codebook.
@@ -167,7 +165,6 @@ YemenRaw_reduced[lcs_vars] = replaceall( YemenRaw_reduced [lcs_vars] , c('1' , '
 
 #Lebanon
 LebRaw_reduced = LebRaw_reduced %>% mutate(RespNationality=recode(RespNationality, '1'='Leb' , '2' = 'Syr_Leb' , '3' = 'Pal_Leb' , '4' = 'Syr' , '5' = 'Pal' , '6' = 'Irq' , '7' = 'Migrant' , '8' = 'Others' ) , HHHSex=recode(HHHSex, '1'='Male' , '2' = 'Female') , HWaterSRC = recode(HWaterSRC, '1' = 'Piped' , '2' = 'PublicTap' , '3' = 'Well_pump' ,'4'= 'ProtectedWell' , '5' = 'Distilled_water' , '6' = 'UnprotectedSpring' , '7' = 'tank_truck' , '8' ='car_tank' , '9' = 'water_Seller' , '10' = 'bottled_water' , '11' = 'surface_water' , '12' = 'Other') , HToiletType = recode(HToiletType, '1' = 'Flush_toilet' , '2' = 'hole_tiledbath' , '3' = 'hole_unpavedbath' , '4' = 'bucket' , '5' = 'OpenAir') , HElectricitySRC = recode(HElectricitySRC , '1' = 'company' , '2' = 'NonOwned_Generator' , '3' = 'Owned_Generator' , '4' = 'Relatives' , '5' = 'Solar') , FCS_SRf = recode(FCS_SRf , '1' = 'OwnProd' , '2' = 'Purchase' ,'3' = 'Labour'  ,'4' = 'Gift' , '5' = 'FoodAssist' , '6' = 'Gov' , '7' = 'Community' , '8' = 'Other') )
-
 
 lcs_vars = names (LebRaw_reduced %>% select (starts_with('Lcs')))
 LebRaw_reduced[lcs_vars] = replaceall( LebRaw_reduced [lcs_vars] , c('1' , '2' , '3' , '4') , c('No' , 'AlreadyExhausted' , 'Yes'  , 'NotApplicable') , quiet = TRUE)
@@ -232,15 +229,12 @@ var_label(df_master$rCSI) <- "Reduced coping strategies index (rCSI)"
 
 
 
-##LCSI
-
-
-
 ```
 
 ## Quality Checks and Associated Flags
 
 ```{r calculate livelihood coping indicators, echo=TRUE, message=FALSE, warning=FALSE}
+df_master
 
 ```
 
