@@ -47,7 +47,8 @@ library(labelled)
 library(expss)
 
 
-pipInput = read_excel('RTM_pipeline_input.xlsx')
+pipInput = read_excel('RTM_pipeline_input.xlsx' , sheet = 'main_parameters')
+stdNames = read_excel('RTM_pipeline_input.xlsx' , sheet = 'standard_names_mapping')
 pipInput$StartDate = format(as.Date(pipInput$StartDate), "%m/%d/%Y")
 pipInput$EndDate = format(as.Date(pipInput$EndDate), "%m/%d/%Y")
 
@@ -65,6 +66,7 @@ To add a new country, first modify the input file and create a new configuration
 
 ```{r extract raw data, message=FALSE, warning=FALSE, echo=TRUE}
 
+## create a configuration list for each country in the pipeline ## Don't proceed with running the pipeline functions for a country without creating this list 
 
 Syria_config = list ('APIKey' = paste("Syria_" , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Syria'] , "/")) [1] , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Syria'] , "/")) [3] , sep = ""),  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Syria']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Syria'] )
 
@@ -75,6 +77,9 @@ Leb_config = list ('APIKey' = "Lebanon_112022",  'DateFrom' = pipInput$StartDate
 Libya_config = list ('APIKey' = paste("Libya_" , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Libya'] , "/")) [1] , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Libya'] , "/")) [3] , sep = ""),  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Libya']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Libya'] )
 
 ##########################################################
+#the function below could be used to pull the survey data for any country if the provider is Crystal
+###########################################################
+
 Crystal_API_connect <- function (con_config) {
   
 json_body <- jsonlite::toJSON(con_config, auto_unbox = TRUE)
@@ -96,35 +101,40 @@ print (json_body)
  
 }
 ######################################################
+##Pull the data for only countries provided in the input list and export the raw data in csv file
+####################################################
+
+if ('Syria' %in% pipInput$CountryCode) {
 
 SyriaRaw = Crystal_API_connect (Syria_config)
 SyriaRaw = SyriaRaw[SyriaRaw$Completed == 'Y' ,]
 print(paste0('total number of completed surveys for Syria survey is ' , nrow(SyriaRaw)))
+write.csv(SyriaRaw , paste0("Syria_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Syria'] , ".csv"))
+print ( paste0('Syria ', pipInput$SvyID[pipInput$CountryCode == 'Syira'] , ' raw data is exported' ))
+}
 
+
+if ('Yemen1' %in% pipInput$CountryCode ) {
 YemenRaw = Crystal_API_connect(Yemen_config)
 YemenRaw = YemenRaw[YemenRaw$Completed == 'Y' ,]
 print(paste0('total number of completed surveys for Yemen survey is ' , nrow(YemenRaw)))
+write.csv(YemenRaw , paste0("Yemen_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Yemen1'] , ".csv"))
+}
 
+if ('Lebanon' %in% pipInput$CountryCode) {
 LebRaw = Crystal_API_connect(Leb_config)
 LebRaw = LebRaw[LebRaw$Completed == 'Y' ,]
 print(paste0('total number of completed surveys for Lebanon survey is ' , nrow(LebRaw)))
+write.csv(LebRaw , paste0("Lebanon_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Lebanon'] , ".csv"))
+}
 
+
+if ('Libya' %in% pipInput$SurveyType) {
 LibyaRaw = Crystal_API_connect(Libya_config)
 LibyaRaw = LibyaRaw[LibyaRaw$Completed == 'Y' ,]
 print(paste0('total number of completed surveys for Libya survey is ' , nrow(LibyaRaw)))
-
-######################################################
-## Export the raw data
-#####################################################
-
-
-write.csv(SyriaRaw , paste0("Syria_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Syria'] , ".csv"))
-
-write.csv(YemenRaw , paste0("Yemen_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Yemen1'] , ".csv"))
-
-write.csv(LebRaw , paste0("Lebanon_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Lebanon'] , ".csv"))
-
-write.csv(LibyaRaw , "Libya_1003_Raw.txt" , fileEncoding = "UTF-8" )
+write.csv(LebRaw , paste0("Libya_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Libya'] , ".csv"))
+}
 
 
 ```
@@ -136,14 +146,48 @@ The new variables names in this section are specified according to the standard 
 The codebook is embedded in WFP [survey designer](https://www.surveydesigner.vam.wfp.org/design/survey).
 
 ```{r renaming and selecting, echo=TRUE, message=FALSE, warning=FALSE}
-# Syria
-SyriaRaw_reduced = SyriaRaw %>% select (ADMIN0Name = Country, ADMIN1Name = City, ADMIN2Name = Area,RspID,SvyDate, ObsDate= LogDate1 ,EnuName = Agent ,HHH_YN,HHHSex,HHHAge,HHHEducation,RESPAge,HHSize , HHDispl, IDPDuration,HDwellType =HouseType,HWaterSRC, FCSStap, FCSPulse, FCSVeg, FCSFruit,FCSPr, FCSDairy, FCSFat , FCSSugar, FCS_SRf, MktAccess_1M,  rCSILessQlty, rCSIBorrow, rCSIMealNb , rCSIMealSize, rCSIMealAdult, Lcs_stress_DomAsset, Lcs_stress_Saving, Lcs_stress_SellFoodRation, Lcs_stress_CrdtFood, Lcs_crisis_OutSchool, Lcs_crisis_ProdAssets, Lcs_crisis_Migration, Lcs_em_ResAsset, LcsR_em_FemAnimal, Lcs_em_Begged)
+
+##Variables standard names mapping
+
+replace_variable_names <- function(data, old_names, new_names) {
+  # Convert the data to a data frame if it's not already
+  if (!is.data.frame(data)) {
+    data <- as.data.frame(data)
+  }
+  
+  # Check if the lengths of old_names and new_names are the same
+  if (length(old_names) != length(new_names)) {
+    stop("The lengths of old_names and new_names must be the same.")
+  }
+  
+  # Iterate over the old_names and new_names to replace variable names
+  for (i in seq_along(old_names)) {
+    if (old_names[i] %in% names(data)) {
+      names(data)[names(data) == old_names[i]] <- new_names[i]
+    }
+  }
+  
+  # Return the updated data frame
+  return(data)
+}
+
+
+
+SyriaRaw = replace_variable_names(SyriaRaw , stdNames$Orignial[stdNames$Country == 'Syria'] , stdNames$Standard[stdNames$Country == 'Syria'])
+
+YemenRaw = replace_variable_names(YemenRaw , stdNames$Orignial[stdNames$Country == 'Yemen'] , stdNames$Standard[stdNames$Country == 'Yemen'])
+
+LebRaw = replace_variable_names(LebRaw , stdNames$Orignial[stdNames$Country == 'Lebanon'] , stdNames$Standard[stdNames$Country == 'Lebanon'])
+
+# select core indicators - Syria
+
+SyriaRaw_reduced = SyriaRaw %>% select (ADMIN0Name,ADMIN1Name, ADMIN2Name ,RspID,SvyDate, ObsDate ,EnuName,HHH_YN,HHHSex,HHHAge,HHHEducation,RESPAge,HHSize , HHDispl, IDPDuration,HDwellType,HWaterSRC, FCSStap, FCSPulse, FCSVeg, FCSFruit,FCSPr, FCSDairy, FCSFat , FCSSugar, FCS_SRf, MktAccess_1M,  rCSILessQlty, rCSIBorrow, rCSIMealNb , rCSIMealSize, rCSIMealAdult, Lcs_stress_DomAsset, Lcs_stress_Saving, Lcs_stress_SellFoodRation, Lcs_stress_CrdtFood, Lcs_crisis_OutSchool, Lcs_crisis_ProdAssets, Lcs_crisis_Migration, Lcs_em_ResAsset, LcsR_em_FemAnimal, Lcs_em_Begged)
 
 #Yemen
-YemenRaw_reduced = YemenRaw %>% select(RspID, SvyDate,ObsDate= LogDate1 ,EnuName = Agent ,RESPAge = BirthYear, HHHSex = HoHSex, ADMIN0Name = Country, ADMIN1Name = City, ADMIN2Name = Area, HHSize= HHSize_90days, HHDispl = IDP_YN, HHChronIllNb = HH65_Disease, FCSStap = Staples, FCSPulse = Pulses, FCSVeg = Veg, FCSFruit = Fruits, FCSPr = Proteins, FCSDairy = Dairy, FCSFat = Fats, FCSSugar = Sugars, FCS_SRf = FoodSrc1, rCSILessQlty = LessExpensiveFood, rCSIBorrow = BorrowOrHelp, rCSIMealNb = ReduceNumMeals, rCSIMealSize = LimitPortionSize, rCSIMealAdult = RestrictConsumption,LcsEN_stress_DomAsset = LC_2_SoldAsset, LcsEN_stress_CrdtFood = LC_3_CreditFood, LcsEN_stress_Saving = LC_4_SpentSaving, LcsEN_stress_BorrowCash = LC_5_BorrowMoney, LcsEN_crisis_ProdAssets = LC_6_SoldProduction, LcsEN_crisis_Health = LC_7_ReduceHealth, LcsEN_crisis_OutSchool = LC_8_WithdrawSchool, LcsEN_em_ResAsset = LC_9_SoldHome, LcsEN_em_Begged = LC_10_Begged , LcsEN_em_LastAnimal = LC_11_LastAnimal, LhCSIEnAccess = LC_MainReason, HHIncFirst_SRi = Income_MainSrc, HHIncChg_YN_1M = Income_Change  )
+YemenRaw_reduced = YemenRaw %>% select(RspID, SvyDate,ObsDate,EnuName,RESPAge , HHHSex, ADMIN0Name , ADMIN1Name, ADMIN2Name , HHSize, HHDispl, HHChronIllNb , FCSStap , FCSPulse, FCSVeg, FCSFruit, FCSPr, FCSDairy, FCSFat, FCSSugar , FCS_SRf , rCSILessQlty, rCSIBorrow , rCSIMealNb , rCSIMealSize , rCSIMealAdult ,LcsEN_stress_DomAsset , LcsEN_stress_CrdtFood , LcsEN_stress_Saving, LcsEN_stress_BorrowCash, LcsEN_crisis_ProdAssets, LcsEN_crisis_Health , LcsEN_crisis_OutSchool , LcsEN_em_ResAsset , LcsEN_em_Begged, LcsEN_em_LastAnimal , LhCSIEnAccess , HHIncFirst_SRi , HHIncChg_1M  )
 
 #Lebanon
-LebRaw_reduced = LebRaw %>%  select(EnuName = Agent, ObsDate= LogDate1, RespNationality = DispStat_Nationality , HHSizebelow2 , HHSizebetween2_5, HHSizebetween5_17, HHSizebetween18_59 , HHSize60above, HHHSex = HoHH_Sex, HWaterSRC= HHdrinkingwater, HToiletType = HHtoiletfacility, HElectricitySRC =MainSourcesElectricity, ADMIN0Name = Country, ADMIN1Name = City, ADMIN2Name = Area, SvyDate,RESPAge,HDwellType= HHHousingCurrent, FCSStap, FCSPulse, FCSDairy, FCSPr, FCSVeg, FCSFruit, FCSFat, FCSSugar, rCSILessQlty, rCSIBorrow, rCSIMealSize, rCSIMealNb, rCSIMealAdult = rCSIMealAdul, Lcs_stress_DomAsset =LhCSIDomAsset,  Lcs_stress_CrdtFood = LhCSICrdtFood, Lcs_crisis_ProdAssets = LhCSIProdAsset, Lcs_em_ResAsset= LhCSIsoldhouse, Lcs_stress_BorrowCash = LhCSIBorrowCash , Lcs_stress_LessSchool = LhCSIchangedschool, Lcs_crisis_OutSchool = LhCSIOutSchool , Lcs_crisis_Health = LhCSIHealth , Lcs_em_Begged = LhCSIBegged , FCS_SRf = HHFoodSource )
+LebRaw_reduced = LebRaw %>%  select(EnuName, ObsDate, RespNationality , HHSizebelow2 , HHSizebetween2_5, HHSizebetween5_17, HHSizebetween18_59 , HHSize60above, HHHSex, HWaterSRC, HToiletType , HElectricitySRC , ADMIN0Name , ADMIN1Name , ADMIN2Name , SvyDate,RESPAge,HDwellType, FCSStap, FCSPulse, FCSDairy, FCSPr, FCSVeg, FCSFruit, FCSFat, FCSSugar, rCSILessQlty, rCSIBorrow, rCSIMealSize, rCSIMealNb, rCSIMealAdult = rCSIMealAdul, Lcs_stress_DomAsset ,  Lcs_stress_CrdtFood , Lcs_crisis_ProdAssets , Lcs_em_ResAsset, Lcs_stress_BorrowCash  , Lcs_stress_LessSchool , Lcs_crisis_OutSchool , Lcs_crisis_Health  , Lcs_em_Begged  , FCS_SRf  )
 
 ```
 
@@ -152,19 +196,19 @@ LebRaw_reduced = LebRaw %>%  select(EnuName = Agent, ObsDate= LogDate1, RespNati
 ```{r recoding, echo=TRUE, message=FALSE, warning=FALSE}
 
 #Syria
-SyriaRaw_reduced = SyriaRaw_reduced %>% mutate(HHHSex=recode(HHHSex, '1'='Female' , '2' = 'Male' ) , HHDispl = recode(HHDispl , '1' = 'Resident' , '2' = 'Returnee' , '3' = 'IDP') , HHHEducation = recode(HHHEducation , '1' = 'None' , '2' = 'Primary' , '3' = 'Secondary' , '4' = 'Vocational' , '5' = 'University') , IDPDuration = recode(IDPDuration, '1' = 'LT3M' , '3To6M' = '' , '3' = '7To12M' , '4' = 'Above12M' ) , HDwellType = recode(HDwellType, '1' = 'Own' , '2' = 'Rent' , '3' = 'Guest_family' , '4' = 'Guest_strangers' , '5' = 'SharingAcco' , '6' = 'Hotel' ,'7' ='RentAnotherH' , '8' ='NoPlace' , '9' = 'TempShelter' , '10' = 'Camp' , '11' = 'UnfinishedShelter' , '12' = 'CollectiveShelter' , '13' = 'Other') , HWaterSRC = recode(HWaterSRC, '1' = 'Piped' , '2' = 'PublicTap' , '3' = 'borehole' ,'4'= 'ProtectedWell' , '5' = 'ProtectedSpring' , '6' = 'UnprotectedSpring' , '7' = 'River' , '8' ='Lake' , '9' = 'Rain' , '10' = 'BottledWater' , '11' = 'TruckedWater'), FCS_SRf = recode(FCS_SRf, '1' = 'OwnProd' , '2' = 'Labour' , '3' = 'Purchase' , '4' = 'FoodAssist' , '5' ='Scavenging' , '6' = 'Gift') , MktAccess_1M = recode (MktAccess_1M , '1' = 'Yes' , '2' = 'No' , '3' = 'DK') )
+SyriaRaw_reduced = SyriaRaw_reduced %>% mutate(HHHSex=recode(HHHSex, '1' ~ 'Female' , '2' ~ 'Male' ) , HHDispl = recode(HHDispl , '1' ~ 'Resident' , '2' ~ 'Returnee' , '3' ~ 'IDP') , HHHEducation = recode(HHHEducation , '1' ~ 'None' , '2' ~ 'Primary' , '3' ~ 'Secondary' , '4' ~ 'Vocational' , '5' ~ 'University') , IDPDuration = recode(IDPDuration, '1' ~ 'LT3M' , '2' ~'3To6M'  , '3' ~ '7To12M' , '4' ~ 'Above12M' ) , HDwellType = recode(HDwellType, '1' ~ 'Own' , '2' ~ 'Rent' , '3' ~ 'Guest_family' , '4' ~ 'Guest_strangers' , '5' ~ 'SharingAcco' , '6' ~ 'Hotel' ,'7' ~ 'RentAnotherH' , '8' ~'NoPlace' , '9' ~ 'TempShelter' , '10' ~ 'Camp' , '11' ~ 'UnfinishedShelter' , '12' ~ 'CollectiveShelter' , '13' ~ 'Other') , HWaterSRC = recode(HWaterSRC, '1' ~ 'Piped' , '2' ~ 'PublicTap' , '3' ~ 'borehole' ,'4' ~ 'ProtectedWell' , '5' ~ 'ProtectedSpring' , '6' ~ 'UnprotectedSpring' , '7' ~ 'River' , '8' ~ 'Lake' , '9' ~ 'Rain' , '10' ~ 'BottledWater' , '11' ~ 'TruckedWater'), FCS_SRf = recode(FCS_SRf, '1' ~ 'OwnProd' , '2' ~ 'Labour' , '3' ~ 'Purchase' , '4' ~ 'FoodAssist' , '5' ~ 'Scavenging' , '6' ~ 'Gift') , MktAccess_1M = recode (MktAccess_1M , '1' ~ 'Yes' , '2' ~ 'No' , '3' ~ 'DK') )
 
 lcs_vars = names (SyriaRaw_reduced %>% select (starts_with('Lcs')))
 SyriaRaw_reduced[lcs_vars] = replaceall( SyriaRaw_reduced [lcs_vars] , c('1' , '2' , '3' , '4') , c('Yes' , 'No' , 'AlreadyExhausted'  , 'NotApplicable') , quiet = TRUE)
 
 #Yemen
-YemenRaw_reduced = YemenRaw_reduced %>% mutate(HHHSex=recode(HHHSex, '1'='Male' , '2' = 'Female' ) , HHDispl = recode(HHDispl , '1' = 'IDP' , '2' = 'Resident' ), FCS_SRf = recode(FCS_SRf, '1' = 'OwnProd' , '2' = 'Hunting' , '3' = 'Purchase' , '4' = 'On_Credit' , '5' ='Gift' ,  '6' = 'Begging' , '7' = 'Swap' , '8' = 'FoodAssist' , '9'= 'CasualLabour') , HHIncFirst_SRi = recode (HHIncFirst_SRi , '1' = 'RegEmp' , '2' = 'CasualLabour' , '3' = 'NoWork_assist') , HHIncChg_YN_1M = recode(HHIncChg_YN_1M, '1' = 'Increased' ,'2' = 'Same' , '3' = 'Reduced' , '4' = 'Stopped'), LhCSIEnAccess = recode(LhCSIEnAccess, '1' = 'Food' , '2' = 'Education' , '3' = 'Health' , '4' = 'Shelter' , '5' = 'Sanitation' , '6' = 'Other') )
+YemenRaw_reduced = YemenRaw_reduced %>% mutate(HHHSex=recode(HHHSex, '1' ~ 'Male' , '2' ~ 'Female' ) , HHDispl = recode(HHDispl , '1' ~ 'IDP' , '2' ~ 'Resident' ), FCS_SRf = recode(FCS_SRf, '1' ~ 'OwnProd' , '2' ~ 'Hunting' , '3' ~ 'Purchase' , '4' ~ 'On_Credit' , '5' ~'Gift' ,  '6' ~ 'Begging' , '7' ~ 'Swap' , '8' ~ 'FoodAssist' , '9' ~ 'CasualLabour') , HHIncFirst_SRi = recode (HHIncFirst_SRi , '1' ~ 'RegEmp' , '2' ~ 'CasualLabour' , '3' ~ 'NoWork_assist') , HHIncChg_YN_1M = recode(HHIncChg_1M, '1' ~ 'Increased' ,'2' ~ 'Same' , '3' ~ 'Reduced' , '4' ~ 'Stopped'), LhCSIEnAccess = recode(LhCSIEnAccess, '1' ~ 'Food' , '2' ~ 'Education' , '3' ~ 'Health' , '4' ~ 'Shelter' , '5' ~ 'Sanitation' , '6' ~ 'Other') )
 
 lcs_vars = names (YemenRaw_reduced %>% select (starts_with('Lcs')))
 YemenRaw_reduced[lcs_vars] = replaceall( YemenRaw_reduced [lcs_vars] , c('1' , '2' , '3' , '4' , '99') , c('No' , 'AlreadyExhausted' , 'Yes'  , 'No_shortage' , 'NotApplicable') , quiet = TRUE)
 
 #Lebanon
-LebRaw_reduced = LebRaw_reduced %>% mutate(RespNationality=recode(RespNationality, '1'='Leb' , '2' = 'Syr_Leb' , '3' = 'Pal_Leb' , '4' = 'Syr' , '5' = 'Pal' , '6' = 'Irq' , '7' = 'Migrant' , '8' = 'Others' ) , HHHSex=recode(HHHSex, '1'='Male' , '2' = 'Female') , HWaterSRC = recode(HWaterSRC, '1' = 'Piped' , '2' = 'PublicTap' , '3' = 'Well_pump' ,'4'= 'ProtectedWell' , '5' = 'Distilled_water' , '6' = 'UnprotectedSpring' , '7' = 'tank_truck' , '8' ='car_tank' , '9' = 'water_Seller' , '10' = 'bottled_water' , '11' = 'surface_water' , '12' = 'Other') , HToiletType = recode(HToiletType, '1' = 'Flush_toilet' , '2' = 'hole_tiledbath' , '3' = 'hole_unpavedbath' , '4' = 'bucket' , '5' = 'OpenAir') , HElectricitySRC = recode(HElectricitySRC , '1' = 'company' , '2' = 'NonOwned_Generator' , '3' = 'Owned_Generator' , '4' = 'Relatives' , '5' = 'Solar') , FCS_SRf = recode(FCS_SRf , '1' = 'OwnProd' , '2' = 'Purchase' ,'3' = 'Labour'  ,'4' = 'Gift' , '5' = 'FoodAssist' , '6' = 'Gov' , '7' = 'Community' , '8' = 'Other') )
+LebRaw_reduced = LebRaw_reduced %>% mutate(RespNationality=recode(RespNationality, '1' ~'Leb' , '2' ~ 'Syr_Leb' , '3' ~ 'Pal_Leb' , '4' ~ 'Syr' , '5' ~ 'Pal' , '6' ~ 'Irq' , '7' ~ 'Migrant' , '8' ~ 'Others' ) , HHHSex=recode(HHHSex, '1' ~ 'Male' , '2' ~ 'Female') , HWaterSRC = recode(HWaterSRC, '1' ~ 'Piped' , '2' ~ 'PublicTap' , '3' ~ 'Well_pump' ,'4' ~ 'ProtectedWell' , '5' ~ 'Distilled_water' , '6' ~ 'UnprotectedSpring' , '7' ~ 'tank_truck' , '8' ~ 'car_tank' , '9' ~ 'water_Seller' , '10' ~ 'bottled_water' , '11' ~ 'surface_water' , '12' ~ 'Other') , HToiletType = recode(HToiletType, '1' ~ 'Flush_toilet' , '2' ~ 'hole_tiledbath' , '3' ~ 'hole_unpavedbath' , '4' ~ 'bucket' , '5' ~ 'OpenAir') , HElectricitySRC = recode(HElectricitySRC , '1' ~ 'company' , '2' ~ 'NonOwned_Generator' , '3' ~ 'Owned_Generator' , '4' ~ 'Relatives' , '5' ~ 'Solar') , FCS_SRf = recode(FCS_SRf , '1' ~ 'OwnProd' , '2' ~ 'Purchase' ,'3' ~ 'Labour'  ,'4' ~ 'Gift' , '5' ~ 'FoodAssist' , '6' ~ 'Gov' , '7' ~ 'Community' , '8' ~ 'Other') )
 
 lcs_vars = names (LebRaw_reduced %>% select (starts_with('Lcs')))
 LebRaw_reduced[lcs_vars] = replaceall( LebRaw_reduced [lcs_vars] , c('1' , '2' , '3' , '4') , c('No' , 'AlreadyExhausted' , 'Yes'  , 'NotApplicable') , quiet = TRUE)
@@ -238,11 +282,6 @@ df_master
 
 ```
 
-## Sampling Weights Construction
-
-```{r Construct weights, echo=TRUE, message=FALSE, warning=FALSE}
-
-```
 
 ## Regional Master Table Connection and Feeding
 
