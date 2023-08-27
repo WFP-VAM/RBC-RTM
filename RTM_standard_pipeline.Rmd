@@ -45,7 +45,7 @@ library(lubridate)
 library(lares)
 library(labelled)
 library(expss)
-
+library(ggplot2)
 
 pipInput = read_excel('RTM_pipeline_input.xlsx' , sheet = 'main_parameters')
 stdNames = read_excel('RTM_pipeline_input.xlsx' , sheet = 'standard_names_mapping')
@@ -275,10 +275,46 @@ var_label(df_master$rCSI) <- "Reduced coping strategies index (rCSI)"
 
 ```
 
-## Quality Checks and Associated Flags
+## Data Profiling and quality checks
 
-```{r calculate livelihood coping indicators, echo=TRUE, message=FALSE, warning=FALSE}
-df_master
+```{r data profiling, echo=TRUE, message=FALSE, warning=FALSE}
+# Check number of completed survey per day per country
+
+
+# Convert 'obs_date' to Date format if needed
+df_master$ObsDate = as.Date(df_master$ObsDate, format = "%m/%d/%Y")
+
+# Group the data by 'obs_date' and 'ADMIN0NAME' and count the number of completed surveys
+completed_surveys <- df_master %>%
+  group_by(ObsDate, ADMIN0Name) %>%
+  summarise(Completed_Count = n())
+
+# Plot the results using ggplot2
+ggplot(completed_surveys, aes(x = ObsDate, y = Completed_Count, fill = ADMIN0Name)) +
+  geom_line(stat = "identity" , aes(colour = ADMIN0Name)) +
+  labs(x = "Date", y = "Completed surveys", title = "Number of Completed Surveys by Country") +
+  theme_bw() +
+  theme(legend.position = "top", axis.text.x = element_text(angle = 45, hjust = 1))
+
+# the graph should show that the data was well distributed over time
+
+# Get duplicated cases in RspID excluding missing values
+duplicated_cases <- df_master$RspID[duplicated(df_master$RspID[complete.cases(df_master$RspID) ]) ]
+
+# Print the duplicated cases
+print(duplicated_cases)
+
+#completed surveys and average consumption per enumerator per country 
+
+Enum_completed_surveys <- df_master %>%
+group_by( ADMIN0Name, EnuName) %>%
+summarise(Completed_Count = n() , avg_staples = round (mean(FCSStap),1) , avg_pulses = round (mean(FCSPulse),1) , avg_fruits = round (mean(FCSFruit),1) , avg_proteins = round (mean(FCSPr),1) , avg_veg = round (mean(FCSVeg),1) , avg_dairy = round (mean(FCSDairy),1) , avg_sug = round(mean(FCSSugar),1) , avg_fat = round(mean(FCSFat),1))
+
+kableExtra::kable(Enum_completed_surveys , format = 'markdown')
+
+Enum_completed_surveys$EnuName [duplicated(Enum_completed_surveys$EnuName)]
+
+
 
 ```
 
