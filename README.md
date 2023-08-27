@@ -26,7 +26,7 @@ Before running this pipeline script, you need to update the input file included 
 
 -   **SurveyType:** Specify if the survey is RTM or other type of surveys ( include only RTM or Others)
 
--   **Country Code:** Specify the country code as included in the API key. Example:Yemen1 is the country code for Yemen
+-   **Country Code:** Specify the country code as included in the API key. <Example:Yemen1> is the country code for Yemen
 
 -   **StartDate:** the first date the you need to extract the data from. It should be in this format MM/DD/YYYY
 
@@ -36,7 +36,7 @@ Before running this pipeline script, you need to update the input file included 
 
 In addition to modifying the input file, make sure that all population figures included in the weights input table file are updated, and the desired indicators are selected.
 
-## RTM/mVAM methodology 
+## RTM/mVAM methodology
 
 RTM/mVAM survey cycle step by step process are explained in the consolidated regional SOPs accessible through this [link](https://wfp.sharepoint.com/:w:/s/RBC-Nearreal-timemonitoringsystem/EfLHfxeUpDJJom9vmhDFVgQB2HAfN0-PxVkXGtflBXSxzQ?e=ySl2b5)
 
@@ -83,3 +83,9 @@ Key functions implemented
     connect to Crystal database through the API to fetch the raw dataset. the function key parameter is `con_config` which should be a **list** contains the values of the three main API parameters `API_Key` , `Start_date` and `end_date`. Specify the `start_date` and `end_date` within which you need to extract the data. the dates should be in the format *MM/DD/YYYY.*
 
     The function should return the dataset in a dataframe structure and the status of the call should be 200 indicating a successful connection, other than that make sure that the dataset is ready for extraction and you inserted the correct dates.
+
+-   **replace_variable_names**
+
+    The function auto-replaces the variable names in a dataframe as specified in the pipeline input file, it iterates over each column to replace the variable name.
+
+    it has three main parameters "**data**" the dataset in a dataframe structure, '**old_names**' a vector of the original names and '**new_names**' the new desired names.
