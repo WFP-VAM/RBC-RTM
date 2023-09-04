@@ -46,6 +46,8 @@ library(lares)
 library(labelled)
 library(expss)
 library(ggplot2)
+library(ggrepel)
+
 
 pipInput = read_excel('RTM_pipeline_input.xlsx' , sheet = 'main_parameters')
 stdNames = read_excel('RTM_pipeline_input.xlsx' , sheet = 'standard_names_mapping')
@@ -74,7 +76,7 @@ Yemen_config = list ('APIKey' = paste("Yemen1_" , unlist (strsplit(pipInput$EndD
 
 Leb_config = list ('APIKey' = "Lebanon_112022",  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Lebanon']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Lebanon'] )
 
-Libya_config = list ('APIKey' = paste("Libya_" , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Libya'] , "/")) [1] , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Libya'] , "/")) [3] , sep = ""),  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Libya']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Libya'] )
+Libya_config = list ('APIKey' =  "Libya_072023",  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Libya']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Libya'] )
 
 ##########################################################
 #the function below could be used to pull the survey data for any country if the provider is Crystal
@@ -86,7 +88,7 @@ json_body <- jsonlite::toJSON(con_config, auto_unbox = TRUE)
 
 print (json_body)
   
- r =  POST(url = 'http://campaignapi.crystelcall.com/CampaignAPI/api/Campaign' , body = json_body , add_headers('Content-Type'='application/json')) 
+ r =  POST(url = 'http://campaignapi.crystelcall.com/CampaignAPI/api/Campaign' , body = json_body ,  add_headers('Content-Type'='application/json')) 
  
  if (r$status_code == 200) {
    print ('Crystal API connection is ok ')
@@ -100,6 +102,7 @@ print (json_body)
  return(Rawdata)
  
 }
+
 ######################################################
 ##Pull the data for only countries provided in the input list and export the raw data in csv file
 ####################################################
@@ -277,11 +280,16 @@ var_label(df_master$rCSI) <- "Reduced coping strategies index (rCSI)"
 
 ## Data Profiling and quality checks
 
-```{r data profiling, echo=TRUE, message=FALSE, warning=FALSE}
+```{r data profiling, echo=TRUE, fig.height=5, fig.width=9, message=FALSE, warning=FALSE}
+
+is_outlier <- function(x) {
+  return(x < quantile(x, 0.25) - 1.5 * IQR(x) | x > quantile(x, 0.75) + 1.5 * IQR(x))
+}
+
 # Check number of completed survey per day per country
 
 
-# Convert 'obs_date' to Date format if needed
+# Convert 'obs_date' to Date format
 df_master$ObsDate = as.Date(df_master$ObsDate, format = "%m/%d/%Y")
 
 # Group the data by 'obs_date' and 'ADMIN0NAME' and count the number of completed surveys
@@ -296,7 +304,22 @@ ggplot(completed_surveys, aes(x = ObsDate, y = Completed_Count, fill = ADMIN0Nam
   theme_bw() +
   theme(legend.position = "top", axis.text.x = element_text(angle = 45, hjust = 1))
 
-# the graph should show that the data was well distributed over time
+# Group the data by 'ADMIN0NAME' and 'ADMIN1NAME' and count the number of completed surveys
+
+completed_surveys_adm1 <- df_master %>%
+  group_by(ADMIN0Name, ADMIN1Name) %>%
+  summarise(Completed_Count = n())
+
+
+ggplot(completed_surveys_adm1)+
+  geom_bar(aes(y = Completed_Count, x = ADMIN1Name , fill = ADMIN0Name), stat = "identity" , width = 0.5)+
+  theme_bw()+
+  ylab("Completed surveys")+
+  xlab("Governorate")+
+  ggtitle("Completed surveys per governorate") +
+  facet_wrap(~ADMIN0Name, scales = 'free_x') +
+  theme(axis.text.x = element_text(angle = 45 ,  hjust=1 , size = 8) ,legend.position="none")
+
 
 # Get duplicated cases in RspID excluding missing values
 duplicated_cases <- df_master$RspID[duplicated(df_master$RspID[complete.cases(df_master$RspID) ]) ]
@@ -308,13 +331,35 @@ print(duplicated_cases)
 
 Enum_completed_surveys <- df_master %>%
 group_by( ADMIN0Name, EnuName) %>%
-summarise(Completed_Count = n() , avg_staples = round (mean(FCSStap),1) , avg_pulses = round (mean(FCSPulse),1) , avg_fruits = round (mean(FCSFruit),1) , avg_proteins = round (mean(FCSPr),1) , avg_veg = round (mean(FCSVeg),1) , avg_dairy = round (mean(FCSDairy),1) , avg_sug = round(mean(FCSSugar),1) , avg_fat = round(mean(FCSFat),1))
+summarise( avg_staples = round (mean(FCSStap),1) , avg_pulses = round (mean(FCSPulse),1) , avg_fruits = round (mean(FCSFruit),1) , avg_proteins = round (mean(FCSPr),1) , avg_veg = round (mean(FCSVeg),1) , avg_dairy = round (mean(FCSDairy),1) , avg_sug = round(mean(FCSSugar),1) , avg_fat = round(mean(FCSFat),1))
 
-kableExtra::kable(Enum_completed_surveys , format = 'markdown')
-
-Enum_completed_surveys$EnuName [duplicated(Enum_completed_surveys$EnuName)]
+Enum_completed_surveys = reshape2::melt(Enum_completed_surveys)
 
 
+Enum_completed_surveys [Enum_completed_surveys$ADMIN0Name == "Syria",] %>% 
+group_by(  variable) %>% 
+mutate(outlier = if_else(is_outlier(value), EnuName, NA_character_)) %>% 
+ggplot(aes(x = variable, y = value, color = variable)) +
+geom_boxplot() +
+geom_text_repel(aes(label = outlier , label.size = 1 ), na.rm = TRUE, show.legend = F) +
+  theme(legend.position="none")
+
+
+Enum_completed_surveys [Enum_completed_surveys$ADMIN0Name == "Yemen",] %>% 
+group_by(  variable) %>% 
+mutate(outlier = if_else(is_outlier(value), EnuName, NA_character_)) %>% 
+ggplot(aes(x = variable, y = value, color = variable)) +
+geom_boxplot() +
+geom_text_repel(aes(label = outlier , size = 1 ), na.rm = TRUE, show.legend = F) +
+  theme(legend.position="none")
+
+Enum_completed_surveys [Enum_completed_surveys$ADMIN0Name == "Lebanon",] %>%
+group_by(  variable) %>% 
+mutate(outlier = if_else(is_outlier(value), EnuName, NA_character_)) %>% 
+ggplot(aes(x = variable, y = value, color = variable)) +
+geom_boxplot() +
+geom_text_repel(aes(label = outlier , size = 1 ), na.rm = TRUE, show.legend = F) +
+  theme(legend.position="none")
 
 ```
 
