@@ -49,8 +49,8 @@ library(ggplot2)
 library(ggrepel)
 
 
-pipInput = read_excel('RTM_pipeline_input.xlsx' , sheet = 'main_parameters')
-stdNames = read_excel('RTM_pipeline_input.xlsx' , sheet = 'standard_names_mapping')
+pipInput = read_excel('Pipeline input/RTM_pipeline_input.xlsx' , sheet = 'main_parameters')
+stdNames = read_excel('Pipeline input/RTM_pipeline_input.xlsx' , sheet = 'standard_names_mapping')
 pipInput$StartDate = format(as.Date(pipInput$StartDate), "%m/%d/%Y")
 pipInput$EndDate = format(as.Date(pipInput$EndDate), "%m/%d/%Y")
 
@@ -175,49 +175,58 @@ replace_variable_names <- function(data, old_names, new_names) {
 }
 
 
-
+if ('Syria' %in% pipInput$CountryCode) {
 SyriaRaw = replace_variable_names(SyriaRaw , stdNames$Orignial[stdNames$Country == 'Syria'] , stdNames$Standard[stdNames$Country == 'Syria'])
+}
 
+if ('Yemen1' %in% pipInput$CountryCode) {
 YemenRaw = replace_variable_names(YemenRaw , stdNames$Orignial[stdNames$Country == 'Yemen'] , stdNames$Standard[stdNames$Country == 'Yemen'])
+}
 
+if ('Lebanon' %in% pipInput$CountryCode) {
 LebRaw = replace_variable_names(LebRaw , stdNames$Orignial[stdNames$Country == 'Lebanon'] , stdNames$Standard[stdNames$Country == 'Lebanon'])
+}
 
-# select core indicators - Syria
 
+# select core indicators and recode variables - Syria
+
+if ('Syria' %in% pipInput$CountryCode) {
 SyriaRaw_reduced = SyriaRaw %>% select (ADMIN0Name,ADMIN1Name, ADMIN2Name ,RspID,SvyDate, ObsDate ,EnuName,HHH_YN,HHHSex,HHHAge,HHHEducation,RESPAge,HHSize , HHDispl, IDPDuration,HDwellType,HWaterSRC, FCSStap, FCSPulse, FCSVeg, FCSFruit,FCSPr, FCSDairy, FCSFat , FCSSugar, FCS_SRf, MktAccess_1M,  rCSILessQlty, rCSIBorrow, rCSIMealNb , rCSIMealSize, rCSIMealAdult, Lcs_stress_DomAsset, Lcs_stress_Saving, Lcs_stress_SellFoodRation, Lcs_stress_CrdtFood, Lcs_crisis_OutSchool, Lcs_crisis_ProdAssets, Lcs_crisis_Migration, Lcs_em_ResAsset, LcsR_em_FemAnimal, Lcs_em_Begged)
 
-#Yemen
-YemenRaw_reduced = YemenRaw %>% select(RspID, SvyDate,ObsDate,EnuName,RESPAge , HHHSex, ADMIN0Name , ADMIN1Name, ADMIN2Name , HHSize, HHDispl, HHChronIllNb , FCSStap , FCSPulse, FCSVeg, FCSFruit, FCSPr, FCSDairy, FCSFat, FCSSugar , FCS_SRf , rCSILessQlty, rCSIBorrow , rCSIMealNb , rCSIMealSize , rCSIMealAdult ,LcsEN_stress_DomAsset , LcsEN_stress_CrdtFood , LcsEN_stress_Saving, LcsEN_stress_BorrowCash, LcsEN_crisis_ProdAssets, LcsEN_crisis_Health , LcsEN_crisis_OutSchool , LcsEN_em_ResAsset , LcsEN_em_Begged, LcsEN_em_LastAnimal , LhCSIEnAccess , HHIncFirst_SRi , HHIncChg_1M  )
 
-#Lebanon
-LebRaw_reduced = LebRaw %>%  select(EnuName, ObsDate, RespNationality , HHSizebelow2 , HHSizebetween2_5, HHSizebetween5_17, HHSizebetween18_59 , HHSize60above, HHHSex, HWaterSRC, HToiletType , HElectricitySRC , ADMIN0Name , ADMIN1Name , ADMIN2Name , SvyDate,RESPAge,HDwellType, FCSStap, FCSPulse, FCSDairy, FCSPr, FCSVeg, FCSFruit, FCSFat, FCSSugar, rCSILessQlty, rCSIBorrow, rCSIMealSize, rCSIMealNb, rCSIMealAdult = rCSIMealAdul, Lcs_stress_DomAsset ,  Lcs_stress_CrdtFood , Lcs_crisis_ProdAssets , Lcs_em_ResAsset, Lcs_stress_BorrowCash  , Lcs_stress_LessSchool , Lcs_crisis_OutSchool , Lcs_crisis_Health  , Lcs_em_Begged  , FCS_SRf  )
-
-```
-
-## Re-coding and Merging
-
-```{r recoding, echo=TRUE, message=FALSE, warning=FALSE}
-
-#Syria
 SyriaRaw_reduced = SyriaRaw_reduced %>% mutate(HHHSex=recode(HHHSex, '1' ~ 'Female' , '2' ~ 'Male' ) , HHDispl = recode(HHDispl , '1' ~ 'Resident' , '2' ~ 'Returnee' , '3' ~ 'IDP') , HHHEducation = recode(HHHEducation , '1' ~ 'None' , '2' ~ 'Primary' , '3' ~ 'Secondary' , '4' ~ 'Vocational' , '5' ~ 'University') , IDPDuration = recode(IDPDuration, '1' ~ 'LT3M' , '2' ~'3To6M'  , '3' ~ '7To12M' , '4' ~ 'Above12M' ) , HDwellType = recode(HDwellType, '1' ~ 'Own' , '2' ~ 'Rent' , '3' ~ 'Guest_family' , '4' ~ 'Guest_strangers' , '5' ~ 'SharingAcco' , '6' ~ 'Hotel' ,'7' ~ 'RentAnotherH' , '8' ~'NoPlace' , '9' ~ 'TempShelter' , '10' ~ 'Camp' , '11' ~ 'UnfinishedShelter' , '12' ~ 'CollectiveShelter' , '13' ~ 'Other') , HWaterSRC = recode(HWaterSRC, '1' ~ 'Piped' , '2' ~ 'PublicTap' , '3' ~ 'borehole' ,'4' ~ 'ProtectedWell' , '5' ~ 'ProtectedSpring' , '6' ~ 'UnprotectedSpring' , '7' ~ 'River' , '8' ~ 'Lake' , '9' ~ 'Rain' , '10' ~ 'BottledWater' , '11' ~ 'TruckedWater'), FCS_SRf = recode(FCS_SRf, '1' ~ 'OwnProd' , '2' ~ 'Labour' , '3' ~ 'Purchase' , '4' ~ 'FoodAssist' , '5' ~ 'Scavenging' , '6' ~ 'Gift') , MktAccess_1M = recode (MktAccess_1M , '1' ~ 'Yes' , '2' ~ 'No' , '3' ~ 'DK') )
 
 lcs_vars = names (SyriaRaw_reduced %>% select (starts_with('Lcs')))
 SyriaRaw_reduced[lcs_vars] = replaceall( SyriaRaw_reduced [lcs_vars] , c('1' , '2' , '3' , '4') , c('Yes' , 'No' , 'AlreadyExhausted'  , 'NotApplicable') , quiet = TRUE)
 
+}
+
 #Yemen
+if ('Yemen1' %in% pipInput$CountryCode) {
+YemenRaw_reduced = YemenRaw %>% select(RspID, SvyDate,ObsDate,EnuName,RESPAge , HHHSex, ADMIN0Name , ADMIN1Name, ADMIN2Name , HHSize, HHDispl, HHChronIllNb , FCSStap , FCSPulse, FCSVeg, FCSFruit, FCSPr, FCSDairy, FCSFat, FCSSugar , FCS_SRf , rCSILessQlty, rCSIBorrow , rCSIMealNb , rCSIMealSize , rCSIMealAdult ,LcsEN_stress_DomAsset , LcsEN_stress_CrdtFood , LcsEN_stress_Saving, LcsEN_stress_BorrowCash, LcsEN_crisis_ProdAssets, LcsEN_crisis_Health , LcsEN_crisis_OutSchool , LcsEN_em_ResAsset , LcsEN_em_Begged, LcsEN_em_LastAnimal , LhCSIEnAccess , HHIncFirst_SRi , HHIncChg_1M  )
+
 YemenRaw_reduced = YemenRaw_reduced %>% mutate(HHHSex=recode(HHHSex, '1' ~ 'Male' , '2' ~ 'Female' ) , HHDispl = recode(HHDispl , '1' ~ 'IDP' , '2' ~ 'Resident' ), FCS_SRf = recode(FCS_SRf, '1' ~ 'OwnProd' , '2' ~ 'Hunting' , '3' ~ 'Purchase' , '4' ~ 'On_Credit' , '5' ~'Gift' ,  '6' ~ 'Begging' , '7' ~ 'Swap' , '8' ~ 'FoodAssist' , '9' ~ 'CasualLabour') , HHIncFirst_SRi = recode (HHIncFirst_SRi , '1' ~ 'RegEmp' , '2' ~ 'CasualLabour' , '3' ~ 'NoWork_assist') , HHIncChg_YN_1M = recode(HHIncChg_1M, '1' ~ 'Increased' ,'2' ~ 'Same' , '3' ~ 'Reduced' , '4' ~ 'Stopped'), LhCSIEnAccess = recode(LhCSIEnAccess, '1' ~ 'Food' , '2' ~ 'Education' , '3' ~ 'Health' , '4' ~ 'Shelter' , '5' ~ 'Sanitation' , '6' ~ 'Other') )
 
 lcs_vars = names (YemenRaw_reduced %>% select (starts_with('Lcs')))
 YemenRaw_reduced[lcs_vars] = replaceall( YemenRaw_reduced [lcs_vars] , c('1' , '2' , '3' , '4' , '99') , c('No' , 'AlreadyExhausted' , 'Yes'  , 'No_shortage' , 'NotApplicable') , quiet = TRUE)
+}
+
 
 #Lebanon
+if ('Lebanon' %in% pipInput$CountryCode) {
+LebRaw_reduced = LebRaw %>%  select(EnuName, ObsDate, RespNationality , HHSizebelow2 , HHSizebetween2_5, HHSizebetween5_17, HHSizebetween18_59 , HHSize60above, HHHSex, HWaterSRC, HToiletType , HElectricitySRC , ADMIN0Name , ADMIN1Name , ADMIN2Name , SvyDate,RESPAge,HDwellType, FCSStap, FCSPulse, FCSDairy, FCSPr, FCSVeg, FCSFruit, FCSFat, FCSSugar, rCSILessQlty, rCSIBorrow, rCSIMealSize, rCSIMealNb, rCSIMealAdult = rCSIMealAdul, Lcs_stress_DomAsset ,  Lcs_stress_CrdtFood , Lcs_crisis_ProdAssets , Lcs_em_ResAsset, Lcs_stress_BorrowCash  , Lcs_stress_LessSchool , Lcs_crisis_OutSchool , Lcs_crisis_Health  , Lcs_em_Begged  , FCS_SRf  )
+
 LebRaw_reduced = LebRaw_reduced %>% mutate(RespNationality=recode(RespNationality, '1' ~'Leb' , '2' ~ 'Syr_Leb' , '3' ~ 'Pal_Leb' , '4' ~ 'Syr' , '5' ~ 'Pal' , '6' ~ 'Irq' , '7' ~ 'Migrant' , '8' ~ 'Others' ) , HHHSex=recode(HHHSex, '1' ~ 'Male' , '2' ~ 'Female') , HWaterSRC = recode(HWaterSRC, '1' ~ 'Piped' , '2' ~ 'PublicTap' , '3' ~ 'Well_pump' ,'4' ~ 'ProtectedWell' , '5' ~ 'Distilled_water' , '6' ~ 'UnprotectedSpring' , '7' ~ 'tank_truck' , '8' ~ 'car_tank' , '9' ~ 'water_Seller' , '10' ~ 'bottled_water' , '11' ~ 'surface_water' , '12' ~ 'Other') , HToiletType = recode(HToiletType, '1' ~ 'Flush_toilet' , '2' ~ 'hole_tiledbath' , '3' ~ 'hole_unpavedbath' , '4' ~ 'bucket' , '5' ~ 'OpenAir') , HElectricitySRC = recode(HElectricitySRC , '1' ~ 'company' , '2' ~ 'NonOwned_Generator' , '3' ~ 'Owned_Generator' , '4' ~ 'Relatives' , '5' ~ 'Solar') , FCS_SRf = recode(FCS_SRf , '1' ~ 'OwnProd' , '2' ~ 'Purchase' ,'3' ~ 'Labour'  ,'4' ~ 'Gift' , '5' ~ 'FoodAssist' , '6' ~ 'Gov' , '7' ~ 'Community' , '8' ~ 'Other') )
 
 lcs_vars = names (LebRaw_reduced %>% select (starts_with('Lcs')))
 LebRaw_reduced[lcs_vars] = replaceall( LebRaw_reduced [lcs_vars] , c('1' , '2' , '3' , '4') , c('No' , 'AlreadyExhausted' , 'Yes'  , 'NotApplicable') , quiet = TRUE)
+}
 
+```
 
-## Create the master table 
+## Generate master table
+
+```{r recoding, echo=TRUE, message=FALSE, warning=FALSE}
 
 df_master = full_join(SyriaRaw_reduced , YemenRaw_reduced)
 df_master = full_join( df_master, LebRaw_reduced)
@@ -335,7 +344,7 @@ summarise( avg_staples = round (mean(FCSStap),1) , avg_pulses = round (mean(FCSP
 
 Enum_completed_surveys = reshape2::melt(Enum_completed_surveys)
 
-
+if ('Syria' %in% pipInput$CountryCode) {
 Enum_completed_surveys [Enum_completed_surveys$ADMIN0Name == "Syria",] %>% 
 group_by(  variable) %>% 
 mutate(outlier = if_else(is_outlier(value), EnuName, NA_character_)) %>% 
@@ -343,8 +352,9 @@ ggplot(aes(x = variable, y = value, color = variable)) +
 geom_boxplot() +
 geom_text_repel(aes(label = outlier , label.size = 1 ), na.rm = TRUE, show.legend = F) +
   theme(legend.position="none")
+}
 
-
+if ('Yemen1' %in% pipInput$CountryCode) {
 Enum_completed_surveys [Enum_completed_surveys$ADMIN0Name == "Yemen",] %>% 
 group_by(  variable) %>% 
 mutate(outlier = if_else(is_outlier(value), EnuName, NA_character_)) %>% 
@@ -352,7 +362,9 @@ ggplot(aes(x = variable, y = value, color = variable)) +
 geom_boxplot() +
 geom_text_repel(aes(label = outlier , size = 1 ), na.rm = TRUE, show.legend = F) +
   theme(legend.position="none")
+}
 
+if ('Lebanon' %in% pipInput$CountryCode) {
 Enum_completed_surveys [Enum_completed_surveys$ADMIN0Name == "Lebanon",] %>%
 group_by(  variable) %>% 
 mutate(outlier = if_else(is_outlier(value), EnuName, NA_character_)) %>% 
@@ -360,6 +372,40 @@ ggplot(aes(x = variable, y = value, color = variable)) +
 geom_boxplot() +
 geom_text_repel(aes(label = outlier , size = 1 ), na.rm = TRUE, show.legend = F) +
   theme(legend.position="none")
+}
+
+###Contact the call center in case there are any suspicious observations and ensure that the invalid observations are removed from the call center side##
+
+##Don't remove or fix any value yourself##
+
+
+
+
+## Reporting on the use of emergency coping strategies 
+
+em_lcs_vars = names (df_master %>% select (contains('em')))
+
+
+# Iterate over each variable in em_lcs_vars 
+
+for (var in em_lcs_vars) {
+  print (var)
+  df_sub = df_master[[var]]
+  df_sub = df_sub [!is.na(df_sub)]
+  g =  ggplot(data.frame(x=df_sub)) +
+  geom_bar(aes(x) , fill="steelblue") 
+  print (g)
+}
+
+
+
+
+```
+
+
+```{r}
+## Activate this chunk when you have meta data about the number of call attempts and attempts status - template is included in the folder (panelists tracking)
+
 
 ```
 
