@@ -20,19 +20,37 @@ The key objective of the standard pipeline is to maintain the same process of da
 
 -   Connecting to the regional master table
 
-Before running this pipeline script, you need to update the input file included in the script dependencies *RTM_pipeline_input.xlsx*, Specify in this file the start and end date that you wish to extract the data within. see the table below for more details:
+## Pipeline dependencies
+
+### 1) Input file
+
+Before running this pipeline script, you need to update the input file included in the script dependencies *RTM_pipeline_input.xlsx*,
+
+In the first sheet *`main_parameters`* specify the start and end date that you wish to extract the data within. see the points below for more details:
 
 -   **Provider:** Include here the name of the service provider.
 
 -   **SurveyType:** Specify if the survey is RTM or other type of surveys ( include only RTM or Others)
 
--   **Country Code:** Specify the country code as included in the API key. <Example:Yemen1> is the country code for Yemen
+-   **Country Code:** Specify the country code as included in the API key. [Example: Yemen1](Example:Yemen1){.uri} is the country code for Yemen
 
 -   **StartDate:** the first date the you need to extract the data from. It should be in this format MM/DD/YYYY
 
 -   **EndDate:** the last date that you need to extract the data to. It should be in this format MM/DD/YYYY
 
 -   **SvyID**: This is unique ID to differentiate each data collection round. It is sequential for each country. and should be unique across all countries.
+
+In the second sheet *`standard_names_mapping`* include the standard names according to WFP codebook in case the standard variables names were not used in the survey tool, The script will replace the original names with the standard names as indicated in that sheet. This step is essential as all other functions implemented in this script will be relying on the standard variables names
+
+### 2) Calls logs
+
+call logs should be provided by the service provider at the end of each data collection round or upon request. the call logs include the date and time of each call attempt as well as the call attempt status and call duration.
+
+Calls logs template are included in the panelists tracking folder, and it is advisable to maintain the same template before running the pipeline.
+
+Before running the pipeline, make sure that there is only one xlsx file in the folder "Panelists tracking", you can include as many sheets as needed for each country separately. The script will compile all data included in all sheets and conduct the checks for each country.
+
+### 3) Weights input table 
 
 In addition to modifying the input file, make sure that all population figures included in the weights input table file are updated, and the desired indicators are selected.
 
@@ -76,7 +94,7 @@ loaded via a namespace (and not attached):
 
 ## 
 
-Key functions implemented
+## Defined functions 
 
 -   **Crystal_API_connect:**
 
