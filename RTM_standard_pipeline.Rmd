@@ -47,6 +47,7 @@ library(labelled)
 library(expss)
 library(ggplot2)
 library(ggrepel)
+library(tools)
 
 
 pipInput = read_excel('Pipeline input/RTM_pipeline_input.xlsx' , sheet = 'main_parameters')
@@ -132,11 +133,11 @@ write.csv(LebRaw , paste0("Lebanon_raw_" , pipInput$SvyID[pipInput$CountryCode =
 }
 
 
-if ('Libya' %in% pipInput$SurveyType) {
+if ('Libya' %in% pipInput$CountryCode) {
 LibyaRaw = Crystal_API_connect(Libya_config)
 LibyaRaw = LibyaRaw[LibyaRaw$Completed == 'Y' ,]
 print(paste0('total number of completed surveys for Libya survey is ' , nrow(LibyaRaw)))
-write.csv(LebRaw , paste0("Libya_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Libya'] , ".csv"))
+write.csv(LibyaRaw , paste0("Libya_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Libya'] , ".csv"))
 }
 
 
@@ -402,9 +403,48 @@ for (var in em_lcs_vars) {
 
 ```
 
+## Calls logs validation
 
-```{r}
+```{r call logs validation, message=FALSE, warning=FALSE}
 ## Activate this chunk when you have meta data about the number of call attempts and attempts status - template is included in the folder (panelists tracking)
+##NOTE##
+# the folder (Panelists tracking) should only include one file at a time each country should have a separated sheet
+
+folder_path = paste0(getwd() , "/Panelists tracking")
+
+# Get a list of all file names in the folder with the .xlsx extension
+xlsx_files <- list.files(folder_path, pattern = "\\.xlsx$", full.names = TRUE)
+
+# Check if there is exactly one xlsx file
+if (length(xlsx_files) == 1) {
+  file_path = xlsx_files  # Get the file path
+  # Read the xlsx file (modify the below line if needed)
+  sheet_names = excel_sheets(file_path)
+  # Use map or lapply function to read data from each sheet
+  calls_log_ls = map(sheet_names, ~ read_excel(file_path, sheet = .x))
+
+  for (i in 1:length(calls_log_ls)) {
+    df = calls_log_ls[[i]]
+    print (unique (df["Admin0Name"]))
+    print (prop.table(table(df["Paneslist (Yes/No)"]))) 
+    print (prop.table(table(df["Call attempt outcome"])))
+    df [df["Call attempt outcome" ] != "Completed Survey",] %>% group_by(RspID) %>% summarise(cnt = n()) 
+
+    # create breaks
+    breaks <- hour(hm("00:00", "6:00", "12:00", "18:00", "23:59"))
+    # labels for the breaks
+    labels <- c("Night", "Morning", "Afternoon", "Evening")
+    
+    df$Time_of_day <- cut(x=hour(df$`Call attempt time`), breaks = breaks, labels = labels, include.lowest=TRUE)
+        df %>% group_by(RspID ,Time_of_day, `Call attempt outcome`) %>% summarise(cnt = n())
+        df %>% group_by(RspID , `Call attempt outcome`) %>% summarise(dur_avg = mean(minutes(hms( `Call duration in minutes`))) )
+        
+  }  
+  
+  
+} else {
+  stop("No xlsx file or multiple xlsx files found in the folder.")
+}
 
 
 ```
