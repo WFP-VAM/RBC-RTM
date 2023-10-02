@@ -79,6 +79,7 @@ Leb_config = list ('APIKey' = "Lebanon_112022",  'DateFrom' = pipInput$StartDate
 
 Libya_config = list ('APIKey' =  "Libya_072023",  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Libya']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Libya'] )
 
+
 ##########################################################
 #the function below could be used to pull the survey data for any country if the provider is Crystal
 ###########################################################
@@ -340,7 +341,7 @@ print(duplicated_cases)
 #completed surveys and average consumption per enumerator per country 
 
 Enum_completed_surveys <- df_master %>%
-group_by( ADMIN0Name, EnuName) %>%
+group_by( ADMIN0Name, EnuName , RspID) %>%
 summarise( avg_staples = round (mean(FCSStap),1) , avg_pulses = round (mean(FCSPulse),1) , avg_fruits = round (mean(FCSFruit),1) , avg_proteins = round (mean(FCSPr),1) , avg_veg = round (mean(FCSVeg),1) , avg_dairy = round (mean(FCSDairy),1) , avg_sug = round(mean(FCSSugar),1) , avg_fat = round(mean(FCSFat),1))
 
 Enum_completed_surveys = reshape2::melt(Enum_completed_surveys)
@@ -450,8 +451,75 @@ if (length(xlsx_files) == 1) {
 ```
 
 
+## Weights calculation 
+
+```{r}
+base_weights <- function (country_name) {
+  
+  #subset the master table for the country selected
+  df_sub = df_master[df_master$ADMIN0Name == country_name , ]
+  
+  #read weights input table adm1 sheet 
+  
+folder_path = paste0(getwd() , "/Weights input tables/" , country_name)
+xlsx_files <- list.files(folder_path, pattern = "\\.xlsx$", full.names = TRUE)
+
+input_admin1 = read_excel( xlsx_files, sheet = "adm1")
+
+input_admin1 = input_admin1 [, 3:5]
+  
+  # list of the strata names in the dataset
+  sample_strata = unique (df_sub$ADMIN1Name)
+  print (sample_strata)
+  # list of the strata names in the input file
+  country_strata = unique (input_admin1$adm1_name_en)
+  print (country_strata)
+  
+  # Check if the names are matched between the dataset and the input file
+ if (setequal(intersect(sample_strata,country_strata), sample_strata) == TRUE) {
+    
+  # join the pop figures with the dataset   
+df_sub = full_join(df_sub , input_admin1 , by = join_by ("ADMIN1Name" == "adm1_name_en"))
+  
+  # get the number of surveys completed in each strata in the dataset
+sample_size = df_sub %>% group_by(ADMIN1Name) %>% summarise(strata_cnt = n())
+
+# Join the sample size per strata with the dataset
+df_sub = full_join(df_sub , sample_size , by ="ADMIN1Name")
+
+
+# calculate the base weights and print the average and sum
+df_sub$base_weights = (df_sub$adm1_pop_count / sum(df_sub$adm1_pop_count) )/ (df_sub$strata_cnt / sum(df_sub$strata_cnt))
+
+print (paste0("the average of the base weight is " , mean(df_sub$base_weights)))
+
+print (paste0("the sum of the base weight is " , sum(df_sub$base_weights)))
+
+sampling_weights = unique(df_sub[c("ADMIN1Name", "base_weights")])
+
+# merge the sampling weights with the master dataset
+
+df_master = full_join(df_master , sampling_weights , by = "ADMIN1Name")
+
+  
+  }
+  
+  else {print ( "strata names are not matching or maybe one of the strata is missing in the input table" )}
+}
+
+
+test = base_weights("Yemen")
+
+```
+
+
+
+
+
+
 ## Regional Master Table Connection and Feeding
 
 ```{r upload data, echo=TRUE, message=FALSE, warning=FALSE}
+
 
 ```
