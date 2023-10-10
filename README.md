@@ -50,7 +50,7 @@ Calls logs template are included in the panelists tracking folder, and it is adv
 
 Before running the pipeline, make sure that there is only one xlsx file in the folder "Panelists tracking", you can include as many sheets as needed for each country separately. The script will compile all data included in all sheets and conduct the checks for each country.
 
-### 3) Weights input table 
+### 3) Weights input table
 
 In addition to modifying the input file, make sure that all population figures included in the weights input table file are updated, and the desired indicators are selected.
 
@@ -94,7 +94,7 @@ loaded via a namespace (and not attached):
 
 ## 
 
-## Defined functions 
+## Defined functions
 
 -   **Crystal_API_connect:**
 
@@ -107,3 +107,9 @@ loaded via a namespace (and not attached):
     The function auto-replaces the variable names in a dataframe as specified in the pipeline input file, it iterates over each column to replace the variable name.
 
     it has three main parameters "**data**" the dataset in a dataframe structure, '**old_names**' a vector of the original names and '**new_names**' the new desired names.
+
+-   **base_weights**
+
+    this function calculate design weights using the population figures included in the weights input table for each country, the only parameter is the country name and it should be inserted as a string value and it returns the master table including the variable "base_weights".
+
+    use this function for each country separately as it doesn't allow for calculating the weights for more than one country at the same time.
