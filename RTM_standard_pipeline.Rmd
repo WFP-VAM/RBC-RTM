@@ -9,6 +9,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 ```
 
 ## Overview
@@ -36,6 +37,9 @@ The script running environment is included in the *readme* file, [make sure that
 ## Load packages and read relevant input files
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+#load required packages
+
 library(tidyverse)
 library(readxl)
 library(xlsx)
@@ -49,7 +53,7 @@ library(ggplot2)
 library(ggrepel)
 library(tools)
 
-
+# read input file
 pipInput = read_excel('Pipeline input/RTM_pipeline_input.xlsx' , sheet = 'main_parameters')
 stdNames = read_excel('Pipeline input/RTM_pipeline_input.xlsx' , sheet = 'standard_names_mapping')
 pipInput$StartDate = format(as.Date(pipInput$StartDate), "%m/%d/%Y")
@@ -67,7 +71,11 @@ The parameters should be inserted in the pipeline input file, the configuration 
 
 To add a new country, first modify the input file and create a new configuration list that should be passed to the connection function.
 
-```{r extract raw data, message=FALSE, warning=FALSE, echo=TRUE}
+The new variables names in this section are specified according to the standard variables names included in WFP codebook.
+
+The codebook is embedded in WFP [survey designer](https://www.surveydesigner.vam.wfp.org/design/survey).
+
+```{r extract raw data and rename, message=FALSE, warning=FALSE, echo=TRUE}
 
 ## create a configuration list for each country in the pipeline ## Don't proceed with running the pipeline functions for a country without creating this list 
 
@@ -105,52 +113,6 @@ print (json_body)
  
 }
 
-######################################################
-##Pull the data for only countries provided in the input list and export the raw data in csv file
-####################################################
-
-if ('Syria' %in% pipInput$CountryCode) {
-
-SyriaRaw = Crystal_API_connect (Syria_config)
-SyriaRaw = SyriaRaw[SyriaRaw$Completed == 'Y' ,]
-print(paste0('total number of completed surveys for Syria survey is ' , nrow(SyriaRaw)))
-write.csv(SyriaRaw , paste0("Syria_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Syria'] , ".csv"))
-print ( paste0('Syria ', pipInput$SvyID[pipInput$CountryCode == 'Syira'] , ' raw data is exported' ))
-}
-
-
-if ('Yemen1' %in% pipInput$CountryCode ) {
-YemenRaw = Crystal_API_connect(Yemen_config)
-YemenRaw = YemenRaw[YemenRaw$Completed == 'Y' ,]
-print(paste0('total number of completed surveys for Yemen survey is ' , nrow(YemenRaw)))
-write.csv(YemenRaw , paste0("Yemen_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Yemen1'] , ".csv"))
-}
-
-if ('Lebanon' %in% pipInput$CountryCode) {
-LebRaw = Crystal_API_connect(Leb_config)
-LebRaw = LebRaw[LebRaw$Completed == 'Y' ,]
-print(paste0('total number of completed surveys for Lebanon survey is ' , nrow(LebRaw)))
-write.csv(LebRaw , paste0("Lebanon_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Lebanon'] , ".csv"))
-}
-
-
-if ('Libya' %in% pipInput$CountryCode) {
-LibyaRaw = Crystal_API_connect(Libya_config)
-LibyaRaw = LibyaRaw[LibyaRaw$Completed == 'Y' ,]
-print(paste0('total number of completed surveys for Libya survey is ' , nrow(LibyaRaw)))
-write.csv(LibyaRaw , paste0("Libya_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Libya'] , ".csv"))
-}
-
-
-```
-
-## Renaming variables according to the standard codebook, and selecting only core indicators
-
-The new variables names in this section are specified according to the standard variables names included in WFP codebook.
-
-The codebook is embedded in WFP [survey designer](https://www.surveydesigner.vam.wfp.org/design/survey).
-
-```{r renaming and selecting, echo=TRUE, message=FALSE, warning=FALSE}
 
 ##Variables standard names mapping
 
@@ -177,17 +139,60 @@ replace_variable_names <- function(data, old_names, new_names) {
 }
 
 
+
+######################################################
+##Pull the data for only countries provided in the input list and export the raw data in csv file
+####################################################
+
 if ('Syria' %in% pipInput$CountryCode) {
+
+SyriaRaw = Crystal_API_connect (Syria_config)
+SyriaRaw = SyriaRaw[SyriaRaw$Completed == 'Y' ,]
+print(paste0('total number of completed surveys for Syria survey is ' , nrow(SyriaRaw)))
 SyriaRaw = replace_variable_names(SyriaRaw , stdNames$Orignial[stdNames$Country == 'Syria'] , stdNames$Standard[stdNames$Country == 'Syria'])
+write.csv(SyriaRaw , paste0("Raw data/Syria/Syria_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Syria'] , ".csv"))
+print ( paste0('Syria ', pipInput$SvyID[pipInput$CountryCode == 'Syira'] , ' raw data is exported' ))
+
 }
 
-if ('Yemen1' %in% pipInput$CountryCode) {
+
+if ('Yemen1' %in% pipInput$CountryCode ) {
+YemenRaw = Crystal_API_connect(Yemen_config)
+YemenRaw = YemenRaw[YemenRaw$Completed == 'Y' ,]
+print(paste0('total number of completed surveys for Yemen survey is ' , nrow(YemenRaw)))
 YemenRaw = replace_variable_names(YemenRaw , stdNames$Orignial[stdNames$Country == 'Yemen'] , stdNames$Standard[stdNames$Country == 'Yemen'])
+write.csv(YemenRaw , paste0("Raw data/Yemen/Yemen_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Yemen1'] , ".csv"))
+print ( paste0('Yemen ', pipInput$SvyID[pipInput$CountryCode == 'Yemen1'] , ' raw data is exported' ))
+
 }
 
 if ('Lebanon' %in% pipInput$CountryCode) {
+LebRaw = Crystal_API_connect(Leb_config)
+LebRaw = LebRaw[LebRaw$Completed == 'Y' ,]
+print(paste0('total number of completed surveys for Lebanon survey is ' , nrow(LebRaw)))
 LebRaw = replace_variable_names(LebRaw , stdNames$Orignial[stdNames$Country == 'Lebanon'] , stdNames$Standard[stdNames$Country == 'Lebanon'])
+write.csv(LebRaw , paste0("Raw data/Lebanon/Lebanon_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Lebanon'] , ".csv"))
+print ( paste0('Lebanon ', pipInput$SvyID[pipInput$CountryCode == 'Lebanon'] , ' raw data is exported' ))
 }
+
+
+if ('Libya' %in% pipInput$CountryCode) {
+LibyaRaw = Crystal_API_connect(Libya_config)
+LibyaRaw = LibyaRaw[LibyaRaw$Completed == 'Y' ,]
+print(paste0('total number of completed surveys for Libya survey is ' , nrow(LibyaRaw)))
+write.csv(LibyaRaw , paste0("Libya_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Libya'] , ".csv"))
+}
+
+
+```
+
+## selecting core indicators from each country and recoding labels
+
+core indicators are the key demographic and geographic indicators as well as all food security modules
+
+Questionnaires should be included in the respective folders (make sure you upload the one aligned with this version of the pipeline)
+
+```{r  selecting core indicators , echo=TRUE, message=FALSE, warning=FALSE}
 
 
 # select core indicators and recode variables - Syria
@@ -226,7 +231,7 @@ LebRaw_reduced[lcs_vars] = replaceall( LebRaw_reduced [lcs_vars] , c('1' , '2' ,
 
 ```
 
-## Generate master table
+## Generate Master Table
 
 ```{r recoding, echo=TRUE, message=FALSE, warning=FALSE}
 
@@ -381,8 +386,6 @@ geom_text_repel(aes(label = outlier , size = 1 ), na.rm = TRUE, show.legend = F)
 ##Don't remove or fix any value yourself##
 
 
-
-
 ## Reporting on the use of emergency coping strategies 
 
 em_lcs_vars = names (df_master %>% select (contains('em')))
@@ -450,56 +453,81 @@ if (length(xlsx_files) == 1) {
 
 ```
 
+## Admin divisions normalization 
+
+```{r}
+
+
+df_master$ADMIN1Name = dplyr::case_match( df_master$ADMIN1Name , "Rural Damascus" ~ "900230" , "Homs" ~ "900226" , "Hama" ~ "900225" , "As-Sweida" ~ "900221" , "Lattakia" ~ "900228" , "Ar-Raqqa" ~ "900220" , "Al-Hasakeh" ~ "900218" , "Dar'a" ~ "900223"  , "Damascus" ~ "900222" , "Aleppo" ~ "900219" , "Deir-ez-Zor" ~ "900224" , "Tartous" ~ "900231" , "Quneitra" ~ "900229" , "Idleb" ~ "900227" , "Aden" ~ "903632" , "Abyan" ~ "903630" , "Dhamar" ~ "903639" , "Al Jawf" ~ "903635" , "Sa'ada" ~ "903646" , "Lahj" ~ "903643" , "Al Hudaydah" ~ "903634" , "Marib" ~ "903644" , "Al Dhale'e" ~ "903631" , "Ibb" ~ "903642" , "Amanat Al Asimah" ~ "903648" , "Sana'a" ~ "903647" , "Raymah" ~ "903645" , "Al Bayda" ~ "903633" , "Hajjah" ~ "903641" , "Shabwah" ~ "903649" , "Taizz" ~ "903651" , "Amran" ~ "903638"  , "Hadramaut" ~ "903640" , "Al Maharah" ~ "903636" , "Al Mahwit" ~ "903637" , "North" ~ "900943" , "Akkar" ~ "900944" , "Baalbek-El Hermel" ~ "900941" , "Mount Lebanon" ~ "900946" , "South" ~ "900945" , "Bekaa" ~ "900940" , "El Nabatieh" ~ "900947" , "Beirut" ~ "900942"      , .default = NA)
+
+
+```
+
+
 
 ## Weights calculation 
 
 ```{r}
+
+
+
 base_weights <- function (country_name) {
   
-  #subset the master table for the country selected
-  df_sub = df_master[df_master$ADMIN0Name == country_name , ]
-  
-  #read weights input table adm1 sheet 
-  
-folder_path = paste0(getwd() , "/Weights input tables/" , country_name)
-xlsx_files <- list.files(folder_path, pattern = "\\.xlsx$", full.names = TRUE)
-
-input_admin1 = read_excel( xlsx_files, sheet = "adm1")
-
-input_admin1 = input_admin1 [, 3:5]
-  
-  # list of the strata names in the dataset
-  sample_strata = unique (df_sub$ADMIN1Name)
-  print (sample_strata)
-  # list of the strata names in the input file
-  country_strata = unique (input_admin1$adm1_name_en)
-  print (country_strata)
-  
-  # Check if the names are matched between the dataset and the input file
- if (setequal(intersect(sample_strata,country_strata), sample_strata) == TRUE) {
+      #subset the master table for the country selected
+    df_sub = df_master[df_master$ADMIN0Name == country_name , ]
+      
+      #read weights input table adm1 sheet 
+      
+    folder_path = paste0(getwd() , "/Weights input tables/" , country_name)
+    xlsx_files <- list.files(folder_path, pattern = "\\.xlsx$", full.names = TRUE)
     
-  # join the pop figures with the dataset   
-df_sub = full_join(df_sub , input_admin1 , by = join_by ("ADMIN1Name" == "adm1_name_en"))
+    input_admin1 = read_excel( xlsx_files, sheet = "adm1")
+    
+    input_admin1 = input_admin1 [, 1:6]
   
-  # get the number of surveys completed in each strata in the dataset
-sample_size = df_sub %>% group_by(ADMIN1Name) %>% summarise(strata_cnt = n())
+    # list of the strata names in the dataset
+    sample_strata = unique (df_sub$ADMIN1Name)
+    #print ( sample_strata) 
+    # list of the strata names in the input file
+    country_strata = unique (input_admin1$adm1_WFP_code)
+    #print ( country_strata) 
 
-# Join the sample size per strata with the dataset
-df_sub = full_join(df_sub , sample_size , by ="ADMIN1Name")
+    
+    # Check if the names are matched between the dataset and the input file
+   if (setequal(intersect(sample_strata,country_strata), sample_strata) == TRUE) {
+      
+    # join the pop figures with the dataset 
+     
+  input_admin1$adm1_WFP_code = as.character(input_admin1$adm1_WFP_code)
+  
+  df_sub = left_join(df_sub , input_admin1 , by = join_by ("ADMIN1Name" == "adm1_WFP_code"))
+    
+    # get the number of surveys completed in each strata in the dataset
+  sample_size = df_sub %>% group_by(ADMIN1Name) %>% summarise(strata_cnt = n())
+  
+  # Join the sample size per strata with the dataset
+  df_sub = left_join(df_sub , sample_size , by = c("ADMIN1Name" ))
+  
 
-
-# calculate the base weights and print the average and sum
-df_sub$base_weights = (df_sub$adm1_pop_count / sum(df_sub$adm1_pop_count) )/ (df_sub$strata_cnt / sum(df_sub$strata_cnt))
-
-print (paste0("the average of the base weight is " , mean(df_sub$base_weights)))
-
-print (paste0("the sum of the base weight is " , sum(df_sub$base_weights)))
-
-sampling_weights = unique(df_sub[c("ADMIN1Name", "base_weights")])
-
-# merge the sampling weights with the master dataset
-
-df_master = full_join(df_master , sampling_weights , by = "ADMIN1Name")
+  # calculate the base weights and print the average and sum
+  df_sub$base_weights = (df_sub$adm1_pop_count / sum(df_sub$adm1_pop_count) )/ (df_sub$strata_cnt / sum(df_sub$strata_cnt))
+  
+  print (country_name)
+  print (head(df_sub$base_weights))
+  
+  print (paste0("the average of the base weight is " , mean(df_sub$base_weights)))
+  # 
+  print (paste0("the sum of the base weight is " , sum(df_sub$base_weights)))
+  
+  print (boxplot(df_sub$base_weights))
+  
+  sampling_weights = unique(df_sub[c("ADMIN1Name", "base_weights")])
+  
+  # print (sampling_weights)
+  
+  # merge the sampling weights with the master dataset
+  
+  df_master = left_join(df_master , sampling_weights , by = c("ADMIN1Name"))
 
   
   }
@@ -508,7 +536,14 @@ df_master = full_join(df_master , sampling_weights , by = "ADMIN1Name")
 }
 
 
-test = base_weights("Yemen")
+df_master = base_weights("Yemen")
+df_master = base_weights("Lebanon")
+df_master = base_weights("Syria")
+
+df_master$base_weights <- apply(df_master [, c( "base_weights" , "base_weights.x" , "base_weights.y")], 1, function(i) ifelse(all(is.na(i)), NA, i[!is.na(i)]))
+
+df_master <- df_master[ , -which(names(df_master) %in% c("base_weights.x","base_weights.y"))]
+
 
 ```
 
