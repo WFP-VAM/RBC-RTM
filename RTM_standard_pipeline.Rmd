@@ -356,7 +356,7 @@ var_label(df_master$rCSI) <- "Reduced coping strategies index (rCSI)"
 
 ```
 
-## Data Profiling and quality checks
+## Data profiling and quality checks
 
 ```{r data profiling, echo=TRUE, fig.height=5, fig.width=9, message=FALSE, warning=FALSE}
 
@@ -617,10 +617,88 @@ write.xlsx(df_master ,paste0( "Cleaned data/RTM_master_tbl " , Sys.Date() ,  ".x
 
 ```
 
-## Regional Master Table Connection and Feeding
+## Regional Master Table Connection 
 
 ```{r upload data, echo=TRUE, message=FALSE, warning=FALSE}
 
 library(RODBC)
+library(tibble)
+
+
+
+## delete from master table columns that will not be uploaded
+
+df_master$CmbAdjWt = df_master$base_weights
+
+df_master = df_master %>% select (- c(EnuName ,HHH_YN,HHHAge, IDPDuration,HWaterSRC, MktAccess_1M, HHIncChg_1M, RespNationality, HHSizebelow2, HToiletType, HElectricitySRC_1,HElectricitySRC_2, HElectricitySRC_3, base_weights , ADMIN2Name ) )
+
+df_master$ADMIN0Name [df_master$ADMIN0Name == "Syria"] = 238
+df_master$ADMIN0Name [df_master$ADMIN0Name == "Yemen"] = 269
+df_master$ADMIN0Name [df_master$ADMIN0Name == "Lebanon"] = 141
+
+df_master$ADMIN0Name = as.numeric(df_master$ADMIN0Name)
+df_master$ADMIN1Name = as.numeric(df_master$ADMIN1Name)
+
+## read config file
+config = read.table("Pipeline input/SQL_connection.txt", header = FALSE, sep = ":", dec = ".")
+
+server <- trimws(config$V2[config$V1 == "Servername"])
+db_name <- trimws (config$V2[config$V1 == "Db"])
+user <- trimws (config$V2[config$V1 == "Username"])
+pwd <- trimws (config$V2[config$V1 == "Password"])
+
+ 
+# Establishing the Connection
+ 
+# Attempt to connect to the SQL Server database using the connection string.
+
+conn <- odbcConnect(db_name, uid = user, pwd = pwd)
+
+
+# Check if the connection is successful.
+if (is.null(conn)) {
+  cat("Connection failed\n")
+} else {
+  cat("Connection successful!\n")
+  
+qry1 = "Select top 10 * from Obs_Master"
+Master_head <- sqlQuery(conn, qry1)
+
+# Add columns that don't exist
+vars_to_add <- setdiff(names(Master_head ) , names(df_master))
+for (c in vars_to_add) {
+  df_master[[c]] = NA
+}
+
+df_master = df_master %>% select (- ObsID)
+
+# Align data types
+for (c in names(df_master)) {
+class(df_master[[c]]) <- class(Master_head[[c]])
+}
+   
+   
+# Close the connection to the database 
+  odbcClose(conn)
+   
+
+}
+
+```
+
+```{r}
+
+library(dplyr)
+library(DBI)
+
+# Establish a connection with SQL Server
+con <- dbConnect(odbc::odbc(), driver = "SQL Server" , server = server, database = db_name, uid = user , pwd = pwd)
+
+
+# Upload the modified dataframe "a" into the table "b" in SQL Server
+dbWriteTable(con, "Obs_Master", df_master, overwrite = TRUE)
+
+# Close the database connection
+dbDisconnect(con)
 
 ```
