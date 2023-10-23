@@ -186,6 +186,61 @@ write.csv(LibyaRaw , paste0("Libya_raw_" , pipInput$SvyID[pipInput$CountryCode =
 
 ```
 
+
+
+## ADMIN 2 names normalization
+
+```{r message=FALSE, warning=FALSE}
+if ("Yemen1" %in% pipInput$CountryCode){
+YemStrata = read.csv("C:/Users/amira.swedan/OneDrive - World Food Programme/mVAM regular activities/Regional/RTM modified standard pipeline/yem_bnd_adm2_wfp_all.csv" )
+
+YemStrata$Dis_NAM_En = trimws(YemStrata$Dis_NAM_En)
+
+for (i in 1:length (YemenRaw$ADMIN2Name)) {
+  YemenRaw$ADMIN2Name[i] = stringr::str_trim(YemenRaw$ADMIN2Name[i])
+  if(YemenRaw$ADMIN2Name[i] %in% YemStrata$Dis_NAM_En ){
+YemenRaw$ADMIN2Name[i] = YemStrata$adm2_id [YemenRaw$ADMIN2Name[i] == YemStrata$Dis_NAM_En]
+  } 
+}
+
+}
+
+
+if ("Lebanon" %in% pipInput$CountryCode){
+LebStrata = read_excel("C:/Users/amira.swedan/OneDrive - World Food Programme/mVAM regular activities/Regional/RTM modified standard pipeline/Codebook/lbn_bnd_adm3_wfp_a_20210325.xlsx" , sheet = 1)
+
+LebStrata$adm2_name = trimws(LebStrata$adm2_name)
+
+for (i in 1:length (LebRaw$ADMIN2Name)) {
+  LebRaw$ADMIN2Name[i] = str_trim(LebRaw$ADMIN2Name[i])
+  if(LebRaw$ADMIN2Name[i] %in% LebStrata$adm2_name ){
+LebRaw$ADMIN2Name[i] = LebStrata$adm2_id [LebRaw$ADMIN2Name[i] == LebStrata$adm2_name]
+  } else { print (LebRaw$ADMIN2Name[i])}
+}
+
+}
+
+
+
+if ("Syria" %in% pipInput$CountryCode){
+SyrStrata = read_excel("C:/Users/amira.swedan/OneDrive - World Food Programme/mVAM regular activities/Regional/RTM modified standard pipeline/Codebook/syr_bnd_adm3_wfp_a_20210325.xlsx" , sheet = 1)
+
+SyrStrata$adm2_name = trimws(SyrStrata$adm2_name)
+
+for (i in 1:length (SyriaRaw$ADMIN2Name)) {
+  SyriaRaw$ADMIN2Name[i] = str_trim(SyriaRaw$ADMIN2Name[i])
+  if(SyriaRaw$ADMIN2Name[i] %in% SyrStrata$adm2_name ){
+SyriaRaw$ADMIN2Name[i] = SyrStrata$adm2_id [SyriaRaw$ADMIN2Name[i] == SyrStrata$adm2_name]
+  } else { print (SyriaRaw$ADMIN2Name[i])}
+}
+
+}
+```
+
+
+
+
+
 ## selecting core indicators from each country and recoding labels
 
 core indicators are the key demographic and geographic indicators as well as all food security modules
@@ -515,12 +570,19 @@ if (length(xlsx_files) == 1) {
 
 ```
 
-## Admin divisions normalization
+## Admin 1 divisions normalization
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 
 
-df_master$ADMIN1Name = dplyr::case_match( df_master$ADMIN1Name , "Rural Damascus" ~ "900230" , "Homs" ~ "900226" , "Hama" ~ "900225" , "As-Sweida" ~ "900221" , "Lattakia" ~ "900228" , "Ar-Raqqa" ~ "900220" , "Al-Hasakeh" ~ "900218" , "Dar'a" ~ "900223"  , "Damascus" ~ "900222" , "Aleppo" ~ "900219" , "Deir-ez-Zor" ~ "900224" , "Tartous" ~ "900231" , "Quneitra" ~ "900229" , "Idleb" ~ "900227" , "Aden" ~ "903632" , "Abyan" ~ "903630" , "Dhamar" ~ "903639" , "Al Jawf" ~ "903635" , "Sa'ada" ~ "903646" , "Lahj" ~ "903643" , "Al Hudaydah" ~ "903634" , "Marib" ~ "903644" , "Al Dhale'e" ~ "903631" , "Ibb" ~ "903642" , "Amanat Al Asimah" ~ "903648" , "Sana'a" ~ "903647" , "Raymah" ~ "903645" , "Al Bayda" ~ "903633" , "Hajjah" ~ "903641" , "Shabwah" ~ "903649" , "Taizz" ~ "903651" , "Amran" ~ "903638"  , "Hadramaut" ~ "903640" , "Al Maharah" ~ "903636" , "Al Mahwit" ~ "903637" , "North" ~ "900943" , "Akkar" ~ "900944" , "Baalbek-El Hermel" ~ "900941" , "Mount Lebanon" ~ "900946" , "South" ~ "900945" , "Bekaa" ~ "900940" , "El Nabatieh" ~ "900947" , "Beirut" ~ "900942"      , .default = NA)
+df_master$ADMIN1Name = dplyr::case_match( df_master$ADMIN1Name , "Rural Damascus" ~ "900230" , "Homs" ~ "900226" , "Hama" ~ "900225" , "As-Sweida" ~ "900221" , "Lattakia" ~ "900228" , "Ar-Raqqa" ~ "900220" , "Al-Hasakeh" ~ "900218" , "Dar'a" ~ "900223"  , "Damascus" ~ "900222" , "Aleppo" ~ "900219" , "Deir-ez-Zor" ~ "900224" , "Tartous" ~ "900231" , "Quneitra" ~ "900229" , "Idleb" ~ "900227" , "Aden" ~ "903632" , "Abyan" ~ "903630" , "Dhamar" ~ "903639" , "Al Jawf" ~ "903635" , "Sa'ada" ~ "903646" ,"Sa'dah" ~ "903646" ,"Lahj" ~ "903643" , "Al Hudaydah" ~ "903634" , "Marib" ~ "903644" , "Al Dhale'e" ~ "903631" , "Ibb" ~ "903642" , "Amanat Al Asimah" ~ "903648" , "Sana'a" ~ "903647" , "Raymah" ~ "903645" , "Sana'a City" ~ "903648" ,"Ad Dali" ~ "903631"   , "Al Bayda" ~ "903633" , "Hajjah" ~ "903641" , "Shabwah" ~ "903649" , "Taizz" ~ "903651" , "Amran" ~ "903638"  , "Hadramaut" ~ "903640" , "Al Maharah" ~ "903636" , "Al Mahwit" ~ "903637" , "North" ~ "900943" , "Akkar" ~ "900944" , "Baalbek-El Hermel" ~ "900941" , "Mount Lebanon" ~ "900946" , "South" ~ "900945" , "Bekaa" ~ "900940" , "El Nabatieh" ~ "900947" , "Beirut" ~ "900942" , "Socotra" ~ "903650"     )
+
+df_master$ADMIN0Name [df_master$ADMIN0Name == "Syria"] = 238
+df_master$ADMIN0Name [df_master$ADMIN0Name == "Yemen"] = 269
+df_master$ADMIN0Name [df_master$ADMIN0Name == "Lebanon"] = 141
+
+df_master$ADMIN0Name = as.numeric(df_master$ADMIN0Name)
+df_master$ADMIN1Name = as.numeric(df_master$ADMIN1Name)
 
 
 ```
@@ -605,21 +667,16 @@ df_master$base_weights <- apply(df_master [, c( "base_weights" , "base_weights.x
 df_master <- df_master[ , -which(names(df_master) %in% c("base_weights.x","base_weights.y"))]
 
 ## Pay attention to the extreme weights - Exclude them before running your analysis ##
+
+
+write.csv(df_master ,paste0( "Cleaned data/RTM_master_tbl " , Sys.Date() ,  ".csv"  ) )
+
+print ("cleaned data is exported in csv")
 ```
 
-## Export master table in xlsx file
+## Regional Master Table Connection
 
-```{r export data, message=FALSE, warning=FALSE}
-
-library(xlsx)
-
-write.xlsx(df_master ,paste0( "Cleaned data/RTM_master_tbl " , Sys.Date() ,  ".xlsx"  ))
-
-```
-
-## Regional Master Table Connection 
-
-```{r upload data, echo=TRUE, message=FALSE, warning=FALSE}
+```{r upload data, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 
 library(RODBC)
 library(tibble)
@@ -630,14 +687,9 @@ library(tibble)
 
 df_master$CmbAdjWt = df_master$base_weights
 
-df_master = df_master %>% select (- c(EnuName ,HHH_YN,HHHAge, IDPDuration,HWaterSRC, MktAccess_1M, HHIncChg_1M, RespNationality, HHSizebelow2, HToiletType, HElectricitySRC_1,HElectricitySRC_2, HElectricitySRC_3, base_weights , ADMIN2Name ) )
+df_master = df_master %>% select (- c(EnuName ,HHH_YN,HHHAge, IDPDuration,HWaterSRC, MktAccess_1M, HHIncChg_1M, RespNationality, HHSizebelow2, HToiletType, HElectricitySRC_1,HElectricitySRC_2, HElectricitySRC_3, base_weights  ) )
 
-df_master$ADMIN0Name [df_master$ADMIN0Name == "Syria"] = 238
-df_master$ADMIN0Name [df_master$ADMIN0Name == "Yemen"] = 269
-df_master$ADMIN0Name [df_master$ADMIN0Name == "Lebanon"] = 141
 
-df_master$ADMIN0Name = as.numeric(df_master$ADMIN0Name)
-df_master$ADMIN1Name = as.numeric(df_master$ADMIN1Name)
 
 ## read config file
 config = read.table("Pipeline input/SQL_connection.txt", header = FALSE, sep = ":", dec = ".")
@@ -684,9 +736,11 @@ class(df_master[[c]]) <- class(Master_head[[c]])
 
 }
 
+
+
 ```
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 
 library(dplyr)
 library(DBI)
@@ -696,7 +750,7 @@ con <- dbConnect(odbc::odbc(), driver = "SQL Server" , server = server, database
 
 
 # Upload the modified dataframe "a" into the table "b" in SQL Server
-dbWriteTable(con, "Obs_Master", df_master, overwrite = TRUE)
+#dbWriteTable(con, "Obs_Master", df_master, overwrite = TRUE)
 
 # Close the database connection
 dbDisconnect(con)
