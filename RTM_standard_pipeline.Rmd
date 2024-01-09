@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This data pipeline automates the process of RTM/mVAM data management for the RTM core variables related to the key indicators. The standard pipeline procedures are aligned with [RBC RTM SOPs](https://wfp-my.sharepoint.com/:w:/g/personal/amira_swedan_wfp_org/EVistHIsU_xAsdsF-2SEcRoB-cMrwS-IuyjyscsUVLfuig?e=SH9hHK) that includes a detailed explanation about the methodology applied in this script.
 
-The key objective of the standard pipeline is to maintain the same process of data management across all countries running RTM/mVAM activities.
+The key objective of the standard pipeline is to maintain the same process of data management across all RBC countries running RTM/mVAM activities.
 
 [**The key functions implemented in this standard pipeline are**:]{.underline}
 
@@ -30,13 +30,13 @@ The key objective of the standard pipeline is to maintain the same process of da
 
 Before running this pipeline script, you need to update the input file included in the script dependencies *RTM_pipeline_input.xlsx*, Specify in this file the start and end date that you wish to extract the data within. [*Check readme for more details*]
 
-In addition to modifying the input file, make sure that all population figures included in the weights input table file are updated, and the desired indicators are selected.
+In addition to modifying the input file, make sure that all population figures included in the weights input table file are updated, and the desired indicators are included.
 
 The script running environment is included in the *readme* file, [make sure that you have all required packages installed]{.underline} before running the script
 
 ## Load packages and read relevant input files
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+```{r load packages, echo=TRUE, message=FALSE, warning=FALSE}
 
 #load required packages
 
@@ -83,7 +83,7 @@ Syria_config = list ('APIKey' = paste("Syria_" , unlist (strsplit(pipInput$EndDa
 
 Yemen_config = list ('APIKey' = paste("Yemen1_" , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Yemen1'] , "/")) [1] , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Yemen1'] , "/")) [3] , sep = ""),  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Yemen1']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Yemen1'] )
 
-Leb_config = list ('APIKey' = "Lebanon_112022",  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Lebanon']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Lebanon'] )
+Leb_config = list ('APIKey' = "Lebanon_112023",  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Lebanon']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Lebanon'] )
 
 Libya_config = list ('APIKey' =  "Libya_072023",  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Libya']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Libya'] )
 
@@ -151,7 +151,7 @@ SyriaRaw = SyriaRaw[SyriaRaw$Completed == 'Y' ,]
 print(paste0('total number of completed surveys for Syria survey is ' , nrow(SyriaRaw)))
 SyriaRaw = replace_variable_names(SyriaRaw , stdNames$Orignial[stdNames$Country == 'Syria'] , stdNames$Standard[stdNames$Country == 'Syria'])
 write.csv(SyriaRaw , paste0("Raw data/Syria/Syria_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Syria'] , "_" , Sys.Date() ,  ".csv"))
-print ( paste0('Syria ', pipInput$SvyID[pipInput$CountryCode == 'Syira'] , ' raw data is exported' ))
+print ( paste0('Syria ', pipInput$SvyID[pipInput$CountryCode == 'Syria'] , ' raw data is exported' ))
 
 }
 
@@ -190,7 +190,7 @@ write.csv(LibyaRaw , paste0("Libya_raw_" , pipInput$SvyID[pipInput$CountryCode =
 
 ## ADMIN 2 names normalization
 
-```{r message=FALSE, warning=FALSE}
+```{r Admin2 normalization, message=TRUE, warning=FALSE}
 if ("Yemen1" %in% pipInput$CountryCode){
 YemStrata = read.csv("C:/Users/amira.swedan/OneDrive - World Food Programme/mVAM regular activities/Regional/RTM modified standard pipeline/yem_bnd_adm2_wfp_all.csv" )
 
@@ -236,9 +236,6 @@ SyriaRaw$ADMIN2Name[i] = SyrStrata$adm2_id [SyriaRaw$ADMIN2Name[i] == SyrStrata$
 
 }
 ```
-
-
-
 
 
 ## selecting core indicators from each country and recoding labels
@@ -305,22 +302,28 @@ YemenRaw_reduced[lcs_vars] = replaceall( YemenRaw_reduced [lcs_vars] , c('1' , '
 
 
 if ('Lebanon' %in% pipInput$CountryCode) {
-LebRaw$HHSize = as.numeric(LebRaw$HHSizebelow2) +  as.numeric(LebRaw$HHSizebetween2_5) + as.numeric(LebRaw$HHSizebetween5_17) + as.numeric(LebRaw$HHSizebetween18_59) + as.numeric(LebRaw$HHSize60above)
+LebRaw$HHSize = as.numeric(LebRaw$HHSizebelow5) +  as.numeric(LebRaw$HHSize_5_17) + as.numeric(LebRaw$HHSize_18_59_m) + as.numeric(LebRaw$HHSize_18_59_f) + as.numeric(LebRaw$HHSize_above60)
 
-LebRaw_reduced = LebRaw %>%  select(EnuName, ObsDate, RspID, RespNationality , HHSizebelow2 , HHSize,  HHHSex, HWaterSRC, HToiletType , HElectricitySRC , ADMIN0Name , ADMIN1Name , ADMIN2Name , SvyDate,RESPAge,HDwellType, FCSStap, FCSPulse, FCSDairy, FCSPr, FCSVeg, FCSFruit, FCSFat, FCSSugar, rCSILessQlty, rCSIBorrow, rCSIMealSize, rCSIMealNb, rCSIMealAdult = rCSIMealAdul, Lcs_stress_DomAsset ,  Lcs_stress_CrdtFood , Lcs_crisis_ProdAssets , Lcs_em_ResAsset, Lcs_stress_BorrowCash  , Lcs_stress_LessSchool , Lcs_crisis_OutSchool , Lcs_crisis_Health  , Lcs_em_Begged  , FCS_SRf  )
+names(LebRaw) = trimws(names(LebRaw))
+LebRaw$HHHSex [LebRaw$Relation_to_HoH == 1] = LebRaw$RESPSex [LebRaw$Relation_to_HoH == 1]
+LebRaw$HoHH_Education [LebRaw$Relation_to_HoH == 1] = LebRaw$RESPEducation [LebRaw$Relation_to_HoH == 1]
+
+
+
+LebRaw_reduced = LebRaw %>%  select(EnuName, ObsDate, RspID, RespNationality, Relation_to_HoH,  RESPEducation , HHSize,  HHHSex, HWaterSRC ,HHHEducation = HoHH_Education, HElectricitySRC = MainSourceElectricity , HToiletType = Hhtoiletfacility, ADMIN0Name , ADMIN1Name , ADMIN2Name , SvyDate,RESPAge,HDwellType = HHHousing, FCSStap, FCSPulse, FCSDairy, FCSPr, FCSVeg, FCSFruit, FCSFat, FCSSugar, rCSILessQlty, rCSIBorrow, rCSIMealSize, rCSIMealNb, rCSIMealAdult = rCSIMealAdul, LcsEN_stress_BorrowCash ,  LcsEN_stress_Utilities , LcsEN_stress_DomAsset ,LcsEN_stress_health1, LcsEN_crisis_Health  , LcsEN_crisis_ProdAssets  , LcsEN_crisis_Housing  , LcsEN_crisis_OutSchool  , LcsEN_crisis_ChildWork  , LcsEN_em_IllegalAct, LcsEN_em_Begged, LcsEN_em_Marriage, LcsEN_em_ResAsset,LhCSIEnAccess, FCS_SRf , MktAccess_7D )
 
 LebRaw_reduced  = LebRaw_reduced %>% separate(HElectricitySRC , c("HElectricitySRC_1" , "HElectricitySRC_2" , "HElectricitySRC_3"))
 
-convert_to_char = c("RespNationality" , "HHHSex" , "HWaterSRC" , "HToiletType" , "HElectricitySRC_1" , "HElectricitySRC_2" , "HElectricitySRC_3" , "FCS_SRf")
-
-LebRaw_reduced[,convert_to_char] = apply(LebRaw_reduced[,convert_to_char] , 2 , as.character)
+# convert_to_char = c("RespNationality" , "HHHSex" , "HWaterSRC" , "HToiletType" , "HElectricitySRC_1" , "HElectricitySRC_2" , "HElectricitySRC_3" , "FCS_SRf")
+# 
+# LebRaw_reduced[,convert_to_char] = apply(LebRaw_reduced[,convert_to_char] , 2 , as.character)
 
 num_vars = c("RESPAge" , "HHSize" , "FCSStap" ,	"FCSPulse",	"FCSVeg",	"FCSFruit",	"FCSPr",	"FCSDairy",	"FCSFat",	"FCSSugar", "rCSILessQlty",	"rCSIBorrow",	"rCSIMealNb",	"rCSIMealSize",	"rCSIMealAdult")
 
 LebRaw_reduced [, num_vars] = apply (LebRaw_reduced [, num_vars] , 2 , as.numeric)
 
 
-LebRaw_reduced = LebRaw_reduced %>% mutate(RespNationality=recode(RespNationality, '1' ~'Leb' , '2' ~ 'Syr_Leb' , '3' ~ 'Pal_Leb' , '4' ~ 'Syr' , '5' ~ 'Pal' , '6' ~ 'Irq' , '7' ~ 'Migrant' , '8' ~ 'Others' ) , HHHSex=recode(HHHSex, '1' ~ 'Male' , '2' ~ 'Female') , HWaterSRC = recode(HWaterSRC, '1' ~ 'Piped' , '2' ~ 'PublicTap' , '3' ~ 'Well_pump' ,'4' ~ 'ProtectedWell' , '5' ~ 'Distilled_water' , '6' ~ 'UnprotectedSpring' , '7' ~ 'tank_truck' , '8' ~ 'car_tank' , '9' ~ 'water_Seller' , '10' ~ 'bottled_water' , '11' ~ 'surface_water' , '12' ~ 'Other') , HToiletType = recode(HToiletType, '1' ~ 'Flush_toilet' , '2' ~ 'hole_tiledbath' , '3' ~ 'hole_unpavedbath' , '4' ~ 'bucket' , '5' ~ 'OpenAir') , HElectricitySRC_1 = recode(HElectricitySRC_1 , '1' ~ 'company' , '2' ~ 'NonOwned_Generator' , '3' ~ 'Owned_Generator' , '4' ~ 'Relatives' , '5' ~ 'Solar') ,HElectricitySRC_2 = recode(HElectricitySRC_2 , '1' ~ 'company' , '2' ~ 'NonOwned_Generator' , '3' ~ 'Owned_Generator' , '4' ~ 'Relatives' , '5' ~ 'Solar') , HElectricitySRC_3 = recode(HElectricitySRC_3 , '1' ~ 'company' , '2' ~ 'NonOwned_Generator' , '3' ~ 'Owned_Generator' , '4' ~ 'Relatives' , '5' ~ 'Solar')  , FCS_SRf = recode(FCS_SRf , '1' ~ 'OwnProd' , '2' ~ 'Purchase' ,'3' ~ 'Labour'  ,'4' ~ 'Gift' , '5' ~ 'FoodAssist' , '6' ~ 'Gov' , '7' ~ 'Community' , '8' ~ 'Other') )
+LebRaw_reduced = LebRaw_reduced %>% mutate(RespNationality=recode(RespNationality, '1' ~'Leb' , '2' ~ 'Syr_Leb' , '3' ~ 'Pal_Leb' , '4' ~ 'Syr' , '5' ~ 'Pal' , '6' ~ 'Irq' , '7' ~ 'Migrant' , '8' ~ 'Others' ) , HHHSex=recode(HHHSex, '1' ~ 'Male' , '2' ~ 'Female') , HWaterSRC = recode(HWaterSRC, '1' ~ 'Piped' , '2' ~ 'PublicTap' , '3' ~ 'Well_pump' ,'4' ~ 'ProtectedWell' , '5' ~ 'Distilled_water' , '6' ~ 'UnprotectedSpring' , '7' ~ 'tank_truck' , '8' ~ 'car_tank' , '9' ~ 'water_Seller' , '10' ~ 'bottled_water' , '11' ~ 'surface_water' , '12' ~ 'Other') , HToiletType = recode(HToiletType, '1' ~ 'Flush_toilet' , '2' ~ 'hole_tiledbath' , '3' ~ 'hole_unpavedbath' , '4' ~ 'bucket' , '5' ~ 'OpenAir' , '6' ~ 'Refused') , HElectricitySRC_1 = recode(HElectricitySRC_1 , '1' ~ 'company' , '2' ~ 'NonOwned_Generator' , '3' ~ 'Owned_Generator' , '4' ~ 'Relatives' , '5' ~ 'Solar' , '6' ~ 'Battery') ,HElectricitySRC_2 = recode(HElectricitySRC_2 , '1' ~ 'company' , '2' ~ 'NonOwned_Generator' , '3' ~ 'Owned_Generator' , '4' ~ 'Relatives' , '5' ~ 'Solar' , '6' ~ 'Battery') , HElectricitySRC_3 = recode(HElectricitySRC_3 , '1' ~ 'company' , '2' ~ 'NonOwned_Generator' , '3' ~ 'Owned_Generator' , '4' ~ 'Relatives' , '5' ~ 'Solar' , '6' ~ 'Battery')  , FCS_SRf = recode(FCS_SRf , '1' ~ 'OwnProd' , '2' ~ 'Purchase' ,'3' ~ 'Labour'  ,'4' ~ 'Gift' , '5' ~ 'FoodAssist' , '6' ~ 'Gov' , '7' ~ 'Community' , '8' ~ 'Other') )
 
 lcs_vars = names (LebRaw_reduced %>% select (starts_with('Lcs')))
 LebRaw_reduced[lcs_vars] = replaceall( LebRaw_reduced [lcs_vars] , c('1' , '2' , '3' , '4') , c('No' , 'AlreadyExhausted' , 'Yes'  , 'NotApplicable') , quiet = TRUE)
@@ -331,13 +334,100 @@ LebRaw_reduced[lcs_vars] = replaceall( LebRaw_reduced [lcs_vars] , c('1' , '2' ,
 
 ```
 
+
+## Construct sampling weights 
+
+```{r}
+
+## Before you run this chunck, make sure you have the weights input table  updated under the respective folder
+
+base_weights <- function (country_name , df) {
+  
+folder_path = paste0(getwd() , "/Weights input tables" )
+xlsx_files <- list.files(folder_path, pattern = "\\.xlsx$", full.names = TRUE)
+input_admin1 = read_excel( xlsx_files, sheet = country_name)
+
+# list of the strata names in the dataset
+sample_strata = unique (df$ADMIN1Name)
+print ( sample_strata) 
+# list of the strata names in the input file
+country_strata = unique (input_admin1$adm1_name_en)
+print ( country_strata) 
+
+    
+# Check if the names are matched between the dataset and the input file
+if (setequal(intersect(sample_strata,country_strata), sample_strata) == TRUE)
+  {
+
+# join the pop figures with the dataset 
+     
+input_admin1$adm1_name_en = as.character(input_admin1$adm1_name_en)
+df$ADMIN1Name = as.character(df$ADMIN1Name) 
+  
+df = left_join(df , input_admin1 , by = join_by ("ADMIN1Name" == "adm1_name_en"))
+    
+# get the number of surveys completed in each strata in the dataset
+sample_size = df %>% group_by(ADMIN1Name) %>% summarise(strata_cnt = n())
+print (paste0("Here is the sample size" , sample_size))
+  
+# Join the sample size per strata with the dataset
+df = left_join(df , sample_size , by = c("ADMIN1Name" ))
+  
+
+# calculate the base weights and print the average and sum
+df$base_weights = (df$adm1_pop_count / sum(df$adm1_pop_count) )/ (df$strata_cnt / sum(df$strata_cnt))
+  
+print (country_name)
+print (head(df$base_weights))
+  
+print (paste0("the average of the base weight is " , mean(df$base_weights)))
+print (paste0("the sum of the base weight is " , sum(df$base_weights)))
+print (boxplot(df$base_weights))
+  
+return(df)
+  
+  }
+  
+  else {print ( "strata names are not matching or maybe one of the strata is missing in the input table" )}
+}
+
+YemenRaw_reduced = base_weights ("Yemen" , YemenRaw_reduced)
+SyriaRaw_reduced = base_weights("Syria" , SyriaRaw_reduced)
+LebRaw_reduced = base_weights("Lebanon" , LebRaw_reduced )
+
+
+
+## Construct post-stratification weights for Lebanon
+
+# Re-categorize HHHEducation to 3 groups 
+LebRaw_reduced$HHHEdu_3gps [(LebRaw_reduced$HHHEducation == "0" | LebRaw_reduced$HHHEducation == "1" | LebRaw_reduced$HHHEducation == "99") ] = "Illiterate_Primary"
+LebRaw_reduced$HHHEdu_3gps [(LebRaw_reduced$RESPEducation == "0" | LebRaw_reduced$RESPEducation == "1" | LebRaw_reduced$HHHEducation == "99") & LebRaw_reduced$Relation_to_HoH == "1"  ] = "Illiterate_Primary"
+
+LebRaw_reduced$HHHEdu_3gps [(LebRaw_reduced$HHHEducation == "2" | LebRaw_reduced$HHHEducation == "3")] = "Secondary"
+LebRaw_reduced$sample_HHHEdu_3gps [(LebRaw_reduced$RESPEducation == "2"  | LebRaw_reduced$RESPEducation == "3") & (LebRaw_reduced$Relation_to_HoH == "1")] = "Secondary"
+
+LebRaw_reduced$HHHEdu_3gps [( LebRaw_reduced$HHHEducation == "4" | LebRaw_reduced$HHHEducation == "5" | LebRaw_reduced$HHHEducation == "6" | LebRaw_reduced$HHHEducation == "7")] = "Higher"
+
+LebRaw_reduced$HHHEdu_3gps [( LebRaw_reduced$RESPEducation == "4" | LebRaw_reduced$RESPEducation == "5" | LebRaw_reduced$RESPEducation == "6" | LebRaw_reduced$RESPEducation == "7") & (LebRaw_reduced$Relation_to_HoH == "1")] = "Higher"
+
+tbl1 = LebRaw_reduced %>% group_by(ADMIN1Name  ) %>% summarise(cnt_gov = n())
+
+tbl2 = LebRaw_reduced %>% group_by(ADMIN1Name , HHHEdu_3gps ) %>% summarise(cnt = n())
+
+full_tbl = full_join(tbl1 , tbl2)
+full_tbl$HHHEdu_3gps_sample_perc = full_tbl$cnt / full_tbl$cnt_gov
+LebRaw_reduced = full_join(LebRaw_reduced , full_tbl  , by = c("ADMIN1Name" , "HHHEdu_3gps"))
+
+```
+
+
+
 ## Generate Master Table
 
-```{r recoding, echo=TRUE, message=FALSE, warning=FALSE}
+```{r generate master table, echo=TRUE, message=FALSE, warning=FALSE}
 
 df_master = full_join(SyriaRaw_reduced , YemenRaw_reduced)
 df_master = full_join( df_master, LebRaw_reduced)
-
 
 
 ## Check that there are no missing values 
@@ -354,12 +444,11 @@ for (i in 1:length(no_nulls)) {
   
 }
 
-#View(df_master[6093:7104,])
 ```
 
 ## Food Security Indicators Calculation
 
-```{r indicators , echo=TRUE, message=FALSE, warning=FALSE}
+```{r calculate indicators , echo=TRUE, message=FALSE, warning=FALSE}
 
 
 #assign variable and value labels
@@ -572,7 +661,7 @@ if (length(xlsx_files) == 1) {
 
 ## Admin 1 divisions normalization
 
-```{r message=FALSE, warning=FALSE}
+```{r admin1 normalization, message=FALSE, warning=FALSE}
 
 
 df_master$ADMIN1Name = dplyr::case_match( df_master$ADMIN1Name , "Rural Damascus" ~ "900230" , "Homs" ~ "900226" , "Hama" ~ "900225" , "As-Sweida" ~ "900221" , "Lattakia" ~ "900228" , "Ar-Raqqa" ~ "900220" , "Al-Hasakeh" ~ "900218" , "Dar'a" ~ "900223"  , "Damascus" ~ "900222" , "Aleppo" ~ "900219" , "Deir-ez-Zor" ~ "900224" , "Tartous" ~ "900231" , "Quneitra" ~ "900229" , "Idleb" ~ "900227" , "Aden" ~ "903632" , "Abyan" ~ "903630" , "Dhamar" ~ "903639" , "Al Jawf" ~ "903635" , "Sa'ada" ~ "903646" ,"Sa'dah" ~ "903646" ,"Lahj" ~ "903643" , "Al Hudaydah" ~ "903634" , "Marib" ~ "903644" , "Al Dhale'e" ~ "903631" , "Ibb" ~ "903642" , "Amanat Al Asimah" ~ "903648" , "Sana'a" ~ "903647" , "Raymah" ~ "903645" , "Sana'a City" ~ "903648" ,"Ad Dali" ~ "903631"   , "Al Bayda" ~ "903633" , "Hajjah" ~ "903641" , "Shabwah" ~ "903649" , "Taizz" ~ "903651" , "Amran" ~ "903638"  , "Hadramaut" ~ "903640" , "Al Maharah" ~ "903636" , "Al Mahwit" ~ "903637" , "North" ~ "900943" , "Akkar" ~ "900944" , "Baalbek-El Hermel" ~ "900941" , "Mount Lebanon" ~ "900946" , "South" ~ "900945" , "Bekaa" ~ "900940" , "El Nabatieh" ~ "900947" , "Beirut" ~ "900942" , "Socotra" ~ "903650"     )
@@ -587,91 +676,12 @@ df_master$ADMIN1Name = as.numeric(df_master$ADMIN1Name)
 
 ```
 
-## Weights calculation
+
 
 ```{r}
+df_master$CmbAdjWt = NA
 
-
-
-base_weights <- function (country_name) {
-  
-      #subset the master table for the country selected
-    df_sub = df_master[df_master$ADMIN0Name == country_name , ]
-      
-      #read weights input table adm1 sheet 
-      
-    folder_path = paste0(getwd() , "/Weights input tables/" , country_name)
-    xlsx_files <- list.files(folder_path, pattern = "\\.xlsx$", full.names = TRUE)
-    
-    input_admin1 = read_excel( xlsx_files, sheet = "adm1")
-    
-    input_admin1 = input_admin1 [, 1:6]
-  
-    # list of the strata names in the dataset
-    sample_strata = unique (df_sub$ADMIN1Name)
-    #print ( sample_strata) 
-    # list of the strata names in the input file
-    country_strata = unique (input_admin1$adm1_WFP_code)
-    #print ( country_strata) 
-
-    
-    # Check if the names are matched between the dataset and the input file
-   if (setequal(intersect(sample_strata,country_strata), sample_strata) == TRUE) {
-      
-    # join the pop figures with the dataset 
-     
-  input_admin1$adm1_WFP_code = as.character(input_admin1$adm1_WFP_code)
-  
-  df_sub = left_join(df_sub , input_admin1 , by = join_by ("ADMIN1Name" == "adm1_WFP_code"))
-    
-    # get the number of surveys completed in each strata in the dataset
-  sample_size = df_sub %>% group_by(ADMIN1Name) %>% summarise(strata_cnt = n())
-  
-  # Join the sample size per strata with the dataset
-  df_sub = left_join(df_sub , sample_size , by = c("ADMIN1Name" ))
-  
-
-  # calculate the base weights and print the average and sum
-  df_sub$base_weights = (df_sub$adm1_pop_count / sum(df_sub$adm1_pop_count) )/ (df_sub$strata_cnt / sum(df_sub$strata_cnt))
-  
-  print (country_name)
-  print (head(df_sub$base_weights))
-  
-  print (paste0("the average of the base weight is " , mean(df_sub$base_weights)))
-  # 
-  print (paste0("the sum of the base weight is " , sum(df_sub$base_weights)))
-  
-  print (boxplot(df_sub$base_weights))
-  
-  sampling_weights = unique(df_sub[c("ADMIN1Name", "base_weights")])
-  
-  # print (sampling_weights)
-  
-  # merge the sampling weights with the master dataset
-  
-  df_master = left_join(df_master , sampling_weights , by = c("ADMIN1Name"))
-
-  
-  }
-  
-  else {print ( "strata names are not matching or maybe one of the strata is missing in the input table" )}
-}
-
-
-df_master = base_weights("Yemen")
-df_master = base_weights("Lebanon")
-df_master = base_weights("Syria")
-
-df_master$base_weights <- apply(df_master [, c( "base_weights" , "base_weights.x" , "base_weights.y")], 1, function(i) ifelse(all(is.na(i)), NA, i[!is.na(i)]))
-
-df_master <- df_master[ , -which(names(df_master) %in% c("base_weights.x","base_weights.y"))]
-
-## Pay attention to the extreme weights - Exclude them before running your analysis ##
-
-
-write.csv(df_master ,paste0( "Cleaned data/RTM_master_tbl " , Sys.Date() ,  ".csv"  ) )
-
-print ("cleaned data is exported in csv")
+df_master = df_master %>% select (- c(EnuName  , IDPDuration, HHH_YN , HHHAge  ) )
 ```
 
 ## Regional Master Table Connection
@@ -737,22 +747,5 @@ class(df_master[[c]]) <- class(Master_head[[c]])
 }
 
 
-
-```
-
-```{r eval=FALSE, include=FALSE}
-
-library(dplyr)
-library(DBI)
-
-# Establish a connection with SQL Server
-con <- dbConnect(odbc::odbc(), driver = "SQL Server" , server = server, database = db_name, uid = user , pwd = pwd)
-
-
-# Upload the modified dataframe "a" into the table "b" in SQL Server
-#dbWriteTable(con, "Obs_Master", df_master, overwrite = TRUE)
-
-# Close the database connection
-dbDisconnect(con)
 
 ```
