@@ -1,0 +1,336 @@
+,objectid,iso3,adm2_name,adm2_altnm,adm2_id,adm1_name,adm1_id,adm0_name,adm0_id,mapclr,rb,disp_area,salb_id,source,source_id,source_date,lst_update,validity,ID,Gov_ID,Gov_PCode,Gov_NAM_En,Gov_NAM_Ar,Dis_ID,Dis_NAM_En,Dis_NAM_Ar,ADM0_PCode
+1,2983,YEM,Abs,عبس,1042924,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1704,01/02/2019,05/03/2021,0,44,17,YE17,Hajjah,حجة,1704,Abs,عبس,YE
+2,2984,YEM,Ad Dali',الضالع,1042925,Ad Dali',903631,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE3006,01/02/2019,05/03/2021,0,229,30,YE30,Al Dhale'e,الضالع,3006,Ad Dhale'e,الضالع,YE
+3,2985,YEM,Ad Dis,الديس,1042926,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1914,01/02/2019,05/03/2021,0,113,19,YE19,Hadramaut,حضرموت,1914,Ad Dis,الديس,YE
+4,2986,YEM,Ad Dohi,الضحى,1042927,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1809,01/02/2019,05/03/2021,0,310,18,YE18,Al Hudaydah,الحديدة,1809,Ad Dahi,الضحي,YE
+5,2987,YEM,Ad Dulay'ah,الضليعه,1042928,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1922,01/02/2019,05/03/2021,0,132,19,YE19,Hadramaut,حضرموت,1922,Adh Dhlia'ah,الضليعه,YE
+6,2988,YEM,Ad Durayhimi,الدريهمي,1042929,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1814,01/02/2019,05/03/2021,0,278,18,YE18,Al Hudaydah,الحديدة,1814,Ad Durayhimi,الدريهمي,YE
+7,2989,YEM,Adh Dhahir,الظاهر,1042930,Sa'dah,903646,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2207,01/02/2019,05/03/2021,0,299,22,YE22,Sa'ada,صعدة,2207,Al Dhaher,الظاهر,YE
+8,2990,YEM,Adh Dhihar,الظهار,1042931,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1119,01/02/2019,05/03/2021,0,214,11,YE11,Ibb,إب,1119,Al Dhihar,الظهار,YE
+9,2991,YEM,Aflah Al Yaman,افلح اليمن,1042932,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1714,01/02/2019,05/03/2021,0,64,17,YE17,Hajjah,حجة,1714,Aflah Al Yaman,افلح اليمن,YE
+10,2992,YEM,Aflah Ash Sham,افلح الشام,1042933,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1710,01/02/2019,05/03/2021,0,303,17,YE17,Hajjah,حجة,1710,Aflah Ash Shawm,افلح الشام,YE
+11,2993,YEM,Ahwar,احور,1042934,Abyan,903630,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1209,01/02/2019,05/03/2021,0,218,12,YE12,Abyan,أبين,1209,Ahwar,احوار,YE
+12,2994,YEM,Al Abdiyah,العبديه,1042935,Ma'rib,903644,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2611,01/02/2019,05/03/2021,0,157,26,YE26,Marib,مأرب,2611,Al Abdiyah,العبدية,YE
+13,2995,YEM,Al Abr,العبر,1042936,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1906,01/02/2019,05/03/2021,0,45,19,YE19,Hadramaut,حضرموت,1906,Al Abr,العبر,YE
+14,2996,YEM,Al Arsh,العرش,1042937,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1416,01/02/2019,05/03/2021,0,184,14,YE14,Al Bayda,البيضاء,1416,Al A'rsh,العرش,YE
+15,2997,YEM,Al Ashah,العشه,1042938,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2903,01/02/2019,05/03/2021,0,26,29,YE29,Amran,عمران,2903,Al Ashah,العشـــــه,YE
+16,2998,YEM,Al Azariq,الازارق,1042939,Ad Dali',903631,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE3008,01/02/2019,05/03/2021,0,238,30,YE30,Al Dhale'e,الضالع,3008,Al Azariq,الازارق,YE
+17,2999,YEM,Al Bayda,البيضاء,1042940,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1410,01/02/2019,05/03/2021,0,201,14,YE14,Al Bayda,البيضاء,1410,Al Bayda,البيضاء,YE
+18,3000,YEM,Al Bayda City,مدينة البيضاء,1042941,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1409,01/02/2019,05/03/2021,0,215,14,YE14,Al Bayda,البيضاء,1409,Al Bayda City,مدينة البيضاء,YE
+19,3001,YEM,Al Burayqah,البريقه,1042942,Aden,903632,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2404,01/02/2019,05/03/2021,0,267,24,YE24,Aden,عدن,2404,Al Buraiqeh,البريقه,YE
+20,3002,YEM,Al Ghaydhah,الغيظه,1042943,Al Maharah,903636,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2804,01/02/2019,05/03/2021,0,323,28,YE28,Al Maharah,المهرة,2804,Al Ghaydah,الغيظه,YE
+21,3003,YEM,Al Ghayl,الغيل,1042944,Al Jawf,903635,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1608,01/02/2019,05/03/2021,0,55,16,YE16,Al Jawf,الجوف,1608,Al Ghayl,الغيل,YE
+22,3004,YEM,Al Had,الحد,1042945,Lahj,903643,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2501,01/02/2019,05/03/2021,0,212,25,YE25,Lahj,لحج,2501,Al Had,الحد,YE
+23,3005,YEM,Al Hada,الحداء,1042946,Dhamar,903639,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2001,01/02/2019,05/03/2021,0,144,20,YE20,Dhamar,ذمار,2001,Al Hada,الحداء,YE
+24,3006,YEM,Al Hali,الحالي,1042947,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1823,01/02/2019,05/03/2021,0,153,18,YE18,Al Hudaydah,الحديدة,1823,Al Hali,الحالي,YE
+25,3007,YEM,Al Hasayn,الحصين,1042948,Ad Dali',903631,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE3005,01/02/2019,05/03/2021,0,228,30,YE30,Al Dhale'e,الضالع,3005,Al Hussein,الحصين,YE
+26,3008,YEM,Al Hashwah,الحشوه,1042949,Sa'dah,903646,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2213,01/02/2019,05/03/2021,0,317,22,YE22,Sa'ada,صعدة,2213,Al Hashwah,الحشوه,YE
+27,3009,YEM,Al Hawak,الحوك,1042950,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1821,01/02/2019,05/03/2021,0,160,18,YE18,Al Hudaydah,الحديدة,1821,Al Hawak,الحوك,YE
+28,3010,YEM,Al Hawtah,الحوطه,1042951,Lahj,903643,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2514,01/02/2019,05/03/2021,0,263,25,YE25,Lahj,لحج,2514,Al  Hawtah,الحوطة,YE
+29,3011,YEM,Al Haymah Ad Dakhiliyah,الحيمة الداخليه,1042952,Sana'a,903647,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2308,01/02/2019,05/03/2021,0,309,23,YE23,Sana'a,صنعاء,2308,Al Haymah Ad Dakhiliyah,الحيمة الداخلية,YE
+30,3012,YEM,Al Haymah Al Kharijiyah,الحيمة الخارجيه,1042953,Sana'a,903647,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2309,01/02/2019,05/03/2021,0,134,23,YE23,Sana'a,صنعاء,2309,Al Haymah Al Kharijiyah,الحيمة الخارجية,YE
+31,3013,YEM,Al Hazm,الحزم,1042954,Al Jawf,903635,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1605,01/02/2019,05/03/2021,0,38,16,YE16,Al Jawf,الجوف,1605,Al Hazm,الحزم,YE
+32,3014,YEM,Al Hissn,الحصن,1042955,Sana'a,903647,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2315,01/02/2019,05/03/2021,0,142,23,YE23,Sana'a,صنعاء,2315,Al Husn,الحصن,YE
+33,3015,YEM,Al Hujjaylah,الحجيله,1042956,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1811,01/02/2019,05/03/2021,0,143,18,YE18,Al Hudaydah,الحديدة,1811,Al Hajjaylah,الحجيلة,YE
+34,3016,YEM,Al Humaydat,الحميدات,1042957,Al Jawf,903635,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1602,01/02/2019,05/03/2021,0,25,16,YE16,Al Jawf,الجوف,1602,Al Humaydat,الحميدات,YE
+35,3017,YEM,Al Husha,الحشاء,1042958,Ad Dali',903631,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE3009,01/02/2019,05/03/2021,0,227,30,YE30,Al Dhale'e,الضالع,3009,Al Husha,الحشاء,YE
+36,3018,YEM,Al Ja'fariyyah,الجعفريه,1042959,Raymah,903645,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE3106,01/02/2019,05/03/2021,0,170,31,YE31,Raymah,ريمة,3106,Mazhar,الجعفرية,YE
+37,3019,YEM,Al Jabin,الجبين,1042960,Raymah,903645,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE3103,01/02/2019,05/03/2021,0,306,31,YE31,Raymah,ريمة,3103,As Salafiyah,الجبين,YE
+38,3020,YEM,Al Jamimah,الجميمه,1042961,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1708,01/02/2019,05/03/2021,0,60,17,YE17,Hajjah,حجة,1708,Al Jamimah,الجميمة,YE
+39,3021,YEM,Al Jarrahi,الجراحي,1042962,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1825,01/02/2019,05/03/2021,0,193,18,YE18,Al Hudaydah,الحديدة,1825,Al Garrahi,الجراحي,YE
+40,3022,YEM,Al Jubah,الجوبه,1042963,Ma'rib,903644,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2607,01/02/2019,05/03/2021,0,131,26,YE26,Marib,مأرب,2607,Al Jubah,الجوبة,YE
+41,3023,YEM,Al Khabt,الخبت,1042964,Al Mahwit,903637,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2704,01/02/2019,05/03/2021,0,103,27,YE27,Al Mahwit,المحويت,2704,Al Khabt,الخبت,YE
+42,3024,YEM,Al Khalaq,الخلق,1042965,Al Jawf,903635,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1609,01/02/2019,05/03/2021,0,58,16,YE16,Al Jawf,الجوف,1609,Al Khalq,الخلق,YE
+43,3025,YEM,Al Khukhah,الخوخه,1042966,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1820,01/02/2019,05/03/2021,0,277,18,YE18,Al Hudaydah,الحديدة,1820,Al Khawkhah,الخوخه,YE
+44,3026,YEM,Al Ma'afer,المعافر,1042967,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1521,01/02/2019,05/03/2021,0,251,15,YE15,Taizz,تعز,1521,Al Ma'afer,المعافر,YE
+45,3027,YEM,Al Madan,المدان,1042968,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2906,01/02/2019,05/03/2021,0,36,29,YE29,Amran,عمران,2906,Al Madan,المــدان,YE
+46,3028,YEM,Al Madaribah Wa Al Aarah,المضاربة و العاره,1042969,Lahj,903643,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2513,01/02/2019,05/03/2021,0,324,25,YE25,Lahj,لحج,2513,Al Madaribah Wa Al Arah,المضاربة و العاره,YE
+47,3029,YEM,Al Maflahi,المفلحي,1042970,Lahj,903643,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2503,01/02/2019,05/03/2021,0,231,25,YE25,Lahj,لحج,2503,Al Maflahy,المفلحي,YE
+48,3030,YEM,Al Maghrabah,المغربه,1042971,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1717,01/02/2019,05/03/2021,0,320,17,YE17,Hajjah,حجة,1717,Al Maghrabah,المغربة,YE
+49,3031,YEM,Al Mahabishah,المحابشه,1042972,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1715,01/02/2019,05/03/2021,0,287,17,YE17,Hajjah,حجة,1715,Al Mahabishah,المحابشة,YE
+50,3032,YEM,Al Mahfad,المحفد,1042973,Abyan,903630,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1201,01/02/2019,05/03/2021,0,202,12,YE12,Abyan,أبين,1201,Al Mahfad,المحفد,YE
+51,3033,YEM,Al Mahwit,المحويت,1042974,Al Mahwit,903637,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2709,01/02/2019,05/03/2021,0,101,27,YE27,Al Mahwit,المحويت,2709,Al Mahwait,المحويت,YE
+52,3034,YEM,Al Mahwit City,مدينة المحويت,1042975,Al Mahwit,903637,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2708,01/02/2019,05/03/2021,0,107,27,YE27,Al Mahwit,المحويت,2708,Al Mahwait City,مدينة المحويت,YE
+53,3035,YEM,Al Makha,المخاء,1042976,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1505,01/02/2019,05/03/2021,0,222,15,YE15,Taizz,تعز,1505,Maqbanah,المخاء,YE
+54,3036,YEM,Al Makhadir,المخادر,1042977,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1107,01/02/2019,05/03/2021,0,197,11,YE11,Ibb,إب,1107,Al Makhadir,المخادر,YE
+55,3037,YEM,Al Malah,الملاح,1042978,Lahj,903643,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2508,01/02/2019,05/03/2021,0,247,25,YE25,Lahj,لحج,2508,Al Milah,الملاح,YE
+56,3038,YEM,Al Malajim,الملاجم,1042979,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1420,01/02/2019,05/03/2021,0,183,14,YE14,Al Bayda,البيضاء,1420,Al Malagim,الملاجم,YE
+57,3039,YEM,Al Manar,المنار,1042980,Dhamar,903639,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2012,01/02/2019,05/03/2021,0,165,20,YE20,Dhamar,ذمار,2012,Al Manar,المنار,YE
+58,3040,YEM,Al Mansurah,المنصوره,1042981,Aden,903632,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2403,01/02/2019,05/03/2021,0,268,24,YE24,Aden,عدن,2403,Al Mansura,المنصورة,YE
+59,3041,YEM,Al Mansuriyah,المنصوريه,1042982,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1816,01/02/2019,05/03/2021,0,166,18,YE18,Al Hudaydah,الحديدة,1816,Al Mansuriyah,المنصورية,YE
+60,3042,YEM,Al Maqatirah,المقاطره,1042983,Lahj,903643,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2512,01/02/2019,05/03/2021,0,260,25,YE25,Lahj,لحج,2512,Al Maqatirah,المقاطرة,YE
+61,3043,YEM,Al Marawi'ah,المراوعه,1042984,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1813,01/02/2019,05/03/2021,0,147,18,YE18,Al Hudaydah,الحديدة,1813,Al Marawi'ah,المراوعة,YE
+62,3044,YEM,Al Mashannah,المشنه,1042985,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1118,01/02/2019,05/03/2021,0,216,11,YE11,Ibb,إب,1118,Al Mashannah,المشنة,YE
+63,3045,YEM,Al Masilah,المسيله,1042986,Al Maharah,903636,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2806,01/02/2019,05/03/2021,0,41,28,YE28,Al Maharah,المهرة,2806,Al Masilah,المسيلة,YE
+64,3046,YEM,Al Maslub,المصلوب,1042987,Al Jawf,903635,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1607,01/02/2019,05/03/2021,0,51,16,YE16,Al Jawf,الجوف,1607,Al Maslub,المصلوب,YE
+65,3047,YEM,Al Matammah,المطمه,1042988,Al Jawf,903635,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1603,01/02/2019,05/03/2021,0,35,16,YE16,Al Jawf,الجوف,1603,Al Matammah,المطمه,YE
+66,3048,YEM,Al Mawasit,المواسط,1042989,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1522,01/02/2019,05/03/2021,0,255,15,YE15,Taizz,تعز,1522,Al Mawasit,المواسط,YE
+67,3049,YEM,Al Miftah,المفتاح,1042990,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1716,01/02/2019,05/03/2021,0,67,17,YE17,Hajjah,حجة,1716,Al Miftah,المفتاح,YE
+68,3050,YEM,Al Mighlaf,المغلاف,1042991,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1808,01/02/2019,05/03/2021,0,121,18,YE18,Al Hudaydah,الحديدة,1808,Al Mighlaf,المغلاف,YE
+69,3051,YEM,Al Mina,الميناء,1042992,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1822,01/02/2019,05/03/2021,0,152,18,YE18,Al Hudaydah,الحديدة,1822,Al Mina,الميناء,YE
+70,3052,YEM,Al Misrakh,المسراخ,1042993,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1511,01/02/2019,05/03/2021,0,285,15,YE15,Taizz,تعز,1511,Sabir Al Mawadim,المسراخ,YE
+71,3053,YEM,Al Mu'alla,المعلا,1042994,Aden,903632,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2406,01/02/2019,05/03/2021,0,293,24,YE24,Aden,عدن,2406,Al Mualla,المعلا,YE
+72,3054,YEM,Al Mudhaffar,المظفر,1042995,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1517,01/02/2019,05/03/2021,0,254,15,YE15,Taizz,تعز,1517,Hayfan,المظفر,YE
+73,3055,YEM,Al Mukalla,المكلا,1042996,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1926,01/02/2019,05/03/2021,0,89,19,YE19,Hadramaut,حضرموت,1926,Huraidhah,حريضه,YE
+74,3056,YEM,Al Mukalla City,مدينة المكلا,1042997,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1927,01/02/2019,05/03/2021,0,167,19,YE19,Hadramaut,حضرموت,1927,Al Mukalla City,NA,YE
+75,3057,YEM,Al Munirah,المنيره,1042998,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1805,01/02/2019,05/03/2021,0,100,18,YE18,Al Hudaydah,الحديدة,1805,Al Munirah,المنيرة,YE
+76,3058,YEM,Al Musaymir,المسيمير,1042999,Lahj,903643,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2509,01/02/2019,05/03/2021,0,325,25,YE25,Lahj,لحج,2509,Al Musaymir,المسيمير,YE
+77,3059,YEM,Al Mutun,المتون,1043000,Al Jawf,903635,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1606,01/02/2019,05/03/2021,0,32,16,YE16,Al Jawf,الجوف,1606,Al Maton,المتون,YE
+78,3060,YEM,Al Odayn,العدين,1043001,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1111,01/02/2019,05/03/2021,0,205,11,YE11,Ibb,إب,1111,Al Udayn,العدين,YE
+79,3061,YEM,Al Qaff,القف,1043002,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1903,01/02/2019,05/03/2021,0,4,19,YE19,Hadramaut,حضرموت,1903,Al Qaf,القف,YE
+80,3062,YEM,Al Qafr,القفر,1043003,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1101,01/02/2019,05/03/2021,0,321,11,YE11,Ibb,إب,1101,Al Qafr,القفر,YE
+81,3063,YEM,Al Qahirah,القاهره,1043004,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1518,01/02/2019,05/03/2021,0,244,15,YE15,Taizz,تعز,1518,Al Mudhaffar,القاهرة,YE
+82,3064,YEM,Al Qanawis,القناوص,1043005,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1806,01/02/2019,05/03/2021,0,280,18,YE18,Al Hudaydah,الحديدة,1806,Al Qanawis,القناوص,YE
+83,3065,YEM,Al Qatn,القطن,1043006,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1907,01/02/2019,05/03/2021,0,43,19,YE19,Hadramaut,حضرموت,1907,Al Qatn,القطن,YE
+84,3066,YEM,Al Qubaytah,القبيطه,1043007,Lahj,903643,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2510,01/02/2019,05/03/2021,0,250,25,YE25,Lahj,لحج,2510,Al Qabbaytah,القبيطه,YE
+85,3067,YEM,Al Quraishyah,القريشيه,1043008,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1414,01/02/2019,05/03/2021,0,161,14,YE14,Al Bayda,البيضاء,1414,Al Quraishyah,القريشية,YE
+86,3068,YEM,Al Wadi',الوضيع,1043009,Abyan,903630,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1208,01/02/2019,05/03/2021,0,230,12,YE12,Abyan,أبين,1208,Al Wade'a,الوضيع,YE
+87,3069,YEM,Al Wazi'yah,الوازعيه,1043010,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1515,01/02/2019,05/03/2021,0,258,15,YE15,Taizz,تعز,1515,Ash Shamayatayn,الوازعية,YE
+88,3070,YEM,Al Wehdah,الوحده,1043011,Sana'a City,903648,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1306,01/02/2019,05/03/2021,0,126,13,YE13,Amanat Al Asimah,أمانة العاصمة,1306,Al Wahdah,الوحدة,YE
+89,3071,YEM,Alluhayah,اللحيه,1043012,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1802,01/02/2019,05/03/2021,0,281,18,YE18,Al Hudaydah,الحديدة,1802,Alluheyah,اللحية,YE
+90,3072,YEM,Amd,عمد,1043013,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1921,01/02/2019,05/03/2021,0,98,19,YE19,Hadramaut,حضرموت,1921,Amd,عمد,YE
+91,3073,YEM,Amran,عمران,1043014,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2915,01/02/2019,05/03/2021,0,307,29,YE29,Amran,عمران,2915,Amran,عمران,YE
+92,3074,YEM,An Nadirah,النادره,1043015,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1104,01/02/2019,05/03/2021,0,330,11,YE11,Ibb,إب,1104,An Nadirah,النادرة,YE
+93,3075,YEM,Ans,عنس,1043016,Dhamar,903639,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2010,01/02/2019,05/03/2021,0,178,20,YE20,Dhamar,ذمار,2010,Anss,عنس,YE
+94,3076,YEM,Ar Radmah,الرضمه,1043017,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1103,01/02/2019,05/03/2021,0,195,11,YE11,Ibb,إب,1103,Ar Radmah,الرضمة,YE
+95,3077,YEM,Ar Rawdah,الروضه,1043018,Shabwah,903649,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2115,01/02/2019,05/03/2021,0,159,21,YE21,Shabwah,شبوة,2115,Ar Rawdah,الروضه,YE
+96,3078,YEM,Ar Raydah wa Qussay'ar,الريدة وقصيعر,1043019,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1913,01/02/2019,05/03/2021,0,106,19,YE19,Hadramaut,حضرموت,1913,Ar Raydah Wa Qusayar,الريده وقصيعر,YE
+97,3079,YEM,Ar Rujum,الرجم,1043020,Al Mahwit,903637,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2703,01/02/2019,05/03/2021,0,104,27,YE27,Al Mahwit,المحويت,2703,Ar Rujum,الرجم,YE
+98,3080,YEM,Ar Ryashyyah,الرياشيه,1043021,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1418,01/02/2019,05/03/2021,0,316,14,YE14,Al Bayda,البيضاء,1418,Ar Ryashyyah,الرياشية,YE
+99,3081,YEM,Arhab,ارحب,1043022,Sana'a,903647,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2302,01/02/2019,05/03/2021,0,63,23,YE23,Sana'a,صنعاء,2302,Arhab,ارحب,YE
+100,3082,YEM,Arma'a,عرماء,1043023,Shabwah,903649,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2104,01/02/2019,05/03/2021,0,86,21,YE21,Shabwah,شبوة,2104,Arma,عرماء,YE
+101,3083,YEM,As Sa'id,الصعيد,1043024,Shabwah,903649,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2112,01/02/2019,05/03/2021,0,189,21,YE21,Shabwah,شبوة,2112,As Said,الصعيد,YE
+102,3084,YEM,As Sab'in,السبعين,1043025,Sana'a City,903648,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1305,01/02/2019,05/03/2021,0,128,13,YE13,Amanat Al Asimah,أمانة العاصمة,1305,As Sabain,السبعين,YE
+103,3085,YEM,As Sabrah,السبره,1043026,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1114,01/02/2019,05/03/2021,0,217,11,YE11,Ibb,إب,1114,As Sabrah,السبرة,YE
+104,3086,YEM,As Saddah,السده,1043027,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1106,01/02/2019,05/03/2021,0,196,11,YE11,Ibb,إب,1106,As Saddah,السدة,YE
+105,3087,YEM,As Safiyah,الصافيه,1043028,Sana'a City,903648,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1304,01/02/2019,05/03/2021,0,125,13,YE13,Amanat Al Asimah,أمانة العاصمة,1304,Assafi'yah,الصافية,YE
+106,3088,YEM,As Safra,الصفراء,1043029,Sa'dah,903646,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2212,01/02/2019,05/03/2021,0,296,22,YE22,Sa'ada,صعدة,2212,As Safra,الصفراء,YE
+107,3089,YEM,As Saiyani,السياني,1043030,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1115,01/02/2019,05/03/2021,0,220,11,YE11,Ibb,إب,1115,As Sayyani,السياني,YE
+108,3090,YEM,As Salafiyyah,السلفيه,1043031,Raymah,903645,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE3102,01/02/2019,05/03/2021,0,162,31,YE31,Raymah,ريمة,3102,Al Jabin,السلفية,YE
+109,3091,YEM,As Salif,الصليف,1043032,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1804,01/02/2019,05/03/2021,0,279,18,YE18,Al Hudaydah,الحديدة,1804,As Salif,الصليف,YE
+110,3092,YEM,As Sawadiyah,السواديه,1043033,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1411,01/02/2019,05/03/2021,0,315,14,YE14,Al Bayda,البيضاء,1411,As Sawadiyah,السوادية,YE
+111,3093,YEM,As Sawd,السود,1043034,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2914,01/02/2019,05/03/2021,0,74,29,YE29,Amran,عمران,2914,As Sawd,السود,YE
+112,3094,YEM,As Sawm,السوم,1043035,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1912,01/02/2019,05/03/2021,0,22,19,YE19,Hadramaut,حضرموت,1912,As Sawm,السوم,YE
+113,3095,YEM,As Sawma'ah,الصومعه,1043036,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1404,01/02/2019,05/03/2021,0,191,14,YE14,Al Bayda,البيضاء,1404,As Sawma'ah,الصومعة,YE
+114,3096,YEM,As Silw,الصلو,1043037,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1513,01/02/2019,05/03/2021,0,249,15,YE15,Taizz,تعز,1513,Dimnat Khadir,الصلو,YE
+115,3097,YEM,As Sudah,السوده,1043038,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2913,01/02/2019,05/03/2021,0,62,29,YE29,Amran,عمران,2913,As Sudah,السوده,YE
+116,3098,YEM,As Sukhnah,السخنه,1043039,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1815,01/02/2019,05/03/2021,0,158,18,YE18,Al Hudaydah,الحديدة,1815,As Sukhnah,السخنة,YE
+117,3099,YEM,Ash Sha'ir,الشعر,1043040,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1105,01/02/2019,05/03/2021,0,208,11,YE11,Ibb,إب,1105,Ash Sha'ir,الشعر,YE
+118,3100,YEM,Ash shaghadirah,الشغادره,1043041,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1725,01/02/2019,05/03/2021,0,91,17,YE17,Hajjah,حجة,1725,Ash Shaghadirah,الشغادرة,YE
+119,3101,YEM,Ash Shahil,الشاهل,1043042,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1721,01/02/2019,05/03/2021,0,73,17,YE17,Hajjah,حجة,1721,Ash Shahil,الشاهل,YE
+120,3102,YEM,Ash Shamayatayn,الشمايتين,1043043,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1514,01/02/2019,05/03/2021,0,253,15,YE15,Taizz,تعز,1514,As Silw,الشمايتين,YE
+121,3103,YEM,Ash Sharyah,الشريه,1043044,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1419,01/02/2019,05/03/2021,0,181,14,YE14,Al Bayda,البيضاء,1419,Ash Sharyah,الشرية,YE
+122,3104,YEM,Ash Shaykh Othman,الشيخ عثمان,1043045,Aden,903632,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2402,01/02/2019,05/03/2021,0,266,24,YE24,Aden,عدن,2402,Ash Shaikh Outhman,الشيخ عثمان,YE
+123,3105,YEM,Ash Shihr,الشحر,1043046,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1915,01/02/2019,05/03/2021,0,130,19,YE19,Hadramaut,حضرموت,1915,Ash Shihr,الشحر,YE
+124,3106,YEM,Ash Shu'ayb,الشعيب,1043047,Ad Dali',903631,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE3004,01/02/2019,05/03/2021,0,223,30,YE30,Al Dhale'e,الضالع,3004,Ash Shu'ayb,الشعيب,YE
+125,3107,YEM,Aslam,اسلم,1043048,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1712,01/02/2019,05/03/2021,0,49,17,YE17,Hajjah,حجة,1712,Aslem,اسلم,YE
+126,3108,YEM,At Ta'iziyah,التعزيه,1043049,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1520,01/02/2019,05/03/2021,0,242,15,YE15,Taizz,تعز,1520,Salh,التعزية,YE
+127,3109,YEM,At Taffah,الطفه,1043050,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1407,01/02/2019,05/03/2021,0,188,14,YE14,Al Bayda,البيضاء,1407,At Taffah,الطفة,YE
+128,3110,YEM,At Tahrir,التحرير,1043051,Sana'a City,903648,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1307,01/02/2019,05/03/2021,0,123,13,YE13,Amanat Al Asimah,أمانة العاصمة,1307,At Tahrir,التحرير,YE
+129,3111,YEM,At Talh,الطلح,1043052,Shabwah,903649,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2102,01/02/2019,05/03/2021,0,119,21,YE21,Shabwah,شبوة,2102,Al Talh,الطلح,YE
+130,3112,YEM,At Tawahi,التواهي,1043053,Aden,903632,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2405,01/02/2019,05/03/2021,0,271,24,YE24,Aden,عدن,2405,Attawahi,التواهي,YE
+131,3113,YEM,At Tawilah,الطويله,1043054,Al Mahwit,903637,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2702,01/02/2019,05/03/2021,0,97,27,YE27,Al Mahwit,المحويت,2702,At Tawilah,الطويلة,YE
+132,3114,YEM,At Tuhayta,التحيتا,1043055,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1826,01/02/2019,05/03/2021,0,276,18,YE18,Al Hudaydah,الحديدة,1826,At Tuhayat,التحيتا,YE
+133,3115,YEM,At Tyal,الطيال,1043056,Sana'a,903647,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2313,01/02/2019,05/03/2021,0,292,23,YE23,Sana'a,صنعاء,2313,Attyal,الطيال,YE
+134,3116,YEM,Ataq,عتق,1043057,Shabwah,903649,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2113,01/02/2019,05/03/2021,0,164,21,YE21,Shabwah,شبوة,2113,Ataq,عتق,YE
+135,3117,YEM,Ath Thawrah,الثوره,1043058,Sana'a City,903648,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1309,01/02/2019,05/03/2021,0,115,13,YE13,Amanat Al Asimah,أمانة العاصمة,1309,Ath'thaorah,الثورة,YE
+136,3118,YEM,Ayn,عين,1043059,Shabwah,903649,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2106,01/02/2019,05/03/2021,0,298,21,YE21,Shabwah,شبوة,2106,Ain,عين,YE
+137,3119,YEM,Az Zahir,الزاهر,1043060,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1405,01/02/2019,05/03/2021,0,210,14,YE14,Al Bayda,البيضاء,1405,Az Zahir,الزاهر,YE
+138,3120,YEM,Az Zahir,الزاهر,1043061,Al Jawf,903635,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1604,01/02/2019,05/03/2021,0,31,16,YE16,Al Jawf,الجوف,1604,Az Zahir,الزاهر,YE
+139,3121,YEM,Az Zaydiah,الزيديه,1043062,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1807,01/02/2019,05/03/2021,0,111,18,YE18,Al Hudaydah,الحديدة,1807,Az Zaydiyah,الزيدية,YE
+140,3122,YEM,Az Zuhrah,الزهره,1043063,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1801,01/02/2019,05/03/2021,0,75,18,YE18,Al Hudaydah,الحديدة,1801,Az Zuhrah,الزهرة,YE
+141,3123,YEM,Azaal,ازال,1043064,Sana'a City,903648,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1303,01/02/2019,05/03/2021,0,122,13,YE13,Amanat Al Asimah,أمانة العاصمة,1303,Az'zal,أزال,YE
+142,3124,YEM,Ba'dan,بعدان,1043065,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1113,01/02/2019,05/03/2021,0,272,11,YE11,Ibb,إب,1113,Ba'dan,بعدان,YE
+143,3125,YEM,Bajil,باجل,1043066,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1810,01/02/2019,05/03/2021,0,331,18,YE18,Al Hudaydah,الحديدة,1810,Bajil,باجل,YE
+144,3126,YEM,Bakil Al Mir,بكيل المير,1043067,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1701,01/02/2019,05/03/2021,0,326,17,YE17,Hajjah,حجة,1701,Bakil Al Mir,بكيل المير,YE
+145,3127,YEM,Bani Al Awam,بني العوام,1043068,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1727,01/02/2019,05/03/2021,0,329,17,YE17,Hajjah,حجة,1727,Bani Al Awam,بني العوام,YE
+146,3128,YEM,Bani Al Harith,بني الحارث,1043069,Sana'a City,903648,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1310,01/02/2019,05/03/2021,0,95,13,YE13,Amanat Al Asimah,أمانة العاصمة,1310,Bani Al Harith,بني الحارث,YE
+147,3129,YEM,Bani Dabyan,بني ضبيان,1043070,Sana'a,903647,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2314,01/02/2019,05/03/2021,0,127,23,YE23,Sana'a,صنعاء,2314,Bani Dhabyan,بني ضبيان,YE
+148,3130,YEM,Bani Hushaysh,بني حشيش,1043071,Sana'a,903647,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2304,01/02/2019,05/03/2021,0,102,23,YE23,Sana'a,صنعاء,2304,Bani Hushaysh,بني حشيش,YE
+149,3131,YEM,Bani Matar,بني مطر,1043072,Sana'a,903647,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2307,01/02/2019,05/03/2021,0,297,23,YE23,Sana'a,صنعاء,2307,Bani Matar,بني مطر,YE
+150,3132,YEM,Bani Qays,بني قيس الطور,1043073,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1724,01/02/2019,05/03/2021,0,82,17,YE17,Hajjah,حجة,1724,Bani Qa'is,بني قيس,YE
+151,3133,YEM,Bani Sa'd,بني سعد,1043074,Al Mahwit,903637,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2707,01/02/2019,05/03/2021,0,114,27,YE27,Al Mahwit,المحويت,2707,Bani Sa'd,بني سعد,YE
+152,3134,YEM,Bani Surim,بني صريم,1043075,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2920,01/02/2019,05/03/2021,0,48,29,YE29,Amran,عمران,2920,Bani Suraim,بني صريم,YE
+153,3135,YEM,Baqim,باقم,1043076,Sa'dah,903646,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2201,01/02/2019,05/03/2021,0,7,22,YE22,Sa'ada,صعدة,2201,Baqim,باقم,YE
+154,3136,YEM,Barat Al Anan,برط العنان,1043077,Al Jawf,903635,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1610,01/02/2019,05/03/2021,0,14,16,YE16,Al Jawf,الجوف,1610,Bart Al Anan,برط العنان,YE
+155,3137,YEM,Bayhan,بيحان,1043078,Shabwah,903649,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2107,01/02/2019,05/03/2021,0,150,21,YE21,Shabwah,شبوة,2107,Bayhan,بيحان,YE
+156,3138,YEM,Bayt Al Faqih,بيت الفقيه,1043079,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1817,01/02/2019,05/03/2021,0,173,18,YE18,Al Hudaydah,الحديدة,1817,Bayt Al Faqiah,بيت الفقيه,YE
+157,3139,YEM,Bidbadah,بدبده,1043080,Ma'rib,903644,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2605,01/02/2019,05/03/2021,0,110,26,YE26,Marib,مأرب,2605,Bidbadah,بدبده,YE
+158,3140,YEM,Bilad Ar Rus,بلاد الروس,1043081,Sana'a,903647,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2306,01/02/2019,05/03/2021,0,138,23,YE23,Sana'a,صنعاء,2306,Bilad Ar Rus,بلاد الروس,YE
+159,3141,YEM,Bilad Atta'am,بلاد الطعام,1043082,Raymah,903645,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE3101,01/02/2019,05/03/2021,0,149,31,YE31,Raymah,ريمة,3101,Bilad At Ta'am,بلاد الطعام,YE
+160,3142,YEM,Brum Mayf'ah,بروم ميفع,1043083,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1925,01/02/2019,05/03/2021,0,169,19,YE19,Hadramaut,حضرموت,1925,Brom Mayfa,بروم ميفع,YE
+161,3143,YEM,Bura',برع,1043084,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1812,01/02/2019,05/03/2021,0,311,18,YE18,Al Hudaydah,الحديدة,1812,Bura,براع,YE
+162,3144,YEM,Dahr,دهر,1043085,Shabwah,903649,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2101,01/02/2019,05/03/2021,0,85,21,YE21,Shabwah,شبوة,2101,Dhar,دهر,YE
+163,3145,YEM,Damt,دمت,1043086,Ad Dali',903631,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE3002,01/02/2019,05/03/2021,0,319,30,YE30,Al Dhale'e,الضالع,3002,Damt,دمت,YE
+164,3146,YEM,Dar Sa'd,دار سعد,1043087,Aden,903632,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2401,01/02/2019,05/03/2021,0,265,24,YE24,Aden,عدن,2401,Dar Sad,دار سعد,YE
+165,3147,YEM,Daw'an,دوعن,1043088,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1918,01/02/2019,05/03/2021,0,112,19,YE19,Hadramaut,حضرموت,1918,Daw'an,دوعن,YE
+166,3148,YEM,Dawran Anis,ضوران انس,1043089,Dhamar,903639,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2011,01/02/2019,05/03/2021,0,145,20,YE20,Dhamar,ذمار,2011,Dawran Aness,ضوران اًنس,YE
+167,3149,YEM,Dhamar City,مدينة ذمار,1043090,Dhamar,903639,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2008,01/02/2019,05/03/2021,0,168,20,YE20,Dhamar,ذمار,2008,Dhamar City,مدينة ذمار,YE
+168,3150,YEM,Dhi As Sufal,ذي السفال,1043091,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1116,01/02/2019,05/03/2021,0,221,11,YE11,Ibb,إب,1116,Dhi As Sufal,ذي السفال,YE
+169,3151,YEM,Dhi Na'im,ذي ناعم,1043092,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1406,01/02/2019,05/03/2021,0,203,14,YE14,Al Bayda,البيضاء,1406,Dhi Na'im,ذي ناعم,YE
+170,3152,YEM,Dhibain,ذيبين,1043093,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2909,01/02/2019,05/03/2021,0,54,29,YE29,Amran,عمران,2909,Dhi Bin,ذيبين,YE
+171,3153,YEM,Dhubab,باب المندب,1043094,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1506,01/02/2019,05/03/2021,0,328,15,YE15,Taizz,تعز,1506,Al  Mukha,ذباب,YE
+172,3154,YEM,Dhulaymat Habur,ظليمة حبور,1043095,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2908,01/02/2019,05/03/2021,0,56,29,YE29,Amran,عمران,2908,Habur Zulaymah,حبور ظليمة,YE
+173,3155,YEM,Dimnat Khadir,خدير,1043096,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1512,01/02/2019,05/03/2021,0,286,15,YE15,Taizz,تعز,1512,Al Misrakh,دمنة خدير,YE
+174,3156,YEM,Eyal Surayh,عيال سريح,1043097,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2918,01/02/2019,05/03/2021,0,295,29,YE29,Amran,عمران,2918,Iyal Surayh,عيال سريح,YE
+175,3157,YEM,Far' Al Odayn,فرع العدين,1043098,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1110,01/02/2019,05/03/2021,0,211,11,YE11,Ibb,إب,1110,Far Al Udayn,فرع العدين,YE
+176,3158,YEM,Ghamr,غمر,1043099,Sa'dah,903646,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2204,01/02/2019,05/03/2021,0,13,22,YE22,Sa'ada,صعدة,2204,Ghamr,غمر,YE
+177,3159,YEM,Ghayl Bawazir,غيل باوزير,1043100,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1917,01/02/2019,05/03/2021,0,139,19,YE19,Hadramaut,حضرموت,1917,Ghayl Ba Wazir,غيل باوزير,YE
+178,3160,YEM,Ghayl bin Yamin,غيل بن يمين,1043101,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1916,01/02/2019,05/03/2021,0,78,19,YE19,Hadramaut,حضرموت,1916,Ghayl Bin Yamin,غيل بن يمين,YE
+179,3161,YEM,Habban,حبان,1043102,Shabwah,903649,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2114,01/02/2019,05/03/2021,0,182,21,YE21,Shabwah,شبوة,2114,Habban,حبان,YE
+180,3162,YEM,Habil Jabr,حبيل جبر,1043103,Lahj,903643,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2505,01/02/2019,05/03/2021,0,240,25,YE25,Lahj,لحج,2505,Habil Jabr,حبيل جبر,YE
+181,3163,YEM,Hadibu,حديبو,1043104,Socotra,903650,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE3201,01/02/2019,05/03/2021,0,269,32,YE32,Socotra,سقطرى,3201,Hidaybu,حديبو,YE
+182,3164,YEM,Hajar,حجر,1043105,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1924,01/02/2019,05/03/2021,0,163,19,YE19,Hadramaut,حضرموت,1924,Hajr,حجر,YE
+183,3165,YEM,Hajar As Say'ar,حجر الصيعر,1043106,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1905,01/02/2019,05/03/2021,0,24,19,YE19,Hadramaut,حضرموت,1905,Hagr As Sai'ar,حجر الصيعر,YE
+184,3166,YEM,Hajjah,حجه,1043107,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1729,01/02/2019,05/03/2021,0,288,17,YE17,Hajjah,حجة,1729,Hajjah,حجة,YE
+185,3167,YEM,Hajjah City,مدينة حجه,1043108,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1728,01/02/2019,05/03/2021,0,88,17,YE17,Hajjah,حجة,1728,Hajjah City,مدينة حجة,YE
+186,3168,YEM,Halmin,حالمين,1043109,Lahj,903643,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2506,01/02/2019,05/03/2021,0,232,25,YE25,Lahj,لحج,2506,Halimayn,حالمين,YE
+187,3169,YEM,Hamdan,همدان,1043110,Sana'a,903647,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2301,01/02/2019,05/03/2021,0,94,23,YE23,Sana'a,صنعاء,2301,Hamdan,همدان,YE
+188,3170,YEM,Harad,حرض,1043111,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1702,01/02/2019,05/03/2021,0,23,17,YE17,Hajjah,حجة,1702,Haradh,حرض,YE
+189,3171,YEM,Harf Sufyan,حرف سفيان,1043112,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2901,01/02/2019,05/03/2021,0,308,29,YE29,Amran,عمران,2901,Harf Sufyan,حرف سفيان,YE
+190,3172,YEM,Harib,حريب,1043113,Ma'rib,903644,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2609,01/02/2019,05/03/2021,0,136,26,YE26,Marib,مأرب,2609,Harib,حريب,YE
+191,3173,YEM,Harib Al Qaramish,حريب القرامش,1043114,Ma'rib,903644,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2604,01/02/2019,05/03/2021,0,105,26,YE26,Marib,مأرب,2604,Harib Al Qaramish,حريب القرامش,YE
+192,3174,YEM,Haridah,حريضه,1043115,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1928,01/02/2019,05/03/2021,0,146,19,YE19,Hadramaut,حضرموت,1928,Al Mukalla,NA,YE
+193,3175,YEM,Haswin,حصوين,1043116,Al Maharah,903636,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2809,01/02/2019,05/03/2021,0,59,28,YE28,Al Maharah,المهرة,2809,Huswain,حصوين,YE
+194,3176,YEM,Hat,حات,1043117,Al Maharah,903636,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2802,01/02/2019,05/03/2021,0,2,28,YE28,Al Maharah,المهرة,2802,Hat,حات,YE
+195,3177,YEM,Hatib,حطيب,1043118,Shabwah,903649,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2111,01/02/2019,05/03/2021,0,194,21,YE21,Shabwah,شبوة,2111,Hatib,حطيب,YE
+196,3178,YEM,Hawf,حوف,1043119,Al Maharah,903636,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2803,01/02/2019,05/03/2021,0,16,28,YE28,Al Maharah,المهرة,2803,Hawf,حوف,YE
+197,3179,YEM,Haydan,حيدان,1043120,Sa'dah,903646,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2208,01/02/2019,05/03/2021,0,19,22,YE22,Sa'ada,صعدة,2208,Haydan,حيدان,YE
+198,3180,YEM,Hayfan,حيفان,1043121,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1516,01/02/2019,05/03/2021,0,257,15,YE15,Taizz,تعز,1516,Al Wazi'iyah,حيفان,YE
+199,3181,YEM,Hayran,حيران,1043122,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1705,01/02/2019,05/03/2021,0,37,17,YE17,Hajjah,حجة,1705,Hayran,حيران,YE
+200,3182,YEM,Hays,حيس,1043123,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1819,01/02/2019,05/03/2021,0,213,18,YE18,Al Hudaydah,الحديدة,1819,Hays,حيس,YE
+201,3183,YEM,Hazm Al Odayn,حزم العدين,1043124,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1109,01/02/2019,05/03/2021,0,198,11,YE11,Ibb,إب,1109,Hazm Al Udayn,حزم العدين,YE
+202,3184,YEM,Hobeish,حبيش,1043125,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1108,01/02/2019,05/03/2021,0,273,11,YE11,Ibb,إب,1108,Hubaysh,حبيش,YE
+203,3185,YEM,Hufash,حفاش,1043126,Al Mahwit,903637,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2706,01/02/2019,05/03/2021,0,108,27,YE27,Al Mahwit,المحويت,2706,Hufash,حفاش,YE
+204,3186,YEM,Huth,حوث,1043127,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2902,01/02/2019,05/03/2021,0,34,29,YE29,Amran,عمران,2902,Huth,حوث,YE
+205,3187,YEM,Ibb,اب,1043128,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1120,01/02/2019,05/03/2021,0,207,11,YE11,Ibb,إب,1120,Ibb,إب,YE
+206,3188,YEM,Jabal Ash sharq,جبل الشرق,1043129,Dhamar,903639,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2003,01/02/2019,05/03/2021,0,155,20,YE20,Dhamar,ذمار,2003,Jabal Ash sharq,جبل الشرق,YE
+207,3189,YEM,Jabal Eyal Yazid,جبل عيال يزيد,1043130,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2912,01/02/2019,05/03/2021,0,71,29,YE29,Amran,عمران,2912,Jabal Iyal Yazid,جبل عيال يزيد,YE
+208,3190,YEM,Jabal Habashi,جبل حبشي,1043131,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1508,01/02/2019,05/03/2021,0,245,15,YE15,Taizz,تعز,1508,Mawza,جبل حبشي,YE
+209,3191,YEM,Jabal Murad,جبل مراد,1043132,Ma'rib,903644,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2614,01/02/2019,05/03/2021,0,141,26,YE26,Marib,مأرب,2614,Jabal Murad,جبل مراد,YE
+210,3192,YEM,Jabal Ras,جبل راس,1043133,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1818,01/02/2019,05/03/2021,0,204,18,YE18,Al Hudaydah,الحديدة,1818,Jabal Ra's,جبل راس,YE
+211,3193,YEM,Jahaf,جحاف,1043134,Ad Dali',903631,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE3007,01/02/2019,05/03/2021,0,236,30,YE30,Al Dhale'e,الضالع,3007,Jahaf,جحاف,YE
+212,3194,YEM,Jahran,جهران,1043135,Dhamar,903639,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2002,01/02/2019,05/03/2021,0,151,20,YE20,Dhamar,ذمار,2002,Jahran,جهران,YE
+213,3195,YEM,Jardan,جردان,1043136,Shabwah,903649,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2103,01/02/2019,05/03/2021,0,93,21,YE21,Shabwah,شبوة,2103,Jardan,جردان,YE
+214,3196,YEM,Jayshan,جيشان,1043137,Abyan,903630,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1203,01/02/2019,05/03/2021,0,192,12,YE12,Abyan,أبين,1203,Jayshan,جيشان,YE
+215,3197,YEM,Jiblah,جبله,1043138,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1112,01/02/2019,05/03/2021,0,219,11,YE11,Ibb,إب,1112,Jiblah,جبلة,YE
+216,3198,YEM,Jihanah,جحانه,1043139,Sana'a,903647,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2316,01/02/2019,05/03/2021,0,129,23,YE23,Sana'a,صنعاء,2316,Jihanah,جحانة,YE
+217,3199,YEM,Juban,جبن,1043140,Ad Dali',903631,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE3001,01/02/2019,05/03/2021,0,200,30,YE30,Al Dhale'e,الضالع,3001,Juban,جبن,YE
+218,3200,YEM,Kamaran,كمران,1043141,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1803,01/02/2019,05/03/2021,0,283,18,YE18,Al Hudaydah,الحديدة,1803,Kamaran,كمران,YE
+219,3201,YEM,Khab wa Ash Sha'f,خب و الشعف,1043142,Al Jawf,903635,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1601,01/02/2019,05/03/2021,0,314,16,YE16,Al Jawf,الجوف,1601,Khabb wa ash Sha'af,خب و الشعف,YE
+220,3202,YEM,Khamir,خمر,1043143,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2919,01/02/2019,05/03/2021,0,57,29,YE29,Amran,عمران,2919,Khamir,خمر,YE
+221,3203,YEM,Khanfar,خنفر,1043144,Abyan,903630,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1211,01/02/2019,05/03/2021,0,239,12,YE12,Abyan,أبين,1211,Khanfir,خنفر,YE
+222,3204,YEM,Kharab Al Marashi,خراب المراشى,1043145,Al Jawf,903635,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1612,01/02/2019,05/03/2021,0,21,16,YE16,Al Jawf,الجوف,1612,Kharab Al Marashi,خراب المراشى,YE
+223,3205,YEM,Kharif,خارف,1043146,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2910,01/02/2019,05/03/2021,0,69,29,YE29,Amran,عمران,2910,Kharif,خارف,YE
+224,3206,YEM,Khawlan,خولان,1043147,Sana'a,903647,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2312,01/02/2019,05/03/2021,0,116,23,YE23,Sana'a,صنعاء,2312,Khwlan,خولان,YE
+225,3207,YEM,Khayran Al Muharraq,خيران المحرق,1043148,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1711,01/02/2019,05/03/2021,0,47,17,YE17,Hajjah,حجة,1711,Khayran Al Muharraq,خيران المحرق,YE
+226,3208,YEM,Khur Maksar,خور مكسر,1043149,Aden,903632,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2408,01/02/2019,05/03/2021,0,264,24,YE24,Aden,عدن,2408,Khur Maksar,خور مكسر,YE
+227,3209,YEM,Kitaf wa Al Boqa',كتاف والبقع,1043150,Sa'dah,903646,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2214,01/02/2019,05/03/2021,0,312,22,YE22,Sa'ada,صعدة,2214,Kitaf wa Al Boqe'e,كتاف والبقع,YE
+228,3210,YEM,Kritar - Sirah,صيره,1043151,Aden,903632,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2407,01/02/2019,05/03/2021,0,270,24,YE24,Aden,عدن,2407,Craiter,كريتر,YE
+229,3211,YEM,Ku'aydinah,كعيدنه,1043152,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1722,01/02/2019,05/03/2021,0,305,17,YE17,Hajjah,حجة,1722,Ku'aydinah,كعيدنه,YE
+230,3212,YEM,Kuhlan Afar,كحلان عفار,1043153,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1718,01/02/2019,05/03/2021,0,79,17,YE17,Hajjah,حجة,1718,Kuhlan Affar,كحلان عفار,YE
+231,3213,YEM,Kuhlan Ash Sharaf,كحلان الشرف,1043154,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1709,01/02/2019,05/03/2021,0,61,17,YE17,Hajjah,حجة,1709,Kuhlan Ash Sharaf,كحلان الشرف,YE
+232,3214,YEM,Kushar,كشر,1043155,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1707,01/02/2019,05/03/2021,0,40,17,YE17,Hajjah,حجة,1707,Kushar,كشر,YE
+233,3215,YEM,Kusmah,كسمه,1043156,Raymah,903645,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE3105,01/02/2019,05/03/2021,0,171,31,YE31,Raymah,ريمة,3105,Al Jafariyah,كسمه,YE
+234,3216,YEM,Lawdar,لودر,1043157,Abyan,903630,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1204,01/02/2019,05/03/2021,0,206,12,YE12,Abyan,أبين,1204,Lawdar,لودر,YE
+235,3217,YEM,Ma'in,معين,1043158,Sana'a City,903648,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1308,01/02/2019,05/03/2021,0,118,13,YE13,Amanat Al Asimah,أمانة العاصمة,1308,Ma'ain,معين,YE
+236,3218,YEM,Ma'rib,مارب,1043159,Ma'rib,903644,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2613,01/02/2019,05/03/2021,0,52,26,YE26,Marib,مأرب,2613,Marib,مأرب,YE
+237,3219,YEM,Ma'rib City,مدينة مارب,1043160,Ma'rib,903644,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2612,01/02/2019,05/03/2021,0,109,26,YE26,Marib,مأرب,2612,Marib City,مدينة مأرب,YE
+238,3220,YEM,Mabyan,مبين,1043161,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1720,01/02/2019,05/03/2021,0,77,17,YE17,Hajjah,حجة,1720,Mabyan,مبين,YE
+239,3221,YEM,Madghal Al Jid'an,مدغل الجدعان,1043162,Ma'rib,903644,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2603,01/02/2019,05/03/2021,0,84,26,YE26,Marib,مأرب,2603,Medghal,مدغل,YE
+240,3222,YEM,Maghrib Ans,مغرب عنس,1043163,Dhamar,903639,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2004,01/02/2019,05/03/2021,0,180,20,YE20,Dhamar,ذمار,2004,Maghirib Ans,مغرب عنس,YE
+241,3223,YEM,Mahliyah,ماهليه,1043164,Ma'rib,903644,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2610,01/02/2019,05/03/2021,0,156,26,YE26,Marib,مأرب,2610,Mahliyah,ماهليه,YE
+242,3224,YEM,Majz,مجز,1043165,Sa'dah,903646,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2210,01/02/2019,05/03/2021,0,10,22,YE22,Sa'ada,صعدة,2210,Majz,مجز,YE
+243,3225,YEM,Majzar,مجزر,1043166,Ma'rib,903644,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2601,01/02/2019,05/03/2021,0,66,26,YE26,Marib,مأرب,2601,Majzar,مجزر,YE
+244,3226,YEM,Man'ar,منعر,1043167,Al Maharah,903636,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2805,01/02/2019,05/03/2021,0,11,28,YE28,Al Maharah,المهرة,2805,Man'ar,منعر,YE
+245,3227,YEM,Manakhah,مناخه,1043168,Sana'a,903647,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2310,01/02/2019,05/03/2021,0,133,23,YE23,Sana'a,صنعاء,2310,Manakhah,مناخه,YE
+246,3228,YEM,Maqbanah,مقبنه,1043169,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1504,01/02/2019,05/03/2021,0,226,15,YE15,Taizz,تعز,1504,Shara'b Ar Rawnah,مقبنة,YE
+247,3229,YEM,Markhah Al Olya,مرخة العليا,1043170,Shabwah,903649,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2108,01/02/2019,05/03/2021,0,175,21,YE21,Shabwah,شبوة,2108,Merkhah Al Ulya,مرخه العليا,YE
+248,3230,YEM,Markhah As Sufla,مرخة السفلى,1043171,Shabwah,903649,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2109,01/02/2019,05/03/2021,0,137,21,YE21,Shabwah,شبوة,2109,Merkhah As Sufla,مرخه السفلى,YE
+249,3231,YEM,Mashr'ah Wa Hadnan,مشرعة وحدنان,1043172,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1509,01/02/2019,05/03/2021,0,246,15,YE15,Taizz,تعز,1509,Jabal Habashy,مشرعة وحدنان,YE
+250,3232,YEM,Maswar,مسور,1043173,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2916,01/02/2019,05/03/2021,0,92,29,YE29,Amran,عمران,2916,Maswar,مسور,YE
+251,3233,YEM,Maswarah,مسوره,1043174,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1403,01/02/2019,05/03/2021,0,179,14,YE14,Al Bayda,البيضاء,1403,Maswarah,مسورة,YE
+252,3234,YEM,Mawiyah,ماويه,1043175,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1501,01/02/2019,05/03/2021,0,284,15,YE15,Taizz,تعز,1501,Mawiyah,ماوية,YE
+253,3235,YEM,Mawza',موزع,1043176,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1507,01/02/2019,05/03/2021,0,259,15,YE15,Taizz,تعز,1507,Dhubab,موزع,YE
+254,3236,YEM,Mayfa'ah,ميفعه,1043177,Shabwah,903649,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2116,01/02/2019,05/03/2021,0,176,21,YE21,Shabwah,شبوة,2116,Mayfa'a,ميفعه,YE
+255,3237,YEM,Mayfa'at Ans,ميفعة عنس,1043178,Dhamar,903639,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2009,01/02/2019,05/03/2021,0,172,20,YE20,Dhamar,ذمار,2009,Mayfa'at Anss,ميفعة عنس,YE
+256,3238,YEM,Mazhar,مزهر,1043179,Raymah,903645,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE3104,01/02/2019,05/03/2021,0,174,31,YE31,Raymah,ريمة,3104,Kusmah,مزهر,YE
+257,3239,YEM,Melhan,ملحان,1043180,Al Mahwit,903637,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2705,01/02/2019,05/03/2021,0,304,27,YE27,Al Mahwit,المحويت,2705,Milhan,ملحان,YE
+258,3240,YEM,Midi,ميدي,1043181,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1703,01/02/2019,05/03/2021,0,289,17,YE17,Hajjah,حجة,1703,Midi,ميدي,YE
+259,3241,YEM,Monabbih,منبه,1043182,Sa'dah,903646,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2203,01/02/2019,05/03/2021,0,9,22,YE22,Sa'ada,صعدة,2203,Monabbih,منبه,YE
+260,3242,YEM,Mudhaykhirah,مذيخره,1043183,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1117,01/02/2019,05/03/2021,0,274,11,YE11,Ibb,إب,1117,Mudhaykhirah,مذيخرة,YE
+261,3243,YEM,Mudiyah,موديه,1043184,Abyan,903630,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1202,01/02/2019,05/03/2021,0,209,12,YE12,Abyan,أبين,1202,Mudiyah,موديه,YE
+262,3244,YEM,Mukayras,مكيراس,1043185,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1408,01/02/2019,05/03/2021,0,199,14,YE14,Al Bayda,البيضاء,1408,Mukayras,مكيراس,YE
+263,3245,YEM,Mustaba,مستباء,1043186,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1706,01/02/2019,05/03/2021,0,33,17,YE17,Hajjah,حجة,1706,Mustaba,مستباء,YE
+264,3246,YEM,Najrah,نجره,1043187,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1726,01/02/2019,05/03/2021,0,90,17,YE17,Hajjah,حجة,1726,Najrah,نجرة,YE
+265,3247,YEM,Nati',ناطع,1043188,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1402,01/02/2019,05/03/2021,0,322,14,YE14,Al Bayda,البيضاء,1402,Nati',ناطع,YE
+266,3248,YEM,Nihm,نهم,1043189,Sana'a,903647,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2303,01/02/2019,05/03/2021,0,65,23,YE23,Sana'a,صنعاء,2303,Nihm,نهم,YE
+267,3249,YEM,Nisab,نصاب,1043190,Shabwah,903649,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2110,01/02/2019,05/03/2021,0,154,21,YE21,Shabwah,شبوة,2110,Nisab,نصاب,YE
+268,3250,YEM,Nu'man,نعمان,1043191,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1401,01/02/2019,05/03/2021,0,275,14,YE14,Al Bayda,البيضاء,1401,Na'man,نعمان,YE
+269,3251,YEM,Old City,صنعاء القديمه,1043192,Sana'a City,903648,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1301,01/02/2019,05/03/2021,0,124,13,YE13,Amanat Al Asimah,أمانة العاصمة,1301,Old City,صنعاء القديمة,YE
+270,3252,YEM,Osaylan,عسيلان,1043193,Shabwah,903649,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2105,01/02/2019,05/03/2021,0,327,21,YE21,Shabwah,شبوة,2105,Usaylan,عسيلان,YE
+271,3253,YEM,Otmah,عتمه,1043194,Dhamar,903639,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2005,01/02/2019,05/03/2021,0,177,20,YE20,Dhamar,ذمار,2005,Utmah,عتمة,YE
+272,3254,YEM,Qa'tabah,قعطبه,1043195,Ad Dali',903631,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE3003,01/02/2019,05/03/2021,0,313,30,YE30,Al Dhale'e,الضالع,3003,Qa'atabah,قعطبة,YE
+273,3255,YEM,Qafl Shammar,قفل شمر,1043196,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1713,01/02/2019,05/03/2021,0,70,17,YE17,Hajjah,حجة,1713,Qafl Shamer,قفل شمر,YE
+274,3256,YEM,Qaflat Odhar,قفلة عذر,1043197,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2904,01/02/2019,05/03/2021,0,30,29,YE29,Amran,عمران,2904,Al Qaflah,القفلة,YE
+275,3257,YEM,Qalansiyah wa Abd Al Kuri,قلنسية وعبد الكوري,1043198,Socotra,903650,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE3202,01/02/2019,05/03/2021,0,290,32,YE32,Socotra,سقطرى,3202,Qulensya Wa Abd Al Kuri,قلنسيه وعبدالكوري,YE
+276,3258,YEM,Qarah,قاره,1043199,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1731,01/02/2019,05/03/2021,0,27,17,YE17,Hajjah,حجة,1731,Qarah,قارة,YE
+277,3259,YEM,Qatabir,قطابر,1043200,Sa'dah,903646,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2202,01/02/2019,05/03/2021,0,8,22,YE22,Sa'ada,صعدة,2202,Qatabir,قطابر,YE
+278,3260,YEM,Qishn,قشن,1043201,Al Maharah,903636,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2808,01/02/2019,05/03/2021,0,53,28,YE28,Al Maharah,المهرة,2808,Qishn,قشن,YE
+279,3261,YEM,Rada',رداع,1043202,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1413,01/02/2019,05/03/2021,0,187,14,YE14,Al Bayda,البيضاء,1413,Rada',رداع,YE
+280,3262,YEM,Radfan,ردفان,1043203,Lahj,903643,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2507,01/02/2019,05/03/2021,0,243,25,YE25,Lahj,لحج,2507,Radfan,ردفان,YE
+281,3263,YEM,Radman,ردمان,1043204,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1412,01/02/2019,05/03/2021,0,300,14,YE14,Al Bayda,البيضاء,1412,Radman Al Awad,ردمان,YE
+282,3264,YEM,Radum,رضوم,1043205,Shabwah,903649,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2117,01/02/2019,05/03/2021,0,301,21,YE21,Shabwah,شبوة,2117,Rudum,رضوم,YE
+283,3265,YEM,Raghwan,رغوان,1043206,Ma'rib,903644,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2602,01/02/2019,05/03/2021,0,72,26,YE26,Marib,مأرب,2602,Raghwan,رغوان,YE
+284,3266,YEM,Rahabah,رحبه,1043207,Ma'rib,903644,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2608,01/02/2019,05/03/2021,0,140,26,YE26,Marib,مأرب,2608,Rahabah,رحبه,YE
+285,3267,YEM,Rajuzah,رجوزه,1043208,Al Jawf,903635,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1611,01/02/2019,05/03/2021,0,20,16,YE16,Al Jawf,الجوف,1611,Rajuzah,رجوزه,YE
+286,3268,YEM,Rakhyah,رخيه,1043209,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1920,01/02/2019,05/03/2021,0,87,19,YE19,Hadramaut,حضرموت,1920,Rakhyah,رخيه,YE
+287,3269,YEM,Rassd,رصد,1043210,Abyan,903630,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1206,01/02/2019,05/03/2021,0,234,12,YE12,Abyan,أبين,1206,Rasad,رصد,YE
+288,3270,YEM,Raydah,ريده,1043211,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2911,01/02/2019,05/03/2021,0,294,29,YE29,Amran,عمران,2911,Raydah,ريده,YE
+289,3271,YEM,Razih,رازح,1043212,Sa'dah,903646,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2205,01/02/2019,05/03/2021,0,15,22,YE22,Sa'ada,صعدة,2205,Razih,رازح,YE
+290,3272,YEM,Rumah,رماه,1043213,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1901,01/02/2019,05/03/2021,0,1,19,YE19,Hadramaut,حضرموت,1901,Rumah,رماه,YE
+291,3273,YEM,Sa'dah,صعده,1043214,Sa'dah,903646,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2215,01/02/2019,05/03/2021,0,291,22,YE22,Sa'ada,صعدة,2215,Sa'adah,صعدة,YE
+292,3274,YEM,Sa'fan,صعفان,1043215,Sana'a,903647,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2311,01/02/2019,05/03/2021,0,135,23,YE23,Sana'a,صنعاء,2311,Sa'fan,صعفان,YE
+293,3275,YEM,Sabah,صباح,1043216,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1417,01/02/2019,05/03/2021,0,190,14,YE14,Al Bayda,البيضاء,1417,Sabah,صباح,YE
+294,3276,YEM,Sabir Al Mawadim,صبر الموادم,1043217,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1510,01/02/2019,05/03/2021,0,248,15,YE15,Taizz,تعز,1510,Mashra'a Wa Hadnan,صبر الموادم,YE
+295,3277,YEM,Sah,ساه,1043218,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1909,01/02/2019,05/03/2021,0,76,19,YE19,Hadramaut,حضرموت,1909,Sah,ساه,YE
+296,3278,YEM,Sahar,سحار,1043219,Sa'dah,903646,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2211,01/02/2019,05/03/2021,0,12,22,YE22,Sa'ada,صعدة,2211,Sahar,سحار,YE
+297,3279,YEM,Salah,صاله,1043220,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1519,01/02/2019,05/03/2021,0,241,15,YE15,Taizz,تعز,1519,Al Qahirah,صالة,YE
+298,3280,YEM,Sami',سامع,1043221,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1523,01/02/2019,05/03/2021,0,252,15,YE15,Taizz,تعز,1523,Sama,سامع,YE
+299,3281,YEM,Sana'a City Outskirts - Hamdan,ضواحي الامانة همدان,1043222,Sana'a City,903648,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1319,01/02/2019,05/03/2021,0,NA,NA,NA,NA,NA,NA,NA,NA,NA
+300,3282,YEM,Sana'a City Outskirts -Sanhan wa Bani Bahlul,ضواحي الامانة سنحان وبني بهلول,1043223,Sana'a City,903648,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1324,01/02/2019,05/03/2021,0,NA,NA,NA,NA,NA,NA,NA,NA,NA
+301,3283,YEM,Sanhan wa Bani Bahlul,سنحان وبني بهلول,1043224,Sana'a,903647,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2305,01/02/2019,05/03/2021,0,120,23,YE23,Sana'a,صنعاء,2305,Sanhan,سنحان وبني بهلول,YE
+302,3284,YEM,Saqin,ساقين,1043225,Sa'dah,903646,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2209,01/02/2019,05/03/2021,0,17,22,YE22,Sa'ada,صعدة,2209,Saqayn,ساقين,YE
+303,3285,YEM,Sarar,سرار,1043226,Abyan,903630,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1207,01/02/2019,05/03/2021,0,237,12,YE12,Abyan,أبين,1207,Sarar,سرار,YE
+304,3286,YEM,Sayhut,سيحوت,1043227,Al Maharah,903636,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2807,01/02/2019,05/03/2021,0,68,28,YE28,Al Maharah,المهرة,2807,Sayhut,سيحوت,YE
+305,3287,YEM,Sayun,سيئون,1043228,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1910,01/02/2019,05/03/2021,0,42,19,YE19,Hadramaut,حضرموت,1910,Sayun,سيئون,YE
+306,3288,YEM,Shada'a,شداء,1043229,Sa'dah,903646,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2206,01/02/2019,05/03/2021,0,18,22,YE22,Sa'ada,صعدة,2206,Shada'a,شداء,YE
+307,3289,YEM,Shaharah,شهاره,1043230,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2905,01/02/2019,05/03/2021,0,39,29,YE29,Amran,عمران,2905,Shaharah,شهاره,YE
+308,3290,YEM,Shahan,شحن,1043231,Al Maharah,903636,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2801,01/02/2019,05/03/2021,0,5,28,YE28,Al Maharah,المهرة,2801,Shahan,شحن,YE
+309,3291,YEM,Shar'ab Ar Rawnah,شرعب الرونه,1043232,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1503,01/02/2019,05/03/2021,0,225,15,YE15,Taizz,تعز,1503,Shara'b As Salam,شرعب الرونة,YE
+310,3292,YEM,Shar'ab As Salam,شرعب السلام,1043233,Ta'iz,903651,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1502,01/02/2019,05/03/2021,0,235,15,YE15,Taizz,تعز,1502,At Ta'iziyah,شرعب السلام,YE
+311,3293,YEM,Sharas,شرس,1043234,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1719,01/02/2019,05/03/2021,0,81,17,YE17,Hajjah,حجة,1719,Sharas,شرس,YE
+312,3294,YEM,Shibam,شبام,1043235,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1908,01/02/2019,05/03/2021,0,46,19,YE19,Hadramaut,حضرموت,1908,Shibam,شبام,YE
+313,3295,YEM,Shibam�Kawkaban,شبام كوكبان,1043236,Al Mahwit,903637,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2701,01/02/2019,05/03/2021,0,99,27,YE27,Al Mahwit,المحويت,2701,Shibam Kawkaban,شبام كوكبان,YE
+314,3296,YEM,,شعوب,1043237,Sana'a City,903648,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1302,01/02/2019,05/03/2021,0,117,13,YE13,Amanat Al Asimah,أمانة العاصمة,1302,Shu'aub,شعوب,YE
+315,3297,YEM,Sibah,سباح,1043238,Abyan,903630,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1205,01/02/2019,05/03/2021,0,224,12,YE12,Abyan,أبين,1205,Sibah,سباح,YE
+316,3298,YEM,Sirwah,صرواح,1043239,Ma'rib,903644,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2606,01/02/2019,05/03/2021,0,96,26,YE26,Marib,مأرب,2606,Sirwah,صرواح,YE
+317,3299,YEM,Suwayr,صوير,1043240,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2907,01/02/2019,05/03/2021,0,50,29,YE29,Amran,عمران,2907,Suwayr,صـويــــر,YE
+318,3300,YEM,Tarim,تريم,1043241,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1911,01/02/2019,05/03/2021,0,28,19,YE19,Hadramaut,حضرموت,1911,Tarim,تريم,YE
+319,3301,YEM,Thamud,ثمود,1043242,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1902,01/02/2019,05/03/2021,0,3,19,YE19,Hadramaut,حضرموت,1902,Thamud,ثمود,YE
+320,3302,YEM,Thula,ثلاء,1043243,Amran,903638,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2917,01/02/2019,05/03/2021,0,333,29,YE29,Amran,عمران,2917,Thula,ثلاء,YE
+321,3303,YEM,Tuban,تبن,1043244,Lahj,903643,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2515,01/02/2019,05/03/2021,0,256,25,YE25,Lahj,لحج,2515,Tuban,تبن,YE
+322,3304,YEM,Tur Al Bahah,طور الباحه,1043245,Lahj,903643,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2511,01/02/2019,05/03/2021,0,261,25,YE25,Lahj,لحج,2511,Tur Al Bahah,طور الباحة,YE
+323,3305,YEM,Wadi�Al�Ayn,وادي العين,1043246,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1919,01/02/2019,05/03/2021,0,80,19,YE19,Hadramaut,حضرموت,1919,Wadi Al Ayn,وادي العين وحوره,YE
+324,3306,YEM,Wadhrah,وضره,1043247,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1723,01/02/2019,05/03/2021,0,83,17,YE17,Hajjah,حجة,1723,Wadhrah,وضرة,YE
+325,3307,YEM,Wald Rabi',ولدربيع,1043248,Al Bayda,903633,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1415,01/02/2019,05/03/2021,0,302,14,YE14,Al Bayda,البيضاء,1415,Wald Rabi',ولد ربيع,YE
+326,3308,YEM,Washhah,وشحه,1043249,Hajjah,903641,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1730,01/02/2019,05/03/2021,0,29,17,YE17,Hajjah,حجة,1730,Washhah,وشحة,YE
+327,3309,YEM,Wusab Al Ali,وصاب العالي,1043250,Dhamar,903639,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2006,01/02/2019,05/03/2021,0,332,20,YE20,Dhamar,ذمار,2006,Wusab Al Ali,وصاب العالي,YE
+328,3310,YEM,Wusab As Safil,وصاب السافل,1043251,Dhamar,903639,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2007,01/02/2019,05/03/2021,0,186,20,YE20,Dhamar,ذمار,2007,Wusab As Safil,وصاب السافل,YE
+329,3311,YEM,Yabuth,يبعث,1043252,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1923,01/02/2019,05/03/2021,0,148,19,YE19,Hadramaut,حضرموت,1923,Yabuth,يبعث,YE
+330,3312,YEM,Yafi',يافع,1043253,Lahj,903643,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2502,01/02/2019,05/03/2021,0,318,25,YE25,Lahj,لحج,2502,Yafa'a,يافع,YE
+331,3313,YEM,Yahr,يهر,1043254,Lahj,903643,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE2504,01/02/2019,05/03/2021,0,233,25,YE25,Lahj,لحج,2504,Yahr,يهر,YE
+332,3314,YEM,Yarim,يريم,1043255,Ibb,903642,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1102,01/02/2019,05/03/2021,0,185,11,YE11,Ibb,إب,1102,Yarim,يريم,YE
+333,3315,YEM,Zabid,زبيد,1043256,Al Hodeidah,903634,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1824,01/02/2019,05/03/2021,0,282,18,YE18,Al Hudaydah,الحديدة,1824,Zabid,زبيد,YE
+334,3316,YEM,Zamakh wa Manwokh,زمخ ومنوخ,1043257,Hadramawt,903640,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1904,01/02/2019,05/03/2021,0,6,19,YE19,Hadramaut,حضرموت,1904,Zamakh wa Manwakh,زموخ ومنوخ,YE
+335,3317,YEM,Zingibar,زنجبار,1043258,Abyan,903630,Yemen,269,YEM,RBC,no,NA,CSO (OCHA Yemen),YE1210,01/02/2019,05/03/2021,0,262,12,YE12,Abyan,أبين,1210,Zingibar,زنجبار,YE
