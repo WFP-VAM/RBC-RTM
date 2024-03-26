@@ -43,7 +43,6 @@ The script running environment is included in the *readme* file, [make sure that
 
 library(tidyverse)
 library(readxl)
-library(xlsx)
 library(httr)
 library(jsonlite)
 library(lubridate)
@@ -53,6 +52,7 @@ library(expss)
 library(ggplot2)
 library(ggrepel)
 library(tools)
+library(writexl)
 
 # read input file
 pipInput = read_excel('Pipeline input/RTM_pipeline_input.xlsx' , sheet = 'main_parameters')
@@ -362,7 +362,7 @@ LebRaw$HoHH_Education [LebRaw$Relation_to_HoH == 1] = LebRaw$RESPEducation [LebR
 
 
 
-LebRaw_reduced = LebRaw %>%  select(EnuName, ObsDate, RspID, RespNationality, Relation_to_HoH,  RESPEducation , HHSize,  HHHSex, HWaterSRC ,HHHEducation = HoHH_Education, HElectricitySRC = MainSourceElectricity , HToiletType = Hhtoiletfacility, ADMIN0Name , ADMIN1Name , ADMIN2Name , SvyDate,RESPAge,HDwellType = HHHousing, FCSStap, FCSPulse, FCSDairy, FCSPr, FCSVeg, FCSFruit, FCSFat, FCSSugar, rCSILessQlty, rCSIBorrow, rCSIMealSize, rCSIMealNb, rCSIMealAdult = rCSIMealAdul, LcsEN_stress_BorrowCash ,  LcsEN_stress_Utilities , LcsEN_stress_DomAsset ,LcsEN_stress_health1, LcsEN_crisis_Health  , LcsEN_crisis_ProdAssets  , LcsEN_crisis_Housing  , LcsEN_crisis_OutSchool  , LcsEN_crisis_ChildWork  , LcsEN_em_IllegalAct, LcsEN_em_Begged, LcsEN_em_Marriage, LcsEN_em_ResAsset,LhCSIEnAccess, FCS_SRf , MktAccess_7D )
+LebRaw_reduced = LebRaw %>%  select(EnuName, ObsDate, RspID, RespNationality, RESPRelationHHH = Relation_to_HoH,  RESPEducation , HHSize,  HHHSex, HWaterSRC ,HHHEducation = HoHH_Education, HElectricitySRC = MainSourceElectricity , HToiletType = Hhtoiletfacility, ADMIN0Name , ADMIN1Name , ADMIN2Name , SvyDate,RESPAge,HDwellType = HHHousing, FCSStap, FCSPulse, FCSDairy, FCSPr, FCSVeg, FCSFruit, FCSFat, FCSSugar, rCSILessQlty, rCSIBorrow, rCSIMealSize, rCSIMealNb, rCSIMealAdult = rCSIMealAdul, LcsEN_stress_BorrowCash ,  LcsEN_stress_Utilities , LcsEN_stress_DomAsset ,LcsEN_stress_health1, LcsEN_crisis_Health  , LcsEN_crisis_ProdAssets  , LcsEN_crisis_Housing  , LcsEN_crisis_OutSchool  , LcsEN_crisis_ChildWork  , LcsEN_em_IllegalAct, LcsEN_em_Begged, LcsEN_em_Marriage, LcsEN_em_ResAsset,LhCSIEnAccess, FCS_SRf , MktAccess_7D )
 
 LebRaw_reduced  = LebRaw_reduced %>% separate(HElectricitySRC , c("HElectricitySRC_1" , "HElectricitySRC_2" , "HElectricitySRC_3"))
 
@@ -385,7 +385,7 @@ LebRaw_reduced[lcs_vars] = replaceall( LebRaw_reduced [lcs_vars] , c('1' , '2' ,
 ## Iraq
 
 if ('Iraq' %in% pipInput$CountryCode) {
-IrqRaw_reduced = IrqRaw %>% select (SvyDate,EnuName,RESPAge,RESPSex,RESPEducation,HHHSex,HHHAge,HHHEdu,ADMIN1Name,ADMIN2Name,HHDispl,HDwellType,HHSize,FCSStap,FCSPulse,FCSDairy,FCSPr,FCSVeg,FCSFruit,FCSFat,FCSSugar,FCS_SRf,rCSILessQlty,rCSIBorrow,rCSIMealSize,rCSIMealNb,rCSIMealAdult,Lcs_stress_Saving,Lcs_stress_CrdtFood,Lcs_stress_BorrowCash,Lcs_stress_DomAsset,Lcs_crisis_HealthEdu,Lcs_crisis_ProdAssets,Lcs_crisis_OutSchool,Lcs_em_Begged,Lcs_em_Marriage,Lcs_em_IllegalAct,HHExpTOT,HHExpFood,HHIncFirst_SRi,HHIncChg_1M,mktaccess_14d,mktnoaccesswhy_14d
+IrqRaw_reduced = IrqRaw %>% select (SvyDate,EnuName,RESPAge,RESPSex,RESPEducation,HHHSex,HHHAge,HHHEducation = HHHEdu,ADMIN1Name,ADMIN2Name,HHDispl,HDwellType,HHSize,FCSStap,FCSPulse,FCSDairy,FCSPr,FCSVeg,FCSFruit,FCSFat,FCSSugar,FCS_SRf,rCSILessQlty,rCSIBorrow,rCSIMealSize,rCSIMealNb,rCSIMealAdult,Lcs_stress_Saving,Lcs_stress_CrdtFood,Lcs_stress_BorrowCash,Lcs_stress_DomAsset,Lcs_crisis_HealthEdu,Lcs_crisis_ProdAssets,Lcs_crisis_OutSchool,Lcs_em_Begged,Lcs_em_Marriage,Lcs_em_IllegalAct,HHExpTOT,HHExpFood,HHIncFirst_SRi,HHIncChg_1M,mktaccess_14d,mktnoaccesswhy_14d
 )
 
 ## convert numeric variables 
@@ -394,7 +394,7 @@ num_vars = c("RESPAge" , "HHSize" , "HHHAge" , "FCSStap" ,	"FCSPulse",	"FCSVeg",
 
 IrqRaw_reduced [, num_vars] = apply (IrqRaw_reduced [, num_vars] , 2 , as.numeric)
 
-convert_to_char = c("HHHSex" , "HHDispl" , "HHHEdu"  , "HDwellType" , "FCS_SRf" , "mktaccess_14d" , "HHIncFirst_SRi" , "HHIncChg_1M")
+convert_to_char = c("HHHSex" , "HHDispl" , "HHHEducation"  , "HDwellType" , "FCS_SRf" , "mktaccess_14d" , "HHIncFirst_SRi" , "HHIncChg_1M")
 
 lcs_vars = names (IrqRaw_reduced %>% select (starts_with('Lcs')))
 
@@ -402,7 +402,7 @@ IrqRaw_reduced[,convert_to_char] = apply(IrqRaw_reduced[,convert_to_char] , 2 , 
 
 IrqRaw_reduced[,lcs_vars] = apply(IrqRaw_reduced[,lcs_vars] , 2 , as.character)
 
-IrqRaw_reduced = IrqRaw_reduced %>% mutate( HHHEdu = recode(HHHEdu , 'Did not attend any school' ~ 'None' , 'Did not complete any level' ~ 'None' , 'Primary/Elementary Certificate (1-6)' ~ 'Primary' , 'Intermediate Certificate (7-9)' ~ 'Primary' , 'Basic Certificate (1-9)' ~ 'Secondary' , 'Preparatory/Secondary Certificate - Academic' ~ 'Secondary' , 'Preparatory/Secondary Certificate - Vocational' ~ 'Vocational' , 'Technical diploma (after Secondary)' ~ 'Secondary' , "Bachelor's Degree" ~ "University" , "Professional Degree" ~ "University" , "Higher Diploma Degree" ~ "University" , "Master's Degree" ~ "University" , "Doctoral Degree" ~ "University" )   , RESPEducation = recode(RESPEducation , 'Did not attend any school' ~ 'None' , 'Did not complete any level' ~ 'None' , 'Primary/Elementary Certificate (1-6)' ~ 'Primary' , 'Intermediate Certificate (7-9)' ~ 'Primary' , 'Basic Certificate (1-9)' ~ 'Secondary' , 'Preparatory/Secondary Certificate - Academic' ~ 'Secondary' , 'Preparatory/Secondary Certificate - Vocational' ~ 'Vocational' , 'Technical diploma (after Secondary)' ~ 'Secondary' , "Bachelor's Degree" ~ "University" , "Professional Degree" ~ "University" , "Higher Diploma Degree" ~ "University" , "Master's Degree" ~ "University" , "Doctoral Degree" ~ "University" )  ,HDwellType = recode(HDwellType, 'Own home' ~ 'Own' , 'Rent home' ~ 'Rent' , 'Living with parents' ~ 'Guest_family' , 'Staying as a guest hosted' ~ 'Guest_strangers' , 'Sharing accommodation with other families' ~ 'SharingAcco' , 'Informal Camp' ~ 'InformalCamp' , 'Informal settlement' ~'InformalSettlment'  , 'Camp' ~ 'Camp' )  ,FCS_SRf = recode(FCS_SRf, 'Own production' ~ 'OwnProd' , 'Exchange labor for food' ~ 'Labour' , 'Market \\ Grocery store' ~ 'Purchase' , 'Food assistance by humanitarian agencies' ~ 'FoodAssist' , 'PDS' ~ 'PDS' , "Food assistance by Government" ~ 'FoodAssist' , 'Gift from family, relatives or friends' ~ 'Gift') , mktaccess_14d = recode (mktaccess_14d , 'yes' ~ 'Yes' , 'no' ~ 'No' ) , mktnoaccesswhy_14d = recode(mktnoaccesswhy_14d , 'High food prices' ~ 'HighPrices' , 'Market\\grocery store is too far' ~ 'FarMarkets'))
+IrqRaw_reduced = IrqRaw_reduced %>% mutate( HHHEducation = recode(HHHEducation , 'Did not attend any school' ~ 'None' , 'Did not complete any level' ~ 'None' , 'Primary/Elementary Certificate (1-6)' ~ 'Primary' , 'Intermediate Certificate (7-9)' ~ 'Primary' , 'Basic Certificate (1-9)' ~ 'Secondary' , 'Preparatory/Secondary Certificate - Academic' ~ 'Secondary' , 'Preparatory/Secondary Certificate - Vocational' ~ 'Vocational' , 'Technical diploma (after Secondary)' ~ 'Secondary' , "Bachelor's Degree" ~ "University" , "Professional Degree" ~ "University" , "Higher Diploma Degree" ~ "University" , "Master's Degree" ~ "University" , "Doctoral Degree" ~ "University" )   , RESPEducation = recode(RESPEducation , 'Did not attend any school' ~ 'None' , 'Did not complete any level' ~ 'None' , 'Primary/Elementary Certificate (1-6)' ~ 'Primary' , 'Intermediate Certificate (7-9)' ~ 'Primary' , 'Basic Certificate (1-9)' ~ 'Secondary' , 'Preparatory/Secondary Certificate - Academic' ~ 'Secondary' , 'Preparatory/Secondary Certificate - Vocational' ~ 'Vocational' , 'Technical diploma (after Secondary)' ~ 'Secondary' , "Bachelor's Degree" ~ "University" , "Professional Degree" ~ "University" , "Higher Diploma Degree" ~ "University" , "Master's Degree" ~ "University" , "Doctoral Degree" ~ "University" )  ,HDwellType = recode(HDwellType, 'Own home' ~ 'Own' , 'Rent home' ~ 'Rent' , 'Living with parents' ~ 'Guest_family' , 'Staying as a guest hosted' ~ 'Guest_strangers' , 'Sharing accommodation with other families' ~ 'SharingAcco' , 'Informal Camp' ~ 'InformalCamp' , 'Informal settlement' ~'InformalSettlment'  , 'Camp' ~ 'Camp' )  ,FCS_SRf = recode(FCS_SRf, 'Own production' ~ 'OwnProd' , 'Exchange labor for food' ~ 'Labour' , 'Market \\ Grocery store' ~ 'Purchase' , 'Food assistance by humanitarian agencies' ~ 'FoodAssist' , 'PDS' ~ 'PDS' , "Food assistance by Government" ~ 'FoodAssist' , 'Gift from family, relatives or friends' ~ 'Gift') , mktaccess_14d = recode (mktaccess_14d , 'yes' ~ 'Yes' , 'no' ~ 'No' ) , mktnoaccesswhy_14d = recode(mktnoaccesswhy_14d , 'High food prices' ~ 'HighPrices' , 'Market\\grocery store is too far' ~ 'FarMarkets'))
 
 IrqRaw_reduced[lcs_vars] = replaceall( IrqRaw_reduced [lcs_vars] , c('Yes' , "no - don't need to do" , "No, because I already did it \\(so cannot continue to do it\\)" , "No, I don't have-non applicable") , c('Yes' , 'No' , 'AlreadyExhausted'  , 'NotApplicable') , quiet = TRUE)
 
@@ -478,14 +478,14 @@ LebRaw_reduced = base_weights("Lebanon" , LebRaw_reduced )
 
 # Re-categorize HHHEducation to 3 groups 
 LebRaw_reduced$HHHEdu_3gps [(LebRaw_reduced$HHHEducation == "0" | LebRaw_reduced$HHHEducation == "1" | LebRaw_reduced$HHHEducation == "99") ] = "Illiterate_Primary"
-LebRaw_reduced$HHHEdu_3gps [(LebRaw_reduced$RESPEducation == "0" | LebRaw_reduced$RESPEducation == "1" | LebRaw_reduced$HHHEducation == "99") & LebRaw_reduced$Relation_to_HoH == "1"  ] = "Illiterate_Primary"
+LebRaw_reduced$HHHEdu_3gps [(LebRaw_reduced$RESPEducation == "0" | LebRaw_reduced$RESPEducation == "1" | LebRaw_reduced$HHHEducation == "99") & LebRaw_reduced$RESPRelationHHH == "1"  ] = "Illiterate_Primary"
 
 LebRaw_reduced$HHHEdu_3gps [(LebRaw_reduced$HHHEducation == "2" | LebRaw_reduced$HHHEducation == "3")] = "Secondary"
-LebRaw_reduced$sample_HHHEdu_3gps [(LebRaw_reduced$RESPEducation == "2"  | LebRaw_reduced$RESPEducation == "3") & (LebRaw_reduced$Relation_to_HoH == "1")] = "Secondary"
+LebRaw_reduced$sample_HHHEdu_3gps [(LebRaw_reduced$RESPEducation == "2"  | LebRaw_reduced$RESPEducation == "3") & (LebRaw_reduced$RESPRelationHHH == "1")] = "Secondary"
 
 LebRaw_reduced$HHHEdu_3gps [( LebRaw_reduced$HHHEducation == "4" | LebRaw_reduced$HHHEducation == "5" | LebRaw_reduced$HHHEducation == "6" | LebRaw_reduced$HHHEducation == "7")] = "Higher"
 
-LebRaw_reduced$HHHEdu_3gps [( LebRaw_reduced$RESPEducation == "4" | LebRaw_reduced$RESPEducation == "5" | LebRaw_reduced$RESPEducation == "6" | LebRaw_reduced$RESPEducation == "7") & (LebRaw_reduced$Relation_to_HoH == "1")] = "Higher"
+LebRaw_reduced$HHHEdu_3gps [( LebRaw_reduced$RESPEducation == "4" | LebRaw_reduced$RESPEducation == "5" | LebRaw_reduced$RESPEducation == "6" | LebRaw_reduced$RESPEducation == "7") & (LebRaw_reduced$RESPRelationHHH == "1")] = "Higher"
 
 tbl1 = LebRaw_reduced %>% group_by(ADMIN1Name  ) %>% summarise(cnt_gov = n())
 
@@ -784,9 +784,11 @@ df_master$ADMIN1Name = as.numeric(df_master$ADMIN1Name)
 
 
 ```{r}
-df_master$CmbAdjWt = NA
+#df_master$CmbAdjWt = NA
 
-df_master = df_master %>% select (- c(EnuName ,HHHEdu_3grp_Illiterate_Primary,HHHEdu_3grp_Secondary, HHHEdu_3grp_Higher,HHHEdu_3gps, sample_HHHEdu_3gps, HHHEdu_3gps, sample_HHHEdu_3gps, cnt_gov, cnt, HHHEdu_3gps_sample_perc , `Male HoH` , `Female HoH` , adm0_name , adm0_WFP_code , adm1_WFP_code, adm1_pcode, adm1_pop_count, strata_cnt  ) )
+df_master = df_master %>% select (- c(EnuName ,HHHEdu_3grp_Illiterate_Primary,HHHEdu_3grp_Secondary, HHHEdu_3grp_Higher,HHHEdu_3gps, sample_HHHEdu_3gps, HHHEdu_3gps, sample_HHHEdu_3gps, cnt_gov, cnt, HHHEdu_3gps_sample_perc , `Male HoH` , `Female HoH` , adm0_name , adm0_WFP_code , adm1_WFP_code, adm1_pcode, adm1_pop_count, strata_cnt , HHH_YN, HHHAge, IDPDuration,mktnoaccesswhy_14d ) )
+
+write_xlsx(df_master, paste0("Cleaned data/" , "RTM_master" , "_"  , Sys.Date(), ".xlsx"))
 ```
 
 ## Regional Master Table Connection
