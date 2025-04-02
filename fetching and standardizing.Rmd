@@ -1,0 +1,190 @@
+---
+title: "Fetching and Standardizing"
+author: "Amira Swedan"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+
+## Overview
+
+This data pipeline automates the process of RTM/mVAM data management for the RTM core variables related to the key indicators. The standard pipeline procedures are aligned with [RBC RTM SOPs](https://wfp-my.sharepoint.com/:w:/g/personal/amira_swedan_wfp_org/EVistHIsU_xAsdsF-2SEcRoB-cMrwS-IuyjyscsUVLfuig?e=SH9hHK) that includes a detailed explanation about the methodology applied in this script.
+
+The key objective of the standard pipeline is to maintain the same process of data management across all RBC countries running RTM/mVAM activities.
+
+[**The key functions implemented in this section are**:]{.underline}
+
+-   Fetching the raw dataset
+-   Renaming and selecting core variables
+
+
+Before running this pipeline script, you need to update the input file included in the script dependencies *RTM_pipeline_input.xlsx*, Specify in this file the start and end date that you wish to extract the data within. [*Check readme for more details*]
+
+The script running environment is included in the *readme* file, [make sure that you have all required packages installed]{.underline} before running the script
+
+
+## Load packages and read relevant input files
+
+```{r load packages, echo=TRUE, message=FALSE, warning=FALSE}
+
+# load required packages
+
+library(tidyverse)
+library(readxl)
+library(httr)
+library(jsonlite)
+library(lubridate)
+library(lares)
+library(labelled)
+library(expss)
+library(ggplot2)
+library(ggrepel)
+library(tools)
+library(writexl)
+
+# read input file
+
+pipInput = read_excel('Pipeline input/RTM_pipeline_input.xlsx' , sheet = 'main_parameters')
+stdNames = read_excel('Pipeline input/RTM_pipeline_input.xlsx' , sheet = 'standard_names_mapping')
+pipInput$StartDate = format(as.Date(pipInput$StartDate), "%m/%d/%Y")
+pipInput$EndDate = format(as.Date(pipInput$EndDate), "%m/%d/%Y")
+
+```
+
+
+## Connect and Extract Raw Data through Crystal API (Syria and Yemen)
+
+Connect through Crystal API to fetch the raw data.
+
+To connect you need to pass the key parameters (`APIKey`, `start date`, `end date`) for each country separately to *Crystal_API_connect* function.
+
+The parameters should be inserted in the pipeline input file, the configuration list for each country (`Syria`, and `Yemen`) will be updated automatically.
+
+
+
+The new variables names in this section are aligned with the standard variables names included in WFP codebook.
+
+The codebook is embedded in WFP [survey designer](https://www.surveydesigner.vam.wfp.org/design/survey).
+
+
+```{r pull raw data through Crystal API , message=FALSE, warning=FALSE}
+##########################################################
+#the function below could be used to pull the survey data for any country if the provider is Crystal
+###########################################################
+
+Crystal_API_connect <- function (con_config) {
+  
+json_body <- jsonlite::toJSON(con_config, auto_unbox = TRUE)
+
+print (json_body)
+  
+ r =  POST(url = 'http://campaignapi.crystelcall.com/CampaignAPI/api/Campaign' , body = json_body ,  add_headers('Content-Type'='application/json')) 
+ 
+ if (r$status_code == 200) {
+   print ('Crystal API connection is ok ')
+ }
+ else {
+     print (paste0('ERROR:reading from Crystal API returned the status code ' , r$status_code))
+ }
+ 
+ Rawdata = fromJSON(rawToChar(r$content))
+ 
+ return(Rawdata)
+ 
+}
+
+
+
+## create a configuration list for countries utilizing Crystal API (Currently only Yemen and Syria)
+
+Syria_config = list ('APIKey' = paste("Syria_" , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Syria'] , "/")) [1] , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Syria'] , "/")) [3] , sep = ""),  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Syria']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Syria'] )
+
+Yemen_config = list ('APIKey' = paste("Yemen1_" , unlist (strsplit(pipInput$StartDate[pipInput$CountryCode == 'Yemen1'] , "/")) [1] , unlist (strsplit(pipInput$StartDate[pipInput$CountryCode == 'Yemen1'] , "/")) [3] , sep = ""),  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Yemen1']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Yemen1'] )
+
+```
+
+## Renaming
+
+```{r}
+##Variables standard names mapping
+
+replace_variable_names <- function(data, old_names, new_names) {
+  # Convert the data to a data frame if it's not already
+  if (!is.data.frame(data)) {
+    data <- as.data.frame(data)
+  }
+  
+  # Check if the lengths of old_names and new_names are the same
+  if (length(old_names) != length(new_names)) {
+    stop("The lengths of old_names and new_names must be the same.")
+  }
+  
+  # Iterate over the old_names and new_names to replace variable names
+  for (i in seq_along(old_names)) {
+    if (old_names[i] %in% names(data)) {
+      names(data)[names(data) == old_names[i]] <- new_names[i]
+    }
+  }
+  
+  # Return the updated data frame
+  return(data)
+}
+
+```
+
+
+```{r}
+##Pull the data for only countries indicated in the input list and export the raw data in csv file
+####################################################
+
+if ('Syria' %in% pipInput$CountryCode) {
+
+SyriaRaw = Crystal_API_connect (Syria_config)
+SyriaRaw = SyriaRaw[SyriaRaw$Completed == 'Y' ,]
+print(paste0('total number of completed surveys for Syria survey is ' , nrow(SyriaRaw)))
+SyriaRaw = replace_variable_names(SyriaRaw , stdNames$Orignial[stdNames$Country == 'Syria'] , stdNames$Standard[stdNames$Country == 'Syria'])
+write.csv(SyriaRaw , paste0("Raw data/Syria/Syria_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Syria'] , "_" , Sys.Date() ,  ".csv"))
+print ( paste0('Syria ', pipInput$SvyID[pipInput$CountryCode == 'Syria'] , ' raw data is exported' ))
+
+}
+
+
+if ('Yemen1' %in% pipInput$CountryCode ) {
+YemenRaw = Crystal_API_connect(Yemen_config)
+YemenRaw = YemenRaw[YemenRaw$Completed == 'Y' ,]
+print(paste0('total number of completed surveys for Yemen survey is ' , nrow(YemenRaw)))
+names(YemenRaw) = gsub("[\r\n]", "", names(YemenRaw))
+YemenRaw = replace_variable_names(YemenRaw , stdNames$Orignial[stdNames$Country == 'Yemen'] , stdNames$Standard[stdNames$Country == 'Yemen'])
+write.csv(YemenRaw , paste0("Raw data/Yemen/Yemen_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Yemen1'] ,"_"  , Sys.Date(), ".csv"))
+print ( paste0('Yemen ', pipInput$SvyID[pipInput$CountryCode == 'Yemen1'] , ' raw data is exported' ))
+
+}
+```
+
+
+
+
+## import raw data directly (Iraq, Gaza, Ukraine, Lebanon) 
+
+For countries that utilizes MODA, there is a need to manually extract the data from MODA and include it in the country respective folder under the raw data folder. 
+Make sure while extracting the data through MODA to:
+1. export it in csv
+2. don't include the groups names in the header
+3. extract the data with the variables labels
+4. include only the data files that are relevant to the process in the respective country folder(s) in raw data container 
+
+```{r message=FALSE, warning=FALSE}
+
+if ('Iraq' %in% pipInput$CountryCode) {
+  setwd("Raw data//Iraq")
+  files = list.files()
+  IrqRaw = read.csv(files[1] , header = TRUE)
+  IrqRaw = IrqRaw[(IrqRaw$CallDispo == "Someone answers"  & IrqRaw$RESPConsent == "Yes"),]
+  print(paste0('total number of completed surveys for Iraq survey is ' , nrow(IrqRaw)))
+  IrqRaw = replace_variable_names(IrqRaw , stdNames$Orignial[stdNames$Country == 'Iraq'] , stdNames$Standard[stdNames$Country == 'Iraq'])
+}
+
+
+
+
+```
