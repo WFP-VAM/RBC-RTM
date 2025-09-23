@@ -55,6 +55,7 @@ library(tools)
 library(writexl)
 
 # read input file
+
 pipInput = read_excel('Pipeline input/RTM_pipeline_input.xlsx' , sheet = 'main_parameters')
 stdNames = read_excel('Pipeline input/RTM_pipeline_input.xlsx' , sheet = 'standard_names_mapping')
 pipInput$StartDate = format(as.Date(pipInput$StartDate), "%m/%d/%Y")
@@ -78,17 +79,19 @@ The codebook is embedded in WFP [survey designer](https://www.surveydesigner.vam
 
 
 
-```{r extract raw data and rename, message=FALSE, warning=FALSE, echo=TRUE}
+```{r extract raw data and rename, echo=TRUE, message=FALSE, warning=FALSE}
 
 ## create a configuration list for each country in the pipeline ## Don't proceed with running the pipeline functions for a country without creating this list 
 
-Syria_config = list ('APIKey' = paste("Syria_" , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Syria'] , "/")) [1] , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Syria'] , "/")) [3] , sep = ""),  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Syria']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Syria'] )
+# Syria_config = list ('APIKey' = paste("Syria_" , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Syria'] , "/")) [1] , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Syria'] , "/")) [3] , sep = ""),  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Syria']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Syria'] )
 
-Yemen_config = list ('APIKey' = paste("Yemen1_" , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Yemen1'] , "/")) [1] , unlist (strsplit(pipInput$EndDate[pipInput$CountryCode == 'Yemen1'] , "/")) [3] , sep = ""),  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Yemen1']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Yemen1'] )
+Syria_config = list ('APIKey' = 'Syria_042025' ,  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Syria']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Syria'] )
 
-Leb_config = list ('APIKey' = "Lebanon_112023",  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Lebanon']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Lebanon'] )
+Yemen_config = list ('APIKey' = paste("Yemen1_" , unlist (strsplit(pipInput$StartDate[pipInput$CountryCode == 'Yemen1'] , "/")) [1] , unlist (strsplit(pipInput$StartDate[pipInput$CountryCode == 'Yemen1'] , "/")) [3] , sep = ""),  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Yemen1']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Yemen1'] )
 
-Libya_config = list ('APIKey' =  "Libya_012024",  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Libya']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Libya'] )
+# Leb_config = list ('APIKey' = "Lebanon_112023",  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Lebanon']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Lebanon'] )
+# 
+# Libya_config = list ('APIKey' =  "Libya_012024",  'DateFrom' = pipInput$StartDate[pipInput$CountryCode == 'Libya']  , 'DateTo' = pipInput$EndDate[pipInput$CountryCode == 'Libya'] )
 
 
 
@@ -165,20 +168,21 @@ if ('Yemen1' %in% pipInput$CountryCode ) {
 YemenRaw = Crystal_API_connect(Yemen_config)
 YemenRaw = YemenRaw[YemenRaw$Completed == 'Y' ,]
 print(paste0('total number of completed surveys for Yemen survey is ' , nrow(YemenRaw)))
+names(YemenRaw) = gsub("[\r\n]", "", names(YemenRaw))
 YemenRaw = replace_variable_names(YemenRaw , stdNames$Orignial[stdNames$Country == 'Yemen'] , stdNames$Standard[stdNames$Country == 'Yemen'])
 write.csv(YemenRaw , paste0("Raw data/Yemen/Yemen_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Yemen1'] ,"_"  , Sys.Date(), ".csv"))
 print ( paste0('Yemen ', pipInput$SvyID[pipInput$CountryCode == 'Yemen1'] , ' raw data is exported' ))
 
 }
 
-if ('Lebanon' %in% pipInput$CountryCode) {
-LebRaw = Crystal_API_connect(Leb_config)
-LebRaw = LebRaw[LebRaw$Completed == 'Y' ,]
-print(paste0('total number of completed surveys for Lebanon survey is ' , nrow(LebRaw)))
-LebRaw = replace_variable_names(LebRaw , stdNames$Orignial[stdNames$Country == 'Lebanon'] , stdNames$Standard[stdNames$Country == 'Lebanon'])
-write.csv(LebRaw , paste0("Raw data/Lebanon/Lebanon_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Lebanon'] , "_" , Sys.Date() , ".csv"))
-print ( paste0('Lebanon ', pipInput$SvyID[pipInput$CountryCode == 'Lebanon'] , ' raw data is exported' ))
-}
+# if ('Lebanon' %in% pipInput$CountryCode) {
+# LebRaw = Crystal_API_connect(Leb_config)
+# LebRaw = LebRaw[LebRaw$Completed == 'Y' ,]
+# print(paste0('total number of completed surveys for Lebanon survey is ' , nrow(LebRaw)))
+# LebRaw = replace_variable_names(LebRaw , stdNames$Orignial[stdNames$Country == 'Lebanon'] , stdNames$Standard[stdNames$Country == 'Lebanon'])
+# write.csv(LebRaw , paste0("Raw data/Lebanon/Lebanon_raw_" , pipInput$SvyID[pipInput$CountryCode == 'Lebanon'] , "_" , Sys.Date() , ".csv"))
+# print ( paste0('Lebanon ', pipInput$SvyID[pipInput$CountryCode == 'Lebanon'] , ' raw data is exported' ))
+# }
 
 
 if ('Libya' %in% pipInput$CountryCode) {
@@ -218,22 +222,36 @@ if ('Iraq' %in% pipInput$CountryCode) {
 
 
 
-## ADMIN 2 names normalization
+## ADMIN names normalization
 
-```{r Admin2 normalization, message=TRUE, warning=FALSE}
+```{r Admin names normalization, message=TRUE, warning=FALSE}
 if ("Yemen1" %in% pipInput$CountryCode){
 YemStrata = read.csv("C:/Users/amira.swedan/OneDrive - World Food Programme/mVAM regular activities/Regional/RTM modified standard pipeline/codebook/yem_bnd_adm2_wfp_all.csv" )
 
-YemStrata$Dis_NAM_En = trimws(YemStrata$Dis_NAM_En)
+YemStrata$adm2_name = trimws(YemStrata$adm2_name)
+YemStrata$adm1_name = trimws(YemStrata$adm1_name)
+
 
 for (i in 1:length (YemenRaw$ADMIN2Name)) {
   YemenRaw$ADMIN2Name[i] = stringr::str_trim(YemenRaw$ADMIN2Name[i])
-  if(YemenRaw$ADMIN2Name[i] %in% YemStrata$Dis_NAM_En ){
-YemenRaw$ADMIN2Name[i] = YemStrata$adm2_id [YemenRaw$ADMIN2Name[i] == YemStrata$Dis_NAM_En]
+  if(YemenRaw$ADMIN2Name[i] %in% YemStrata$adm2_name ){
+YemenRaw$ADMIN2Name[i] = YemStrata$adm2_id [YemenRaw$ADMIN2Name[i] == YemStrata$adm2_name]
   } 
 }
 
+### ADMIN1 Name Normalization
+
+for (i in 1:length (YemenRaw$ADMIN1Name)) {
+  YemenRaw$ADMIN1Name[i] = stringr::str_trim(YemenRaw$ADMIN1Name[i])
+  if(YemenRaw$ADMIN1Name[i] %in% YemStrata$adm1_name ){
+YemenRaw$ADMIN1Name[i] = YemStrata$adm1_id [YemenRaw$ADMIN1Name[i] == YemStrata$adm1_name]
+  } 
 }
+
+
+YemenRaw$ADMIN0Name = 269
+}
+
 
 
 if ("Lebanon" %in% pipInput$CountryCode){
@@ -247,7 +265,10 @@ for (i in 1:length (LebRaw$ADMIN2Name)) {
 LebRaw$ADMIN2Name[i] = LebStrata$adm2_id [LebRaw$ADMIN2Name[i] == LebStrata$adm2_name]
   } 
 }
+### ADMIN1 Name Normalization
+# LebRaw$ADMIN1Name = dplyr::case_match( LebRaw$ADMIN1Name ,  "North" ~ "900943" , "Akkar" ~ "900944" , "Baalbek-El Hermel" ~ "900941" , "Mount Lebanon" ~ "900946" , "South" ~ "900945" , "Bekaa" ~ "900940" , "El Nabatieh" ~ "900947" , "Beirut" ~ "900942"  )
 
+LebRaw$ADMIN0Name = 141
 }
 
 
@@ -256,6 +277,8 @@ if ("Syria" %in% pipInput$CountryCode){
 SyrStrata = read_excel("C:/Users/amira.swedan/OneDrive - World Food Programme/mVAM regular activities/Regional/RTM modified standard pipeline/Codebook/syr_bnd_adm3_wfp_a_20210325.xlsx" , sheet = 1)
 
 SyrStrata$adm2_name = trimws(SyrStrata$adm2_name)
+SyrStrata$adm1_name = trimws(SyrStrata$adm1_name)
+
 
 for (i in 1:length (SyriaRaw$ADMIN2Name)) {
   SyriaRaw$ADMIN2Name[i] = str_trim(SyriaRaw$ADMIN2Name[i])
@@ -263,8 +286,20 @@ for (i in 1:length (SyriaRaw$ADMIN2Name)) {
 SyriaRaw$ADMIN2Name[i] = SyrStrata$adm2_id [SyriaRaw$ADMIN2Name[i] == SyrStrata$adm2_name]
   } 
 }
-
+### ADMIN1 Name Normalization
+for (i in 1:length (SyriaRaw$ADMIN1Name)) {
+  SyriaRaw$ADMIN1Name[i] = str_trim(SyriaRaw$ADMIN1Name[i])
+  if(SyriaRaw$ADMIN1Name[i] %in% SyrStrata$adm1_name ){
+SyriaRaw$ADMIN1Name[i] = SyrStrata$adm1_id [SyriaRaw$ADMIN1Name[i] == SyrStrata$adm1_name]
+  } 
 }
+
+SyriaRaw$ADMIN1Name [SyriaRaw$ADMIN1Name == "Dar'a"] = "900223"
+SyriaRaw$ADMIN0Name = 238
+}
+
+
+
 
 if ("Iraq" %in% pipInput$CountryCode){
 IrqStrata = read_excel("C:/Users/amira.swedan/OneDrive - World Food Programme/mVAM regular activities/Regional/RTM modified standard pipeline/Codebook/irq_bnd_adm2_wfp_a_20210325.xlsx" , sheet = 1)
@@ -284,7 +319,11 @@ for (i in 1:length (IrqRaw$ADMIN2Name)) {
 IrqRaw$ADMIN2Name[i] = IrqStrata$adm2_id [IrqRaw$ADMIN2Name[i] == IrqStrata$adm2_name]
   } 
 }
+### ADMIN1 Name Normalization
+# IrqRaw$ADMIN1Name = dplyr::case_match( IrqRaw$ADMIN1Name ,  "Najaf" ~ "901262" , "Baghdad" ~ "901252" , "Babylon" ~ "901251" , "Erbil" ~ "901256" , "Anbar" ~ "901250" , "Diyala"  ~ "901254" , "Qadissiya" ~ "901263" , "Kerbala" ~ "901257" , "Ninewa" ~ "901261" , "Salah Al-Din" ~ "901264" , "Wassit" ~ "901267" , "Thi-Qar" ~ "901266" , "Muthanna" ~ "901260" , "Basrah" ~ "901253" , "Dahuk" ~ "901255" , "Sulaymaniyah" ~ "901265" , "Missan" ~ "901259" , "Kirkuk" ~ "901258"  )
+IrqRaw$ADMIN0Name = 118
 }
+
 
 
 ```
@@ -384,8 +423,10 @@ LebRaw_reduced[lcs_vars] = replaceall( LebRaw_reduced [lcs_vars] , c('1' , '2' ,
 
 ## Iraq
 
+#IrqRaw = IrqRaw [, !duplicated(names(IrqRaw))]
+
 if ('Iraq' %in% pipInput$CountryCode) {
-IrqRaw_reduced = IrqRaw %>% select (SvyDate,EnuName,RESPAge,RESPSex,RESPEducation,HHHSex,HHHAge,HHHEducation = HHHEdu,ADMIN1Name,ADMIN2Name,HHDispl,HDwellType,HHSize,FCSStap,FCSPulse,FCSDairy,FCSPr,FCSVeg,FCSFruit,FCSFat,FCSSugar,FCS_SRf,rCSILessQlty,rCSIBorrow,rCSIMealSize,rCSIMealNb,rCSIMealAdult,Lcs_stress_Saving,Lcs_stress_CrdtFood,Lcs_stress_BorrowCash,Lcs_stress_DomAsset,Lcs_crisis_HealthEdu,Lcs_crisis_ProdAssets,Lcs_crisis_OutSchool,Lcs_em_Begged,Lcs_em_Marriage,Lcs_em_IllegalAct,HHExpTOT,HHExpFood,HHIncFirst_SRi,HHIncChg_1M,mktaccess_14d,mktnoaccesswhy_14d
+IrqRaw_reduced = IrqRaw %>% select (SvyDate,EnuName,RESPAge,RESPSex,RESPEducation,HHHSex,HHHAge,HHHEducation = HHHEdu,ADMIN0Name,ADMIN1Name,ADMIN2Name,HHDispl,HDwellType,HHSize,FCSStap,FCSPulse,FCSDairy,FCSPr,FCSVeg,FCSFruit,FCSFat,FCSSugar,FCS_SRf,rCSILessQlty,rCSIBorrow,rCSIMealSize,rCSIMealNb,rCSIMealAdult,Lcs_stress_Saving,Lcs_stress_CrdtFood,Lcs_stress_BorrowCash,Lcs_stress_DomAsset,Lcs_crisis_HealthEdu,Lcs_crisis_ProdAssets,Lcs_crisis_OutSchool,Lcs_em_Begged,Lcs_em_Marriage,Lcs_em_IllegalAct,HHExpTOT,HHExpFood,HHIncFirst_SRi,HHIncChg_1M,mktaccess_14d,mktnoaccesswhy_14d
 )
 
 ## convert numeric variables 
@@ -428,7 +469,7 @@ input_admin1 = read_excel( xlsx_files, sheet = country_name)
 sample_strata = unique (df$ADMIN1Name)
 print ( sample_strata) 
 # list of the strata names in the input file
-country_strata = unique (input_admin1$adm1_name_en)
+country_strata = unique (input_admin1$adm1_WFP_code)
 print ( country_strata) 
 
     
@@ -468,9 +509,10 @@ return(df)
   else {print ( "strata names are not matching or maybe one of the strata is missing in the input table" )}
 }
 
-YemenRaw_reduced = base_weights ("Yemen" , YemenRaw_reduced)
+YemenRaw_reduced_test = base_weights ("Yemen" , YemenRaw_reduced)
 SyriaRaw_reduced = base_weights("Syria" , SyriaRaw_reduced)
 LebRaw_reduced = base_weights("Lebanon" , LebRaw_reduced )
+IrqRaw_reduced = base_weights("Iraq" , IrqRaw_reduced)
 
 
 
@@ -503,15 +545,19 @@ LebRaw_reduced = full_join(LebRaw_reduced , full_tbl  , by = c("ADMIN1Name" , "H
 
 ```{r generate master table, echo=TRUE, message=FALSE, warning=FALSE}
 
-IrqRaw_reduced$ADMIN0Name = 'Iraq'
-
+#IrqRaw_reduced$ADMIN0Name = 'Iraq'
+SyriaRaw_reduced$ADMIN0Name = as.character(SyriaRaw_reduced$ADMIN0Name)
+YemenRaw_reduced$ADMIN0Name = as.character(YemenRaw_reduced$ADMIN0Name)
+# LebRaw_reduced$ADMIN0Name = as.character(LebRaw_reduced$ADMIN0Name)
+IrqRaw_reduced$ADMIN0Name = as.character(IrqRaw_reduced$ADMIN0Name)
+# 
 df_master = full_join(SyriaRaw_reduced , YemenRaw_reduced)
-df_master = full_join( df_master, LebRaw_reduced)
 df_master = full_join(df_master , IrqRaw_reduced)
 
+df_master = SyriaRaw_reduced
 
 ## Check that there are no missing values 
-no_nulls = c("ADMIN0Name" ,	"ADMIN1Name" ,	"ADMIN2Name" ,	"RspID" ,	"SvyDate" ,	"ObsDate" ,	"EnuName" , "HHHSex" , "RESPAge" ,	"HHSize" , "FCSStap" ,	"FCSPulse" ,	"FCSVeg" ,	"FCSFruit" ,	"FCSPr" ,	"FCSDairy" ,	"FCSFat" ,	"FCSSugar" , "rCSILessQlty" ,	"rCSIBorrow",	"rCSIMealNb" ,	"rCSIMealSize" ,	"rCSIMealAdult" )
+no_nulls = c("ADMIN0Name" ,	"ADMIN1Name" ,	"ADMIN2Name" ,	"RspID" ,	"SvyDate" ,	"ObsDate" ,	"EnuName" , "HHHSex" , "RESPAge" ,	"HHSize" , "FCSStap" ,	"FCSPulse" ,	"FCSVeg" ,	"FCSFruit" ,	"FCSPr" ,	"FCSDairy" ,	"FCSFat" ,	"FCSSugar" , "rCSILessQlty" ,	"rCSIBorrow",	"rCSIMealNb" ,	"rCSIMealSize" ,	"rCSIMealAdult" , "Lcs_stress_DomAsset" , "Lcs_stress_Saving" , "Lcs_stress_SellFoodRation" , "Lcs_stress_CrdtFood" ,"Lcs_crisis_OutSchool" , "Lcs_crisis_ProdAssets" , "Lcs_crisis_Migration" , "Lcs_em_ResAsset" , "LcsR_em_FemAnimal" , "Lcs_em_Begged" )
 
 for (i in 1:length(no_nulls)) {
   if ( any (is.na (df_master[no_nulls[i]] ))) {
@@ -679,17 +725,17 @@ geom_text_repel(aes(label = outlier , size = 1 ), na.rm = TRUE, show.legend = F)
 }
 
 
-Enum_exp <- df_master [df_master$ADMIN0Name == 'Iraq',] %>%
-group_by(  EnuName ) %>%
-summarise( avg_total_exp = round (mean(HHExpTOT),1) , avg_food_exp = round (mean(HHExpFood),1)) %>% reshape2::melt() 
+# Enum_exp <- df_master [df_master$ADMIN0Name == 'Iraq',] %>%
+# group_by(  EnuName ) %>%
+# summarise( avg_total_exp = round (mean(HHExpTOT),1) , avg_food_exp = round (mean(HHExpFood),1)) %>% reshape2::melt() 
 
-Enum_exp %>%
-group_by(  variable) %>% 
-mutate(outlier = if_else(is_outlier(value), EnuName, NA_character_)) %>% 
-ggplot(aes(x = variable, y = value, color = variable)) +
-geom_boxplot() +
-geom_text_repel(aes(label = outlier , size = 1 ), na.rm = TRUE, show.legend = F) +
-  theme(legend.position="none")
+# Enum_exp %>%
+# group_by(  variable) %>% 
+# mutate(outlier = if_else(is_outlier(value), EnuName, NA_character_)) %>% 
+# ggplot(aes(x = variable, y = value, color = variable)) +
+# geom_boxplot() +
+# geom_text_repel(aes(label = outlier , size = 1 ), na.rm = TRUE, show.legend = F) +
+#   theme(legend.position="none")
 
 ###Contact the call center in case there are any suspicious observations and ensure that the invalid observations are removed from the call center side##
 
@@ -724,42 +770,42 @@ for (var in em_lcs_vars) {
 ##NOTE##
 # the folder (Panelists tracking) should only include one file at a time each country should have a separated sheet
 
-folder_path = paste0(getwd() , "/Panelists tracking")
-
-# Get a list of all file names in the folder with the .xlsx extension
-xlsx_files <- list.files(folder_path, pattern = "\\.xlsx$", full.names = TRUE)
-
-# Check if there is exactly one xlsx file
-if (length(xlsx_files) == 1) {
-  file_path = xlsx_files  # Get the file path
-  # Read the xlsx file (modify the below line if needed)
-  sheet_names = excel_sheets(file_path)
-  # Use map or lapply function to read data from each sheet
-  calls_log_ls = map(sheet_names, ~ read_excel(file_path, sheet = .x))
-
-  for (i in 1:length(calls_log_ls)) {
-    df = calls_log_ls[[i]]
-    print (unique (df["Admin0Name"]))
-    print (prop.table(table(df["Paneslist (Yes/No)"]))) 
-    print (prop.table(table(df["Call attempt outcome"])))
-    df [df["Call attempt outcome" ] != "Completed Survey",] %>% group_by(RspID) %>% summarise(cnt = n()) 
-
-    # create breaks
-    breaks <- hour(hm("00:00", "6:00", "12:00", "18:00", "23:59"))
-    # labels for the breaks
-    labels <- c("Night", "Morning", "Afternoon", "Evening")
-    
-    df$Time_of_day <- cut(x=hour(df$`Call attempt time`), breaks = breaks, labels = labels, include.lowest=TRUE)
-        df %>% group_by(RspID ,Time_of_day, `Call attempt outcome`) %>% summarise(cnt = n())
-        df %>% group_by(RspID , `Call attempt outcome`) %>% summarise(dur_avg = mean(minutes(hms( `Call duration in minutes`))) )
-        
-  }  
-  
-  
-} else {
-  stop("No xlsx file or multiple xlsx files found in the folder.")
-}
-
+# folder_path = paste0(getwd() , "/Panelists tracking")
+# 
+# # Get a list of all file names in the folder with the .xlsx extension
+# xlsx_files <- list.files(folder_path, pattern = "\\.xlsx$", full.names = TRUE)
+# 
+# # Check if there is exactly one xlsx file
+# if (length(xlsx_files) == 1) {
+#   file_path = xlsx_files  # Get the file path
+#   # Read the xlsx file (modify the below line if needed)
+#   sheet_names = excel_sheets(file_path)
+#   # Use map or lapply function to read data from each sheet
+#   calls_log_ls = map(sheet_names, ~ read_excel(file_path, sheet = .x))
+# 
+#   for (i in 1:length(calls_log_ls)) {
+#     df = calls_log_ls[[i]]
+#     print (unique (df["Admin0Name"]))
+#     print (prop.table(table(df["Paneslist (Yes/No)"]))) 
+#     print (prop.table(table(df["Call attempt outcome"])))
+#     df [df["Call attempt outcome" ] != "Completed Survey",] %>% group_by(RspID) %>% summarise(cnt = n()) 
+# 
+#     # create breaks
+#     breaks <- hour(hm("00:00", "6:00", "12:00", "18:00", "23:59"))
+#     # labels for the breaks
+#     labels <- c("Night", "Morning", "Afternoon", "Evening")
+#     
+#     df$Time_of_day <- cut(x=hour(df$`Call attempt time`), breaks = breaks, labels = labels, include.lowest=TRUE)
+#         df %>% group_by(RspID ,Time_of_day, `Call attempt outcome`) %>% summarise(cnt = n())
+#         df %>% group_by(RspID , `Call attempt outcome`) %>% summarise(dur_avg = mean(minutes(hms( `Call duration in minutes`))) )
+#         
+#   }  
+#   
+#   
+# } else {
+#   stop("No xlsx file or multiple xlsx files found in the folder.")
+# }
+# 
 
 ```
 
@@ -768,15 +814,15 @@ if (length(xlsx_files) == 1) {
 ```{r admin1 normalization, message=FALSE, warning=FALSE}
 
 
-df_master$ADMIN1Name = dplyr::case_match( df_master$ADMIN1Name , "Rural Damascus" ~ "900230" , "Homs" ~ "900226" , "Hama" ~ "900225" , "As-Sweida" ~ "900221" , "Lattakia" ~ "900228" , "Ar-Raqqa" ~ "900220" , "Al-Hasakeh" ~ "900218" , "Dar'a" ~ "900223"  , "Damascus" ~ "900222" , "Aleppo" ~ "900219" , "Deir-ez-Zor" ~ "900224" , "Tartous" ~ "900231" , "Quneitra" ~ "900229" , "Idleb" ~ "900227" , "Aden" ~ "903632" , "Abyan" ~ "903630" , "Dhamar" ~ "903639" , "Al Jawf" ~ "903635" , "Sa'ada" ~ "903646" ,"Sa'dah" ~ "903646" ,"Lahj" ~ "903643" , "Al Hudaydah" ~ "903634" , "Marib" ~ "903644" , "Al Dhale'e" ~ "903631" , "Ibb" ~ "903642" , "Amanat Al Asimah" ~ "903648" , "Sana'a" ~ "903647" , "Raymah" ~ "903645" , "Sana'a City" ~ "903648" ,"Ad Dali" ~ "903631"   , "Al Bayda" ~ "903633" , "Hajjah" ~ "903641" , "Shabwah" ~ "903649" , "Taizz" ~ "903651" , "Amran" ~ "903638"  , "Hadramaut" ~ "903640" , "Al Maharah" ~ "903636" , "Al Mahwit" ~ "903637" , "North" ~ "900943" , "Akkar" ~ "900944" , "Baalbek-El Hermel" ~ "900941" , "Mount Lebanon" ~ "900946" , "South" ~ "900945" , "Bekaa" ~ "900940" , "El Nabatieh" ~ "900947" , "Beirut" ~ "900942" , "Socotra" ~ "903650"  , "Najaf" ~ "901262" , "Baghdad" ~ "901252" , "Babylon" ~ "901251" , "Erbil" ~ "901256" , "Anbar" ~ "901250" , "Diyala"  ~ "901254" , "Qadissiya" ~ "901263" , "Kerbala" ~ "901257" , "Ninewa" ~ "901261" , "Salah Al-Din" ~ "901264" , "Wassit" ~ "901267" , "Thi-Qar" ~ "901266" , "Muthanna" ~ "901260" , "Basrah" ~ "901253" , "Dahuk" ~ "901255" , "Sulaymaniyah" ~ "901265" , "Missan" ~ "901259" , "Kirkuk" ~ "901258"  )
-
-df_master$ADMIN0Name [df_master$ADMIN0Name == "Syria"] = 238
-df_master$ADMIN0Name [df_master$ADMIN0Name == "Yemen"] = 269
-df_master$ADMIN0Name [df_master$ADMIN0Name == "Lebanon"] = 141
-df_master$ADMIN0Name [df_master$ADMIN0Name == "Iraq"] = 118
-
-df_master$ADMIN0Name = as.numeric(df_master$ADMIN0Name)
-df_master$ADMIN1Name = as.numeric(df_master$ADMIN1Name)
+df_master$ADMIN1Name = dplyr::case_match( df_master$ADMIN1Name , "Rural Damascus" ~ "900230" , "Homs" ~ "900226" , "Hama" ~ "900225" , "As-Sweida" ~ "900221" , "Lattakia" ~ "900228" , "Ar-Raqqa" ~ "900220" , "Al-Hasakeh" ~ "900218" , "Dar'a" ~ "900223"  , "Damascus" ~ "900222" , "Aleppo" ~ "900219" , "Deir-ez-Zor" ~ "900224" , "Tartous" ~ "900231" , "Quneitra" ~ "900229" , "Idleb" ~ "900227" , "Aden" ~ "903632" , "Abyan" ~ "903630" , "Dhamar" ~ "903639" , "Al Jawf" ~ "903635" , "Sa'ada" ~ "903646" ,"Sa'dah" ~ "903646" ,"Lahj" ~ "903643" , "Al Hudaydah" ~ "903634" , "Marib" ~ "903644" , "Ad Dali'" ~ "903631" , "Ibb" ~ "903642" , "Amanat Al Asimah" ~ "903648" , "Sana'a" ~ "903647" , "Raymah" ~ "903645" , "Sana'a City" ~ "903648" ,"Ad Dali" ~ "903631"   , "Al Bayda" ~ "903633" , "Hajjah" ~ "903641" , "Shabwah" ~ "903649" , "Taizz" ~ "903651" , "Amran" ~ "903638"  , "Hadramaut" ~ "903640" , "Al Maharah" ~ "903636" , "Al Mahwit" ~ "903637" , "North" ~ "900943" , "Akkar" ~ "900944" , "Baalbek-El Hermel" ~ "900941" , "Mount Lebanon" ~ "900946" , "South" ~ "900945" , "Bekaa" ~ "900940" , "El Nabatieh" ~ "900947" , "Beirut" ~ "900942" , "Socotra" ~ "903650"  , "Najaf" ~ "901262" , "Baghdad" ~ "901252" , "Babylon" ~ "901251" , "Erbil" ~ "901256" , "Anbar" ~ "901250" , "Diyala"  ~ "901254" , "Qadissiya" ~ "901263" , "Kerbala" ~ "901257" , "Ninewa" ~ "901261" , "Salah Al-Din" ~ "901264" , "Wassit" ~ "901267" , "Thi-Qar" ~ "901266" , "Muthanna" ~ "901260" , "Basrah" ~ "901253" , "Dahuk" ~ "901255" , "Sulaymaniyah" ~ "901265" , "Missan" ~ "901259" , "Kirkuk" ~ "901258"  )
+# 
+# df_master$ADMIN0Name [df_master$ADMIN0Name == "Syria"] = 238
+# df_master$ADMIN0Name [df_master$ADMIN0Name == "Yemen"] = 269
+# df_master$ADMIN0Name [df_master$ADMIN0Name == "Lebanon"] = 141
+# df_master$ADMIN0Name [df_master$ADMIN0Name == "Iraq"] = 118
+# 
+# df_master$ADMIN0Name = as.numeric(df_master$ADMIN0Name)
+# df_master$ADMIN1Name = as.numeric(df_master$ADMIN1Name)
 
 
 ```
@@ -786,7 +832,9 @@ df_master$ADMIN1Name = as.numeric(df_master$ADMIN1Name)
 ```{r}
 #df_master$CmbAdjWt = NA
 
-df_master = df_master %>% select (- c(EnuName ,HHHEdu_3grp_Illiterate_Primary,HHHEdu_3grp_Secondary, HHHEdu_3grp_Higher,HHHEdu_3gps, sample_HHHEdu_3gps, HHHEdu_3gps, sample_HHHEdu_3gps, cnt_gov, cnt, HHHEdu_3gps_sample_perc , `Male HoH` , `Female HoH` , adm0_name , adm0_WFP_code , adm1_WFP_code, adm1_pcode, adm1_pop_count, strata_cnt , HHH_YN, HHHAge, IDPDuration,mktnoaccesswhy_14d ) )
+df_master = df_master %>% select (- c(EnuName ,IDPDuration , HHHAge ,HHH_YN) )
+
+# df_master$ObsDate <- strptime(as.character(df_master$ObsDate), "%m/%d/%Y")
 
 write_xlsx(df_master, paste0("Cleaned data/" , "RTM_master" , "_"  , Sys.Date(), ".xlsx"))
 ```
